@@ -1,1 +1,9 @@
+.DS_Store
+*.bcf 
 *.aux
+*.log
+*.out
+*.pdf
+*.xml
+*.gz
+*.toc
