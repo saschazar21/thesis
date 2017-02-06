@@ -17,8 +17,8 @@
 \bibliography{literatur}  % requires file 'literatur.bib'
 
 \author{Sascha Zarhuber\\ S1510629021}
-\title{IM690 Thesis Project 1\\ Project Report}
-\date{February 2016}
+\title{IM690\\ \emph{Event-based build pipeline for static content management}\\ Project Report}
+\date{\today}
 
 %%%----------------------------------------------------------
 \begin{document}
@@ -41,7 +41,8 @@ This project should reveal possibilities to overcome these challenges, mainly us
 %%%----------------------------------------------------------
 
 Static site generators are growing fast and are more and more used as a replacement for common content management systems.
-The main advantage are their independence of \emph{external} services, like database systems, session caching services, etc\ldots\newline Also, they seldomly consist of complicated backend systems and are mostly created in pure \textbf{HTML} or simple markup languages like \textbf{Markdown}.\footnote{Markdown: \url{https://daringfireball.net/projects/markdown/}}
+
+The main advantage are their independence of \emph{external} services, like database systems, session caching services, etc\ldots\newline Also, they seldomly consist of complicated backend systems and are mostly created in pure \textbf{HTML} or simple markup languages like \textbf{Markdown}.\footnote{Markdown: \url{https://daringfireball.net/projects/markdown/}}
 %
 \begin{figure}[p]
     \centering
@@ -50,8 +51,12 @@ Static site generators are growing fast and are more and more used as a replacem
     \label{fig:jekyll_build}
 \end{figure}
 %
-One of the biggest drawbacks however, is the fact, that static site generators have to preprocess every bit of information they contain (\emph{see Fig. \ref{fig:jekyll_build}}). This is the complete opposite compared to other content management systems, which process information \emph{on request}. This means, that user-readable content is fetched and rendered \emph{just in time} it was requested from the client.
-Therefore, depending on the setup, a dynamically growing amount of time needed for a build cycle might be the case.For being able to work against this fact, a working approach has to be found, which saves time by \emph{leaving out} information, which has not changed since the previous build.%
+
+One of the biggest drawbacks however, is the fact, that static site generators have to preprocess every bit of information they contain (\emph{see Fig. \ref{fig:jekyll_build}}). This is the complete opposite compared to other content management systems, which process information \emph{on request}. This means, that user-readable content is fetched and rendered \emph{just in time} it was requested from the client.
+
+Therefore, depending on the setup, a dynamically growing amount of time needed for a build cycle might be the case.
+For being able to work against this fact, a working approach has to be found, which saves time by \emph{leaving out} information, which has not changed since the previous build.
+%
 
 %%%----------------------------------------------------------
 \chapter{Implementation}
@@ -137,7 +142,11 @@ Being able to investigate the altered contents of the project using \emph{diff},
 %%%----------------------------------------------------------
 
 \begin{itemize}
-\item GitHub API integration\item Provide ecosystem for web project builds\item Compare states using diff\item Keep track on build states\item Create a possible testbed for render measurements
+\item GitHub API integration
+\item Provide ecosystem for web project builds
+\item Compare states using diff
+\item Keep track on build states
+\item Create a possible testbed for render measurements
 \end{itemize}
 
 
@@ -148,7 +157,9 @@ Being able to investigate the altered contents of the project using \emph{diff},
 
 \begin{itemize}
 \item Render or re-render static webroots seamlessly
-\item Provide latest build as archive for deployment\item Make service responsive to GitHub webhooks\item Integrate into CI services
+\item Provide latest build as archive for deployment
+\item Make service responsive to GitHub webhooks
+\item Integrate into CI services
 \end{itemize}
 
 
