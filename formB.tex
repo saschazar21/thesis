@@ -1,0 +1,75 @@
+%% A simple template for a lab or course report using the Hagenberg setup
+%% with the standard LaTeX 'report' class
+%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
+
+\documentclass[a4paper,english,11pt]{article}
+%\documentclass[a4paper,twocolumn,english,11pt]{article}		
+%\documentclass[a4paper,ngerman,11pt]{article}
+
+\usepackage{hgb}
+\usepackage{hgbabbrev}
+\usepackage{hgblistings}
+\usepackage{hgbbib}
+\usepackage{hgbheadings}
+
+\RequirePackage[utf8]{inputenc}		% remove when using lualatex oder xelatex!
+
+\flushbottom
+
+\graphicspath{{images/}}   % where are the images?
+\bibliography{literatur}   % requires file 'literatur.bib'
+
+
+\author{
+Sascha Zarhuber\\ 
+\texttt{sascha.zarhuber@students.fh-hagenberg.com}
+}
+
+
+\title{Selective rendering\\
+in build pipelines}
+\date{\today}
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+\maketitle
+\tableofcontents
+%%%----------------------------------------------------------
+
+\begin{abstract}
+This document acts as the additional statement, enclosed to the Submission of the Agreement (\emph{Form B}). It should cover the current research progress and where I left off after the submission of the \texttt{Thesis Project 1}.\\
+Furthermore, it contains already a preliminary table of contents, as well as an outlook of the literature that is going to be used during the ongoing research process.\\
+The included Expose features an extension of the already submitted topic description.
+\end{abstract}
+
+
+\section{Working title}
+
+The current working title for my Master's Thesis would be:
+
+\begin{center}
+\textbf{Selective rendering in build pipelines}
+\end{center}
+
+A former title, which appeared in earlier submissions, was \emph{Event-based build pipeline for static content management}. Due to the initial thoughts, and where the \emph{Thesis Project 1} has evolved to, a renaming of the description was necessary.\\
+The new title should support me in improving the focus towards the important core parts of my research, which will be covered in the written Master's Thesis:
+\begin{itemize}
+	\item Find a selective approach, which distinguishes between \emph{modified} and \emph{unmodified} data parts.
+	\item Separate both from each other.
+	\item Apply rendering mechanism only on \emph{modified} data.
+	\item Merge with previously rendered content to provide \texttt{iterative} versions of the respective website source.
+\end{itemize}
+
+\section{Expose}
+
+
+
+
+%%%----------------------------------------------------------
+  
+\printbibliography  % alternatively: \MakeBibliography[nosplit]
+
+%%%----------------------------------------------------------
+
+\end{document}
