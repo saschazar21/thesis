@@ -1,0 +1,15 @@
+[0] Config.pm:343> INFO - This is Biber 2.5
+[0] Config.pm:346> INFO - Logfile is 'formB.blg'
+[117] biber-darwin:290> INFO - === Thu Feb 23, 2017, 19:09:39
+[207] Biber.pm:351> INFO - Reading 'formB.bcf'
+[323] Biber.pm:776> INFO - Found 3 citekeys in bib section 0
+[343] Biber.pm:3493> INFO - Processing section 0
+[404] Biber.pm:3657> INFO - Looking for bibtex format file 'literatur.bib' for section 0
+[405] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
+[406] bibtex.pm:1048> INFO - Found BibTeX data source 'literatur.bib'
+[540] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[541] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[541] Biber.pm:3306> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'en-US'
+[541] Biber.pm:3310> INFO - No sort tailoring available for locale 'en-US'
+[546] bbl.pm:526> INFO - Writing 'formB.bbl' with encoding 'UTF-8'
+[547] bbl.pm:619> INFO - Output to formB.bbl
