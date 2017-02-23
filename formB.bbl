@@ -19,6 +19,50 @@
 
 \refsection{0}
   \sortlist[entry]{nty/global/}
+    \entry{cantelon2017node}{book}{}
+      \name{author}{5}{}{%
+        {{hash=6779ce3a4311dd3cc5df6457942ef5ad}{%
+           family={Cantelon},
+           family_i={C\bibinitperiod},
+           given={M.},
+           given_i={M\bibinitperiod}}}%
+        {{hash=5dbf060edddda7a775a88a1186bf3f4a}{%
+           family={Young},
+           family_i={Y\bibinitperiod},
+           given={A.R.},
+           given_i={A\bibinitperiod}}}%
+        {{hash=66c73ee697152a7145d216060a62999c}{%
+           family={Harter},
+           family_i={H\bibinitperiod},
+           given={M.},
+           given_i={M\bibinitperiod}}}%
+        {{hash=14892d2928660928ea21e461f01f4423}{%
+           family={Rajlich},
+           family_i={R\bibinitperiod},
+           given={N.},
+           given_i={N\bibinitperiod}}}%
+        {{hash=b401c966d7c285924502ddcc43fd74f3}{%
+           family={Holowaychuk},
+           family_i={H\bibinitperiod},
+           given={T.J.},
+           given_i={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Manning Publications Company}%
+      }
+      \strng{namehash}{b28f70e322a5fa3ee4adb97645390eb5}
+      \strng{fullhash}{85b9492658ca514d71c23ba48de7b9f6}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9781617292576}
+      \field{title}{Node.Js in Action}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://books.google.at/books?id=YzfuvQAACAAJ
+      \endverb
+    \endentry
     \entry{dhillon2016}{book}{}
       \name{author}{1}{}{%
         {{hash=1e62fe53241696697ffdc45f2d8eb27e}{%
@@ -44,6 +88,58 @@
       \field{subtitle}{Build elegant and minimalistic static blogs}
       \field{title}{Creating Blogs with Jekyll}
       \field{year}{2016}
+    \endentry
+    \entry{Hunt1975}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=8cb503599ef0f4b35a2d96a2ff6c8e6c}{%
+           family={Hunt},
+           family_i={H\bibinitperiod},
+           given={J.\bibnamedelimi W.},
+           given_i={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=846b0ec3486ff2c6082e5f9675ea3b77}{%
+           family={McIlroy},
+           family_i={M\bibinitperiod},
+           given={M.\bibnamedelimi D.},
+           given_i={M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{8cde7e109fff6b2fcf83d55c2ecef91f}
+      \strng{fullhash}{8cde7e109fff6b2fcf83d55c2ecef91f}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An Algorithm for Differential File Comparison}
+      \field{year}{1975}
+    \endentry
+    \entry{Jackson1994}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=85e84071519004b965ff9e290e5205cd}{%
+           family={Jackson},
+           family_i={J\bibinitperiod},
+           given={D.},
+           given_i={D\bibinitperiod}}}%
+        {{hash=170fb27f5b23e3aeff8b4dbe971292eb}{%
+           family={Ladd},
+           family_i={L\bibinitperiod},
+           given={D.\bibnamedelimi A.},
+           given_i={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{9822d1a59c407b54a600deaf71b6d5d1}
+      \strng{fullhash}{9822d1a59c407b54a600deaf71b6d5d1}
+      \field{sortinit}{J}
+      \field{sortinithash}{ec3950a647c092421b9fcca6d819504a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings 1994 International Conference on Software Maintenance}
+      \field{month}{09}
+      \field{title}{Semantic Diff: a tool for summarizing the effects of modifications}
+      \field{year}{1994}
+      \field{pages}{243\bibrangedash 252}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/ICSM.1994.336770
+      \endverb
+      \keyw{configuration management;input-output programs;program diagnostics;real-time systems;software tools;Semantic Diff;local variable renaming;meaning-preserving transformations;observable input-output behaviour;procedure versions;program dependence graphs;real-time system;report generation;semantic differences;software modification effects summarization;spurious differences;syntactic components;Real-time systems;Software fault diagnosis;Software tools}
     \endentry
     \entry{loeliger2012version}{book}{}
       \name{author}{2}{}{%

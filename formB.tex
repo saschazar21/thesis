@@ -61,7 +61,8 @@ The new title should support me in improving the focus towards the important cor
 \end{itemize}
 
 \section{Expos\'{e}}
-Due to my own experiences on the job, building and constantly rebuilding a static website easily slows down the whole workflow. In general, it can be said; \emph{the more files, the longer the build cycle}. Mostly, this is caused by the inclusion of files which do not require to be rebuilt individually.\\Therefore, the main motivation behind my research culminates in ways to find a selective approach of only rendering files, which need to be rebuilt immediately for resulting in an up-to-date version of a given website.
+Due to my own experiences on the job, building and constantly rebuilding a static website easily slows down the whole workflow. In general, it can be said; \emph{the more files, the longer the build cycle}. Mostly, this is caused by the inclusion of files which do not require to be rebuilt individually.\\
+Therefore, the main motivation behind my research culminates in ways to find a selective approach of only rendering files, which need to be rebuilt immediately for resulting in an up-to-date version of a given website.
 
 \subsection{Possible research question}
 The main research topic focuses on ways for a \emph{smart selection} of necessary files needed for an immediate content update on a static website, thus initiated by different source code modifications checked into a version control system (\texttt{VCS}), like \emph{Git}\footnote{Git: \url{https://git-scm.com}}, for example. Therefore, a possible research question would be the following:
@@ -75,7 +76,9 @@ The Thesis project mainly supports my research as a platform for testing differe
 \subsection{Research goals}
 \begin{itemize}
 \item Find a selection method for altered files using git commits.
-\item Separate \texttt{content} from \texttt{system build} files.\item Filter modified sections in files, based on their diff (\emph{meta, body}).\item Create \texttt{dependency-awareness} in the project tree (Enhance the rebuild focus on dependent files as well).
+\item Separate \texttt{content} from \texttt{system build} files.
+\item Filter modified sections in files, based on their diff (\emph{meta, body}).
+\item Create \texttt{dependency-awareness} in the project tree (Enhance the rebuild focus on dependent files as well).
 \end{itemize}
 
 \section{Preliminary Table of Contents}
@@ -117,9 +120,12 @@ Begin writing chapters \emph{2, 3}.
 
 \section{Relevant literature}
 \begin{description}
-\item [Creating Blogs with Jekyll] -- Vikram Dhillon \cite[]{dhillon2016}
-\item [Version Control with Git] -- J Loeliger et al. \cite[]{loeliger2012version}
+\item [Creating Blogs with Jekyll] -- Vikram Dhillon\cite[]{dhillon2016}
+\item [Version Control with Git] -- J Loeliger et al.\cite[]{loeliger2012version}
+\item [Node.Js in Action] -- M. Cantelon et al.\cite[]{cantelon2017node}
 \item [A Large Scale Study of Programming Languages and Code Quality in Github] -- Baishakhi Ray et al. \cite[]{ray2014github}
+\item [An Algorithm for Differential File Comparison] -- J. W. Hunt et al.\cite[]{Hunt1975}
+\item [Semantic Diff] -- D. Jackson et al.\cite[]{Jackson1994}
 \end{description}
 
 %%%----------------------------------------------------------
