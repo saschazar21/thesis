@@ -1,4 +1,6 @@
 .DS_Store
+_dist
+*.bbl
 *.blg
 *.bcf
 *.aux

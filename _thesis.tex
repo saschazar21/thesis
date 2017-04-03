@@ -2,8 +2,8 @@
 %%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
 
 \documentclass[master,english]{hgbthesis}
-% Zulässige Class Options: 
-%   Typ der Arbeit: diplom, master (default), bachelor, praktikum 
+% Zulässige Class Options:
+%   Typ der Arbeit: diplom, master (default), bachelor, praktikum
 %   Hauptsprache: german (default), english
 %%%----------------------------------------------------------
 
@@ -25,14 +25,14 @@
 \abgabedatum{2017}{06}{11}	% {YYYY}{MM}{DD}
 
 %%% Zusätzlich für eine Bachelorarbeit: ---------------------
-\nummer{1510629021-A}   % Stud-ID, z.B. 1310238045-A  
+\nummer{1510629021-A}   % Stud-ID, z.B. 1310238045-A
 % (A = 1. Bachelorarbeit)
-\semester{Sommersemester 2016} 
-\gegenstand{Einführung in die Tiefere Problematik 1} 
-\betreuer{Alois B.~Treuer, Päd.\ Phil.} % oder \betreuerin{..}
+\semester{Sommersemester 2016}
+\gegenstand{Einführung in die Tiefere Problematik 1}
+\betreuer{FH-Prof. DI Rimbert Rudisch-Sommer} % oder \betreuerin{..}
 
 %%% Restriktive Lizenformel anstatt CC (nur für Typ master) -
-%\strictlicense
+\strictlicense
 
 %%%----------------------------------------------------------
 \begin{document}
@@ -45,38 +45,32 @@
 \maketitle
 \tableofcontents
 
-\include{front/vorwort} % Optional. Ggf. weglassen
-\include{front/kurzfassung}		
-\include{front/abstract}			
+\input{front/vorwort} % Optional. Ggf. weglassen
+\input{front/kurzfassung}
+\input{front/abstract}
 
 %%%----------------------------------------------------------
 \mainmatter          % Hauptteil (ab hier arab. Seitenzahlen)
 %%%----------------------------------------------------------
 
-\include{chapters/einleitung}
-\include{chapters/abschlussarbeit}
-\include{chapters/latex}
-\include{chapters/abbildungen}
-\include{chapters/mathematik}
-\include{chapters/literatur}
-\include{chapters/drucken}
-\include{chapters/schluss}
+%\input{chapters/01-introduction/index}
+\input{chapters/02-state-of-the-art/index}
 
 %%%----------------------------------------------------------
-\appendix                                            % Anhang 
+\appendix                                            % Anhang
 %%%----------------------------------------------------------
 
-\include{back/anhang_a}	% Technische Ergänzungen
-\include{back/anhang_b}	% Inhalt der CD-ROM/DVD
-\include{back/anhang_c}	% Chronologische Liste der Änderungen
-\include{back/anhang_d}	% Quelltext dieses Dokuments
+%\input{back/anhang_a}	% Technische Ergänzungen
+%\input{back/anhang_b}	% Inhalt der CD-ROM/DVD
+%\input{back/anhang_c}	% Chronologische Liste der Änderungen
+%\input{back/anhang_d}	% Quelltext dieses Dokuments
 
 %%%----------------------------------------------------------
 \MakeBibliography                        % Quellenverzeichnis
 %%%----------------------------------------------------------
 
 %%% Messbox zur Druckkontrolle ------------------------------
-\include{back/messbox}
+\input{back/messbox}
 
 %%%----------------------------------------------------------
 \end{document}
