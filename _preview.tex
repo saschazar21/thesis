@@ -1,0 +1,53 @@
+%% A simple template for a lab or course report using the Hagenberg setup
+%% with the standard LaTeX 'report' class
+%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
+
+\documentclass[a4paper,english,11pt]{report}
+%\documentclass[a4paper,ngerman,11pt]{article}
+
+\usepackage{hgb}
+\usepackage{hgbabbrev}
+\usepackage{hgblistings}
+\usepackage{hgbbib}
+\usepackage{hgbheadings}
+\usepackage{calc}
+
+\RequirePackage[utf8]{inputenc}		% remove when using lualatex oder xelatex!
+
+\flushbottom
+
+\graphicspath{{images/}}   % where are the images?
+\bibliography{literatur}   % requires file 'literatur.bib'
+
+
+%%%----------------------------------------------------------
+%% Set desired chapter no. below
+\def \index {2}
+\setcounter{chapter}{\index-1}
+\def \includeChapter {chapters/02-state-of-the-art/index}
+\def \chapterName {State of the Art}
+%%%----------------------------------------------------------
+
+
+\author{
+Sascha Zarhuber\\
+\texttt{sascha.zarhuber@students.fh-hagenberg.at}}
+
+
+\title{Preview Chapter \index:\\\chapterName}
+\date{\today}
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+\maketitle
+%%%----------------------------------------------------------
+\tableofcontents
+
+%% Include preview chapter
+\input{\includeChapter}
+%%%----------------------------------------------------------
+
+\printbibliography
+
+\end{document}
