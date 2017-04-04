@@ -1,6 +1,21 @@
 \chapter{State of the art}
 \label{cha:state-of-the-art}
 
-Static site generators seem to experience some kind of revival during the last years, as well-established Content Management systems are facing more and more security issues through their dynamically executeable code base.
+%% W3Tech chart of server-side language share
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.9\textwidth]{server-side-languages.png}
+    \caption{A graphic showing the global share of \textbf{server-side programming languages} from January 2010 to April 2017. \texttt{PHP} remains the dominant language with a share growing from \textbf{72.5\%} to \textbf{82.6\%}.}
+    \label{fig:server-side-languages}
+\end{figure}
+%
+
+The roots of the most well-known modern Content Management Systems (\emph{CMS}) date back to the early 2000s, when PHP was (and \emph{still is}) the dominant factor in terms of server-side programming languages (See Fig. \ref{fig:server-side-languages}). %% Please check, if reference is accurate enough
+
+While the \emph{typical} CMS was starting out as mostly just a ``dynamic online tool'', it also shows that with seamlessly integrating new features gained through the development of its underlying programming languages, as well as steadily adding new functionalities (mostly requested by the community), a transition towards a fully-manageable and customizeable, semi-automatic web application was possible \cite[17]{dhillon2016}.
+
+However, this progression also caused a few drawbacks, especially when it comes down to comparing the amount of workload needed before being able to actually create content for the World Wide Web. Due to the fact, that most CMS contain their own sort of plugin management
+
+on the one hand it shows the ease of bringing new content online, whereas on the other hand
 
 \input{chapters/02-state-of-the-art/_support/jekyll}
