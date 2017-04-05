@@ -10,12 +10,18 @@
 \end{figure}
 %
 
+\paragraph{History of Content Management Systems.}
 The roots of the most well-known modern Content Management Systems (\emph{CMS}) date back to the early 2000s, when PHP was (and \emph{still is}) the dominant factor in terms of server-side programming languages (See Fig. \ref{fig:server-side-languages}). %% Please check, if reference is accurate enough
 
 While the \emph{typical} CMS was starting out as mostly just a ``dynamic online tool'', it also shows that with seamlessly integrating new features gained through the development of its underlying programming languages, as well as steadily adding new functionalities (mostly requested by the community), a transition towards a fully-manageable and customizeable, semi-automatic web application was possible \cite[17]{dhillon2016}.
 
-However, this progression also caused a few drawbacks, especially when it comes down to comparing the amount of workload needed before being able to actually create content for the World Wide Web. Due to the fact, that most CMS contain their own sort of plugin management
+The advantages are clear; A web designer or content editor does not automatically have to be a web developer, who has profound knowledge about software or server architecture. Instead, most of the time it is enough to know how to operate an FTP-client and to know the credentials of the built-in database service, submitted by the web hoster upon registration.\\
+As a summary, it can be said: \emph{Less people for less responsibilities} -- The web application does the rest.
 
-on the one hand it shows the ease of bringing new content online, whereas on the other hand
+However, this progression also caused a few drawbacks, especially when it comes down to comparing the amount of workload needed before actually being able to create content for the World Wide Web. Due to the fact, that most CMSs evolved to their own sort of powerful admin panels, developers who are not keen about keeping their site updated, risk its defacing or other embarrassing attacks through unmanaged security holes in the code \cite[23]{dhillon2016}.\\
+So, how is it possible to bridge the gap between a fairly secure system and creating content whenever it is desired?
+
+\paragraph{Creating content using static HTML.}
+In 2008, \emph{Tom Preston-Werner} created \texttt{Jekyll} out his frustration to having the need of ``styling a zillion template pages'' and ``moderating comments all day long'' before even being ready to create content on his blogging engine \cite[]{PrestonWerner2008}. Furthermore he mentioned, that one of the other main reasons were the lack of possibility for publishing his posts on his own server, when subscribing to a fully-managed online hosting service like \texttt{wordpress.com}\footnote{\url{https://en.wordpress.com} -- A hosted version of Wordpress.}. Services like this offer only limited customization options, where there likely is no access to online storage and database without using the built-in admin panel. Even then, access might be very restricted.
 
 \input{chapters/02-state-of-the-art/_support/jekyll}
