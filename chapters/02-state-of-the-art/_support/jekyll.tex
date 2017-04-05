@@ -1,8 +1,25 @@
 \section{Jekyll}
 \label{sec:jekyll}
 
-As already described in section <<\emph{\nameref{par:creatingcontent}}>> on p. \pageref{par:creatingcontent}, \texttt{Jekyll} was created out of the need for avoiding to service the blogging engine before writing and publishing content.
+As already described in section <<\emph{\nameref{par:creatingcontent}}>> on p. \pageref{par:creatingcontent}, \texttt{Jekyll} was created out of the need for avoiding to service the blogging engine before writing and publishing content. Since it is deeply integrated into \texttt{GitHub}, it is considered as the probably most-popular static site generator.
 
-\emph{Tom Preston-Werner}, co-founder of \texttt{GitHub}\footnote{\url{https://github.com} -- GitHub Inc.}, announced it in October 2008 in one of his blog posts \cite{PrestonWerner2008jekyll}. Already in December 2008, it was introduced as build engine for the then newly featured \textbf{GitHub Pages} service, allowing owners of repositories to publish a static website by just pushing to a certain \texttt{master} or \texttt{gh-pages} branch \cite{PrestonWerner2008githubpages}, which is still available for free to this day.
-
+\subsection{History}
+\label{sec:jekyll-history}
+\emph{Tom Preston-Werner}, co-founder of \texttt{GitHub}\footnote{\url{https://github.com} -- GitHub Inc.}, announced it in October 2008 in one of his blog posts \cite{PrestonWerner2008jekyll}. Already in December 2008, it was introduced as build engine for the then newly featured \textbf{GitHub Pages} service, allowing owners of repositories to publish a static website by just pushing to a certain \texttt{master} or \texttt{gh-pages} branch \cite{PrestonWerner2008githubpages}, which is still available for free to this day.\\
 All of this happened just 6 (respectively 8) months after \texttt{GitHub} was launched \cite{PrestonWerner2008githublaunch} and is now even being used by technology-leading companies to showcase their Open-Source efforts\footnote{\url{https://github.com/showcases/github-pages-examples} -- GitHub Pages examples.}.
+
+\subsection{Technology}
+\label{sec:jekyll-technology}
+\texttt{Jekyll} was entirely written in \textbf{Ruby}, as \emph{Tom Preston-Werner} rather saw himself as a software developer in the first place, than as a content author \cite{PrestonWerner2008jekyll}. Until now, the repository for \texttt{Jekyll} still consists mainly of \texttt{Ruby} code at a share of roughly 77.5\% (See Fig. \ref{fig:jekyll-languages}).
+
+% Jekyll programming languages graphic
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.9\textwidth]{jekyll-repo-languages.png}
+    \caption{A screenshot taken from the \texttt{GitHub} repository page, showing the spread of \textbf{programming languages} used for developing \texttt{Jekyll}. \textbf{Ruby} acts as the most prominent language, holding a share of roughly \textbf{77.5\%}.}
+    \label{fig:jekyll-languages}
+\end{figure}
+%
+
+\subsubsection{Advantages}
+One of the main advantages is the modular structure of its code base. By inheriting different \texttt{Ruby} classes, it is quite easy to extend and add features to fit the developer's needs. Due to its wide-spread usage across the \texttt{GitHub} universe, \texttt{Jekyll} also has an accordingly huge user base and is therefore well documented.\\ Furthermore, its website\footnote{\url{http://jekyllrb.com} -- Jekyll website.}, which mainly acts as starting basis for documentation, is not only available as open-sourced git repository, it is also built using \texttt{Jekyll} to prove its universality.
