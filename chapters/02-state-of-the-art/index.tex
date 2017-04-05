@@ -22,6 +22,18 @@ However, this progression also caused a few drawbacks, especially when it comes 
 So, how is it possible to bridge the gap between a fairly secure system and creating content whenever it is desired?
 
 \paragraph{Creating content using static HTML.}
-In 2008, \emph{Tom Preston-Werner} created \texttt{Jekyll} out his frustration to having the need of ``styling a zillion template pages'' and ``moderating comments all day long'' before even being ready to create content on his blogging engine \cite[]{PrestonWerner2008}. Furthermore he mentioned, that one of the other main reasons were the lack of possibility for publishing his posts on his own server, when subscribing to a fully-managed online hosting service like \texttt{wordpress.com}\footnote{\url{https://en.wordpress.com} -- A hosted version of Wordpress.}. Services like this offer only limited customization options, where there likely is no access to online storage and database without using the built-in admin panel. Even then, access might be very restricted.
+\label{par:creatingcontent}
+In 2008, \emph{Tom Preston-Werner} created \texttt{Jekyll} out his frustration to having the need of ``styling a zillion template pages'' and ``moderating comments all day long'' before even being ready to create content on his blogging engine \cite[]{PrestonWerner2008jekyll}. Furthermore he mentioned, that one of the other main reasons were the lack of possibility for publishing his posts on his own server, when subscribing to a fully-managed online hosting service like \texttt{wordpress.com}\footnote{\url{https://en.wordpress.com} -- A hosted version of Wordpress.}. Services like this offer only limited customization options, where there likely is no access to online storage and database without using the built-in admin panel. Even then, access might be very restricted.
+
+The intended core functionality of \texttt{Jekyll} narrows down its mode of operation to handle three main components found in most static site generators today \cite[24]{dhillon2016}:
+
+\begin{description}
+  \item [Core language] -- The language a static generator is written in, for example JavaScript or Ruby.
+  \item [Templates] -- The templating language to be used through the blog and posts.
+  \item [Plug-ins] -- All static site generators allow for additional functionality through some
+sort of a plug-in system.
+\end{description}
+
+In contrast to common dynamic CMSs, a static site generator outputs \textbf{plain static HTML}. It does it in a way, that a certain \emph{distribution} folder holds the complete web root, without the need of binding it to external services like databases or session management tools. Occasionally, different plug-ins also allow the generation of client-side \texttt{JavaScript} or \texttt{Cascading Style Sheet} files through their respective pre-processing tools.
 
 \input{chapters/02-state-of-the-art/_support/jekyll}
