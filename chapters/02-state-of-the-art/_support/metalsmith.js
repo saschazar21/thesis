@@ -13,9 +13,9 @@ Metalsmith(__dirname)
 // (...)                     // Additional configuration
 .use(layouts({
   engine: 'handlebars',
-  pattern: '**/*.html'       // Plugin would look for .html files, although
+  pattern: '*.html'          // Plugin would look for .html files, although
 }))                          // not yet processed by markdown renderer
-.use(markdown())
+.use(markdown())             // <- Here markdown gets processed to HTML
 .build((err) => {
   if (err) {
     throw err;

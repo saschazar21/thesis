@@ -25,6 +25,7 @@ Using the built-in \texttt{JavaScript} API, it is also possible to invoke the ne
 
 \subsubsection{Disadvantages}
 So much freedom in designing a project may also cause some dangers. In this case, one of the most crucial things is the arrangement of plugins in the configuration. Since \texttt{Metalsmith} acts as a streaming build system, every transformation of the content must happen at its time. This is especially important when a plugin might alter the underlying code in a way, that a following plugin becomes useless, as it might not be able to succeed in its predefined task.\\
-As an example, the following code snippet shows one bold example of misconfiguration:
+As an example, the following code snippet shows one bold example of misconfiguration (See line no. 16):
 
+%% Update line no. above, if code changes
 \lstinputlisting[language=JavaScript]{chapters/02-state-of-the-art/_support/metalsmith.js}
