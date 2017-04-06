@@ -22,4 +22,17 @@ All of this happened just 6 (respectively 8) months after \texttt{GitHub} was la
 %
 
 \subsubsection{Advantages}
-One of the main advantages is the modular structure of its code base. By inheriting different \texttt{Ruby} classes, it is quite easy to extend and add features to fit the developer's needs. Due to its wide-spread usage across the \texttt{GitHub} universe, \texttt{Jekyll} also has an accordingly huge user base and is therefore well documented.\\ Furthermore, its website\footnote{\url{http://jekyllrb.com} -- Jekyll website.}, which mainly acts as starting basis for documentation, is not only available as open-sourced git repository, it is also built using \texttt{Jekyll} to prove its universality.
+One of the main advantages is the modular structure of its code base. By inheriting different \texttt{Ruby} classes, it is quite easy to extend and add features to fit the developer's needs. Due to its wide-spread usage initiated through the \texttt{GitHub} universe, \texttt{Jekyll} also has an accordingly huge user base and is therefore well documented \cite[26]{dhillon2016}.\\ Furthermore, its website\footnote{\url{http://jekyllrb.com} -- Jekyll website.}, which mainly acts as starting basis for documentation, is not only available as open-sourced git repository, it is also built using \texttt{Jekyll} to prove its universality.
+
+Starting from scratch, the command \texttt{jekyll new my\_project} installs a blog environment for starters in the \texttt{./my\_project} folder. The basic install consists of an elementar blog post structure, \texttt{sass} source files, and a few template files written for Shopify's \texttt{Liquid}\footnote{\url{https://help.shopify.com/themes/liquid} -- Shopify's Liquid template engine.} engine.\\
+Using this starting environment, the unexperienced developer quickly gets a sufficient overview of what is generally possible using \texttt{Jekyll}, whereas the content author is able to fully concentrate himself on writing content, as the used \texttt{Markdown} markup language requires little to no prior syntax knowledge.
+
+Furthermore, \texttt{Jekyll} already ships with a built-in webserver for quickly reviewing the rendered static output.
+
+\subsubsection{Disadvantages}
+As powerful as \texttt{Ruby} might be designed, many unskilled developers are facing difficulties right from the beginning, as most of them experience a steep learning curve. Nearly every single bit of customizing \texttt{Jekyll} requires \texttt{Ruby} knowledge, especially if it is desired to move along the ``predefined'' way and not including third-party extensions like \texttt{Node.js} tools or else.
+
+Additionally, its template language, \texttt{Liquid}, offers customization on a very high level, so it might happen to confuse core application logic\footnote{How \texttt{Jekyll} processes data into programmatically readable structures.} with template logic\footnote{How \texttt{Liquid} transforms these structures into browser-readable HTML.}. To make things worse, different template constructions might also evolve over time and therefore causing a parallel coding universe when trying to surpass difficulties in the core application logic.
+
+%% bring some difficulties concerning ruby versions
+%% ruby gems
