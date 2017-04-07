@@ -10,7 +10,7 @@ Metalsmith(__dirname)
 .source('_src')              // the content directory
 .destination('_site')        // the output directory for compiled content
 .clean(true)                 // delete output directory first? yes!
-// (...)                     // Additional configuration
+// (...)                     // Additional plugin configuration
 .use(layouts({
   engine: 'handlebars',
   pattern: '*.html'          // Plugin would look for .html files, although
@@ -21,4 +21,4 @@ Metalsmith(__dirname)
     throw err;
   }
   console.log('Success!');
-})
+});
