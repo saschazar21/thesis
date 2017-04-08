@@ -9,5 +9,4 @@ tags:                     # Array of tags for use later on
 template: false           # Order plugin to not render this file
 ---
 
-# A frontmatter demo
-This file consists of Markdown, but shows some metadata encoded as YAML.
+Here starts the normal content
