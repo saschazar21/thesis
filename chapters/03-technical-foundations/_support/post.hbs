@@ -1,0 +1,15 @@
+<!-- include header partial -->
+{{> header.hbs}}
+
+<!-- set title of post in h1 -->
+<h1>{{title}}</h1>
+<!-- insert post author & date metadata -->
+<p>by {{author}} on {{date}}</p>
+
+<div>
+  <!-- insert the main content here -->
+  {{{contents}}}
+</div>
+
+<!-- include footer partial -->
+{{> footer.hbs}}
