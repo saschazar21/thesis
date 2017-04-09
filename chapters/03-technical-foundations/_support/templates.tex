@@ -5,6 +5,6 @@
 
 Born out of the need to fail-safe produce \texttt{HTML} on the server, as the produced data chunks -- initiated by a client \texttt{HTTP} request -- steadily grew, the goal behind templating engines is primarily to separate business logic from data display. Ideally, at the end of the day, there should be no code in \texttt{HTML}, and no \texttt{HTML} in code \cite[225]{Parr2004templates}.
 
-\lstinputlisting[caption={post.hbs}, label={list:handlebars}, language=HTML]{chapters/03-technical-foundations/_support/post.hbs}
+\lstinputlisting[caption={post.hbs}, label={list:handlebars}, language=HTML]{chapters/03-technical-foundations/_support/post.html}
 
 A simple template file example for a blog post is shown in Listing \ref{list:handlebars}. It is written in \texttt{Handlebars}, a very basic templating language, offering only a very limited amount of template logic. Included are \emph{loops, if/else, partials, \ldots} -- however, additional ``\emph{helper}''-functions may be added by the developer.
