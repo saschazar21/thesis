@@ -21,3 +21,27 @@ While it was merely a tool for kernel hackers in the beginning, its simplicity q
 
 \subsection{Technology}
 \label{sec:git-technology}
+Having decided to use \texttt{Git} as VCS, everything begins with setting up a new respository. This can be made remotely on a service like \texttt{GitHub}, or locally using \texttt{git init}. When initialized a local repository, it can still be published remotely through setting the correct URL using \texttt{git remote} later on \cite[198]{loeliger2012version}.
+
+\subsubsection{Commits}
+The next step would be working with the repository. For the most part, this should not influence the developer's workflow in any way, as the \texttt{.git} directory should be automatically hidden in most modern editors to not distract him/herself from the actual work. If the developer succeeded in a sub-task or simply wanted to save the current project state, he/she would create a \emph{commit}.
+
+A \emph{commit} is a snapshot of the current repository's state. While it does not contain a copy of every file and directory in the project tree, it rather compares the current condition with its predecessing snapshot and creates a list of affected files and their changes. Blobs\footnote{\emph{BLOB} -- Binary Large OBject, a file which does not consist of queryable source code.} are either reused, if they remain unchanged or created new, if they were altered\cite[65]{loeliger2012version}.
+
+Every \emph{commit} is organized in a way, that it is chained to its predecessor (\emph{parent}), thus representing a singly linked list with the ability of gaplessly going back from the current state (\emph{head}) to the initial \emph{commit} \cite[204]{dhillon2016}\cite[65]{loeliger2012version}. This is necessary, as it may happen to fix a bug or improve a design decision only by reworking a certain snapshot in the past \cite[151]{loeliger2012version}.
+
+\subsubsection{Branches}
+
+%% Graphic of git branches
+\begin{figure} % h-ere, t-op, b-ottom, p-age
+    \centering
+    \includegraphics[width=0.8\textwidth]{git-branches.png}
+    \caption{A graphic showing the basic structure of branches in \texttt{Git}.\\
+    The \textbf{testing} branch was created out of project state ``B'', whereas \textbf{dev} was branched away from state ``D'' and currently holds the \emph{head commit} at ``Z''. In the meantime, \textbf{testing} was merged into \textbf{dev} at state ``R''. In the end, \textbf{dev} contains the commit history of all states connected with the bold line \cite[p. 92f]{loeliger2012version}.}
+    \label{fig:git-branches}
+\end{figure}
+%
+
+Since its early days, \texttt{Git} was used not only as back-up or archive system, but also as code management system. This is possible due to built-in functions, such as the so-called \emph{branched development}, where a current state of the actual development is duplicated and worked on separately. It allows for development to continue in multiple directions simultaneously \cite[89]{loeliger2012version} (see Fig. \ref{fig:git-branches}).
+
+When being part of a remote team, a developer may also \emph{push} his/her own local branches for providing it to others, as well as keeping them for local development and \emph{merging} them back to the main branch after succeeding in his current task \cite[207]{dhillon2016}. Through the use of these possibilities, a responsible administrator keeping track of the development structure is not necessarily required to be appointed in any repository settings. Furthermore, the team may decide members in charge for merges in an agile way, based on the current need.
