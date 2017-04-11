@@ -1,0 +1,12 @@
+\section{Diff}
+\label{sec:diff}
+
+``\texttt{diff} reports file differences between two files, expressed as a minimal list of line changes (\ldots)'' \cite[1]{Hunt1976}. Existing more than 40 years now, it has been an essential tool for file comparison throughout the history of computing -- furthermore, it is also a core component of \texttt{Git}, which contains its own version called \texttt{git diff} \cite[108]{loeliger2012version}.
+
+\subsection{History}
+\label{sec:diff-history}
+Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called \texttt{diff}. \emph{Paul Eggert} and \emph{Richard Stallman} (among others)\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for \emph{GNU diff}.} also wrote the \texttt{diff} application as part of their \emph{GNU diffutils}, which is nowadays mainly distributed in \emph{Linux} derivatives, \emph{MacOS}, as well as part of \texttt{Git}. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985, who proved, that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, \emph{Miller's} and \emph{Myers'} algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
+
+\subsection{Technology}
+\label{sec:diff-technology}
+\texttt{diff's} core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file}.
