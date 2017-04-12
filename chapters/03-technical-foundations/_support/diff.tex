@@ -5,8 +5,24 @@
 
 \subsection{History}
 \label{sec:diff-history}
-Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called \texttt{diff}. \emph{Paul Eggert} and \emph{Richard Stallman} (among others)\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for \emph{GNU diff}.} also wrote the \texttt{diff} application as part of their \emph{GNU diffutils}, which is nowadays mainly distributed in \emph{Linux} derivatives, \emph{MacOS}, as well as part of \texttt{Git}. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985, who proved, that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, \emph{Miller's} and \emph{Myers'} algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
+Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called \texttt{diff}. \emph{Paul Eggert} and \emph{Richard Stallman} (among others) also wrote the \texttt{diff} application as part of their \emph{GNU diffutils}\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for \emph{GNU diff}.}, which is nowadays mainly distributed in \emph{Linux} derivatives, \emph{MacOS}, as well as part of \texttt{Git}. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985 \cite[3]{mackenzie2003comparing}, who proved, that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, \emph{Miller's} and \emph{Myers'} algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
 
 \subsection{Technology}
 \label{sec:diff-technology}
-\texttt{diff's} core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file}.
+
+\begin{lstlisting}[label={list:diff-normalformat}, caption=sample.diff]
+0 a 1,1
+>w
+3,4 c 4,6
+<c
+<d
+---
+>x
+>y
+>z
+6,7 d 7
+<f
+<g
+\end{lstlisting}
+
+\texttt{diff's} core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Together with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers combined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Listing \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} \cite[p. 1f]{Hunt1976}.
