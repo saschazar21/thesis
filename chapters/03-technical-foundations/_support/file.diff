@@ -1,0 +1,15 @@
+--- oldfile	2017-04-13 09:33:18.092200876 +0200
++++ newfile	2017-04-13 09:34:11.256529061 +0200
+@@ -1,8 +1,10 @@
+ Hello,
+-this line gets deleted in newfile.txt,
+-as well as this, so both get prefixed with a minus
++
+ This line stays the same, but is preceded
+ by a blank line, which gets prefixed with a plus
++Oh yes, and this line got added in newfile.txt
+ All other lines staying the same as in oldfile.txt
+ are prefixed with a blank space.
+    (such as this, which should be a blank line)
++   (but not this, as it also got added in newfile.txt)
++Good bye (also added)

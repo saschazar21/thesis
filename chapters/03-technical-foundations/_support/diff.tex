@@ -11,18 +11,59 @@ Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in Jul
 \label{sec:diff-technology}
 
 \begin{lstlisting}[label={list:diff-normalformat}, caption=sample.diff]
-0 a 1,1
->w
-3,4 c 4,6
-<c
-<d
+0a1
+> w
+3,4c4,6
+< c
+< d
 ---
->x
->y
->z
-6,7 d 7
-<f
-<g
+> x
+> y
+> z
+6,7d7
+< f
+< g
 \end{lstlisting}
 
-\texttt{diff's} core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Together with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers combined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Listing \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} \cite[p. 1f]{Hunt1976}.
+\texttt{diff's} core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Together with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers combined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Listing \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} (one line per letter)\cite[p. 1f]{Hunt1976}.
+
+
+% TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
+\vspace{20pt}
+\subsubsection{The Unified Format}
+
+To provide a more readable user experience, \emph{GNU diff} contains an improved format, called \emph{Unified Format}, removing redundancy by using a more compact syntax. It can be selected as output format by executing \texttt{diff} together with a \texttt{-u} flag \cite[16]{mackenzie2003comparing}, whereas \texttt{git diff} uses this as standard format to show changes within the current working tree\footnote{\url{https://git-scm.com/docs/git-diff} -- git diff documentation on \texttt{Git's} website}.
+
+
+\begin{lstlisting}[label={list:diff-unifiedformat}, caption=unified\_format.diff]
+--- oldfile	2017-04-13 09:42:47.474769553 +0200
++++ newfile	2017-04-13 09:43:13.898566935 +0200
+@@ -1,7 +1,7 @@
++w
+ a
+ b
+-c
+-d
++x
++y
++z
+ e
+-f
+-g
+\end{lstlisting}
+
+As an example, Listing \ref{list:diff-unifiedformat} shows the same \texttt{diff} output as Listing \ref{list:diff-normalformat}, only as \emph{Unified Format} using the following components:
+
+\begin{description}
+  \item[\texttt{------ \{filename\} \{timestamp\}}] -- indicates the initial file together with the timestamp it was created,
+  \item[\texttt{+++ \{filename\} \{timestamp\}}] -- same as above, but for the compared file
+  \item[\texttt{@@ -\{intial line range\} +\{compared line range\} @@}] -- \texttt{-1,7} indicates the following 7 lines, starting from the first line of the initial file
+  \item[\texttt{+}] -- marks a line as added in compared file
+  \item[\texttt{-}] -- marks a line as deleted in compared file
+\end{description}
+
+To make the above explanation a little bit more clear, an additional example with a text speaking for itself is added below:
+
+\lstinputlisting[caption={file.diff}, label={list:diff-explanation}]{chapters/03-technical-foundations/_support/file.diff}
+
+It can be clearly seen, that line 3 shows a growth of \emph{newfile} by two lines: \texttt{-1,8} vs. \texttt{+1,10}. Having also a color-coded representation, it would boost the readability of such \texttt{diff} outputs once again.
