@@ -67,3 +67,29 @@ To make the above explanation a little bit more clear, an additional example wit
 \lstinputlisting[caption={file.diff}, label={list:diff-explanation}]{chapters/03-technical-foundations/_support/file.txt}
 
 It can be clearly seen, that line 3 shows a growth of \emph{newfile} by two lines: \texttt{-1,8} vs. \texttt{+1,10}. Having also a color-coded representation, it would boost the readability of such \texttt{diff} outputs once again.
+
+
+% TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
+%\vspace{20pt}
+\subsubsection{Usage with \texttt{Git}}
+As already stated, \texttt{diff} is one of the core components of \texttt{Git}. Not only does it support determining changes in the source code between a snapshot and another, it may also reveal merge conflicts, if segments are mutually exclusive and therefore preventing a flawless propagation of development. Thus, a varying development history of different origins (e.g. branches) not compatible to each other might be indicated. Furthermore, a conflict may also happen, if a developer forgot to \texttt{pull} the latest changes before committing his/her current development progress. These conflicts may only be handled through human guidance \cite[124]{loeliger2012version}.
+
+\begin{lstlisting}[label={list:diff-conflict}, caption={A snippet of a file called ``manual.txt'', which is affected by a conflict. Content between \texttt{HEAD} and \texttt{=======} contains the local version, content below contains the foreign conflicting version.}]
+<<<<<<< HEAD:manual.txt
+I (the developer) am right!
+=======
+The branch_name is right!
+>>>>>>> branch_name:manual.txt
+\end{lstlisting}
+
+A conflict presents itself primarily through a message similar to:\\
+\texttt{CONFLICT (content): Merge conflict in file\\
+Automatic merge failed; fix conflicts and then commit the result.}\\
+If anything like the above happens, the affected files by the conflict also contain a structure like shown in Listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter\footnote{\url{https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/} -- Tutorial about merging resolve conflicts on \texttt{GitHub}.}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
+
+\subsubsection{Usage with \texttt{GitHub}}
+Especially when interacting with \texttt{GitHub's} REST API, it is very easy to generate and import file \texttt{diffs} of a given repository. Whether two branches or two commits using their \texttt{SHA} values are compared, a single HTTP request suffices for programmatically retrieving data, which is normally only accessible using a terminal emulator.
+
+Depending on the requested \emph{media type} in the appropriate HTTP header field, either a full-featured \texttt{diff, patch} or \texttt{JSON} containing per-file patches is emitted by the API. If the latter was used, the underlying \texttt{diff} is translated into a \texttt{JSON} object, containing informations like the number of additions, deletions and changes, as well as the mentioned \texttt{patch} for each file.
+
+As a consequence, a repository does not necessarily have to be \texttt{cloned}, as it may be patched constantly using the API to keep it up to date -- using this method, \texttt{patch} is even able to create and delete files, if necessary \cite[57]{mackenzie2003comparing}. The only prerequisite is to keep track of the single commit hashes the patches are applied from.
