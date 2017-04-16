@@ -15,7 +15,7 @@ Today, hardly any software project is started without any form of version contro
   \item Free, as in freedom
 \end{itemize}
 
-While it was merely a tool for kernel hackers in the beginning, its simplicity quickly made developers use it for other projects too. However, the CLI still scared off people with less programming background, until \texttt{GitHub} came and introduced its Desktop client\footnote{\url{https://desktop.github.com/} -- GitHub Desktop client.}. Today, it is one of many GUIs, which are available for different operating systems\footnote{\url{https://git-scm.com/downloads/guis} -- Git GUI clients on the \texttt{git} website.} and completely omits the necessity of terminal emulator knowledge when working with \texttt{git}.
+While it was merely a tool for kernel hackers in the beginning, its simplicity quickly made developers use it for other projects too. However, the CLI still scared off people with less programming background, until \texttt{GitHub} came and introduced its Desktop client\footnote{\url{https://desktop.github.com/} -- GitHub Desktop client.}. Today, it is one of many GUIs, which are available for different operating systems\footnote{\url{https://git-scm.com/downloads/guis} -- Git GUI clients on the \texttt{Git} website.} and completely omits the necessity of terminal emulator knowledge when working with \texttt{Git}.
 
 %% Write something, why it is so famous. distributed development - other use cases .. blargh.
 
@@ -49,6 +49,6 @@ When being part of a remote team, a developer may also \emph{push} his/her own l
 \subsubsection{Usage in static site development}
 The advantages of using \texttt{Git} in static site development are mainly its possibilities of providing a full-featured archive of the content and source code of each project. Seamlessly going back and forth in the website development history makes it easy to navigate between every single content edit, without loosing track of previous and future revisions. In this case, it may work significantly better than using a common database system for content storage.
 
-Furthermore, it is also possible to make use of \texttt{Git} \emph{hooks}. Once a new \emph{commit} is created, a \emph{hook} might take care of invoking the \textbf{build pipeline} as a ``post-receive'' \emph{hook} -- thus, the new website version gets built automatically without requiring any additional user interaction. However, \emph{hooks} should be only used with caution, as they are not distributed the same way as the files tracked in a given repository and also may harm the integrity of their \texttt{Git} repository.
+Furthermore, it is also possible to make use of \texttt{Git} \emph{hooks}. Once a new \emph{commit} is created, a \emph{hook} might take care of invoking the \textbf{build pipeline} as a ``post-receive'' \emph{hook} -- thus, the new website version gets built automatically without requiring any additional user interaction. However, \emph{hooks} should be only used with caution, as they are not distributed the same way as the files tracked in a given repository and also may harm the integrity of their \texttt{Git} repository \cite[p. 285f]{loeliger2012version}.
 
 \input{chapters/03-technical-foundations/_support/github}
