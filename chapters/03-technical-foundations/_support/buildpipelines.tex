@@ -11,7 +11,7 @@
 \end{figure}
 %
 
-A static site generator mostly consists of a \emph{build pipeline}, it handles the workflow needed for bringing the content in shape. This goes from setting the boundaries, determined in a configuration file, to finally producing a web root consisting of \texttt{HTML, CSS} and \texttt{JavaScript} files, as well as images.
+A static site generator mostly consists of a \emph{build pipeline}, which handles the workflow needed for bringing the content in shape. This goes from setting the boundaries, determined by a configuration file, to finally producing a web root, consisting of \texttt{HTML, CSS} and \texttt{JavaScript} files, as well as images.
 
 Normally, the most part of it happens sequentially, as nearly all content files are facing a series of transformations on them \cite{Metalsmith2015technicaldocumentation}. Although the amount and extent of conversions may differ heavily from pipeline setup to pipeline setup, it can be broken down to the following core parts (see Fig. \ref{fig:build-pipeline}):
 
@@ -21,7 +21,7 @@ Normally, the most part of it happens sequentially, as nearly all content files 
   \item[Template renderer] -- Responsible for bringing the very basic content structure in shape. The goal should be a common appearence, enriched with additional elements (like navigation, breadcrumbs, \ldots).
 \end{description}
 
-Of course, the listing above overlaps at some point with the listing mentioned in <<\emph{\nameref{par:creatingcontent}}>> on p. \pageref{par:creatingcontent}, as I consider a \emph{build pipeline} just as a part of the given static site generator (although the main part), not as the generator itself. One of the reasons is its independence of programming languages: A \emph{build pipeline} doesn't care which programming language it consists of, as long as it knows how to interpret the content sources and templates. Therefore, I may call it merely a concept, not a framework.
+Of course, the above list overlaps at some point with the list mentioned in <<\emph{\nameref{par:creatingcontent}}>> on p. \pageref{par:creatingcontent}, as I consider a \emph{build pipeline} just as a part of the given static site generator (although the main part), not as the generator itself. One of the reasons is its independence of programming languages: A \emph{build pipeline} doesn't care which programming language it consists of, as long as it knows how to interpret the content sources and templates. Therefore, I may call it merely a concept, not a framework.
 
 %% Say something about the config file, yadda yadda yadda one hand pure build pipeline, because of metadata and configuration, other hand no, because of plugins. plugins??
 
