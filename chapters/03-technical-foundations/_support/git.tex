@@ -1,7 +1,7 @@
 \section{Git}
 \label{sec:git}
 
-Today, hardly any software project is started without any form of version control system (\texttt{VCS}). It supports developers as a back-up system and living archive of their work, as data generally is ephemeral and can be lost easily \cite[1]{loeliger2012version}. Although there are many different variations offered, some of the most popular today are \emph{Git, Apache Subversion, Mercurial} and \emph{Bazaar}.
+Today, hardly any software project is started without any form of version control system (\texttt{VCS}). It supports developers as a back-up system and living archive of their work, as data generally is ephemeral and can be lost easily \cite[1]{loeliger2012version}. Although there are many different variations offered, some of the most popular ones today are \emph{Git, Apache Subversion, Mercurial} and \emph{Bazaar}.
 
 \subsection{History}
 \label{sec:git-history}
@@ -24,7 +24,7 @@ While it was merely a tool for kernel hackers in the beginning, its simplicity q
 Having decided to use \texttt{Git} as VCS, everything begins with setting up a new respository. This can be made remotely on a service like \texttt{GitHub}, or locally using \texttt{git init}. When initialized a local repository, it can still be published remotely through setting the correct URL using \texttt{git remote} later on \cite[198]{loeliger2012version}.
 
 \subsubsection{Commits}
-The next step would be working with the repository. For the most part, this should not influence the developer's workflow in any way, as the \texttt{.git} directory should be automatically hidden in most modern editors to not distract him/herself from the actual work. If the developer succeeded in a sub-task or simply wanted to save the current project state, he/she would create a \emph{commit}.
+The next step would be to work with the repository. For the most part, this should not influence the developer's workflow in any way, as the \texttt{.git} directory should be automatically hidden in most modern editors to not distract him/herself from the actual work. If the developer succeeded in a sub-task or simply wanted to save the current project state, he/she would create a \emph{commit}.
 
 A \emph{commit} is a snapshot of the current repository's state. While it does not contain a copy of every file and directory in the project tree, it rather compares the current condition with its predecessing snapshot and creates a list of affected files and their changes. Blobs\footnote{\emph{BLOB} -- Binary Large OBject, a file which does not consist of queryable source code.} are either reused, if they remain unchanged or created new, if they were altered\cite[65]{loeliger2012version}.
 
