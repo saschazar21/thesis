@@ -3,9 +3,9 @@
 
 \lstinputlisting[caption={frontmatter.md}, label={list:frontmatter}]{chapters/03-technical-foundations/_support/frontmatter.md}
 
-Listing \ref{list:frontmatter} shows a sample usage of \texttt{frontmatter} inside a \texttt{Markdown} file. Bounded by three dashes above the main content source, it allows certain per-file metadata definitions, which will be parsed at build time and provided for the template rendering engine.
+Listing \ref{list:frontmatter} shows a sample usage of frontmatter inside a Markdown file. Bounded by three dashes above the main content source, it allows certain per-file metadata definitions, which will be parsed at build time and provided for the template rendering engine.
 % Mention something about omitting databases using frontmatter meta
 
 As an example, the selected template for this sample file may also hold a list for the mentioned \emph{tags}, as well as a placeholder for the \emph{author}'s name and/or \emph{title}. The main content gets then rendered into the respective placeholding tag, already self-containing a basic structure.
 
-Using a \emph{template: false} declaration, some plugins may prevent rendering the content into a template. This might be interesting in cases, where different partials should be included in the DOM by some sort of asynchronous \texttt{JavaScript} later on.
+Using a \emph{template: false} declaration, some plugins may prevent rendering the content into a template. This might be interesting in cases, where different partials should be included in the DOM by some sort of asynchronous JavaScript later on.

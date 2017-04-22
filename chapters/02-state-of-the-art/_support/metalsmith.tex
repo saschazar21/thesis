@@ -24,7 +24,7 @@ It neither contains a pre-installed template engine, nor any other pre-processin
 Using the built-in JavaScript API, it is also possible to invoke the needed modules programmatically, which is one of the core topics of this Thesis.
 
 \subsubsection{Disadvantages}
-So much freedom in designing a project may also cause some dangers. In this case, one of the most crucial things is the arrangement of plugins in the configuration. Since \texttt{Metalsmith} acts as a streaming build system, every transformation of the content must happen at its time to not interfere with any upcoming plugins. This is especially important when a plugin might alter the underlying code in a way, that a following plugin becomes useless, as it might not be able to succeed in its predefined task. \emph{Andy Jiang} gives a good example about a sample structuring of Metalsmith plugins on the Segment blog \cite{Metalsmith2015technicaldocumentation}.
+So much freedom in designing a project may also cause some dangers. In this case, one of the most crucial things is the arrangement of plugins in the configuration. Since Metalsmith acts as a streaming build system, every transformation of the content must happen at its time to not interfere with any upcoming plugins. This is especially important when a plugin might alter the underlying code in a way, that a following plugin becomes useless, as it might not be able to succeed in its predefined task. \emph{Andy Jiang} gives a good example about a sample structuring of Metalsmith plugins on the Segment blog \cite{Metalsmith2015technicaldocumentation}.
 
 As an example, the following code snippet shows one bold example of misconfiguration (See line no. 16):
 
