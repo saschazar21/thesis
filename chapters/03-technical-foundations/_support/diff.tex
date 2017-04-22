@@ -32,7 +32,7 @@ Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in Jul
 \vspace{20pt}
 \subsubsection{The Unified Format}
 
-To provide a more readable user experience, \emph{GNU diff} contains an improved format, called \emph{Unified Format}, removing redundancy by using a more compact syntax. It can be selected as output format by executing \texttt{diff} together with a \texttt{-u} flag \cite[16]{mackenzie2003comparing}, whereas \texttt{git diff} uses this as standard format to show changes within the current working tree\footnote{\url{https://git-scm.com/docs/git-diff} -- git diff documentation on \texttt{Git's} website}.
+To provide a more readable user experience, \emph{GNU diff} contains an improved format, called \emph{Unified Format}, removing redundancy by using a more compact syntax. It can be selected as output format by executing \texttt{diff} together with a \texttt{-u} flag \cite[16]{mackenzie2003comparing}, whereas \texttt{git diff} uses this as standard format to show changes within the current working tree \cite{GitDiff}.
 
 
 \begin{lstlisting}[label={list:diff-unifiedformat}, caption=unified\_format.diff]
@@ -85,7 +85,7 @@ The branch_name is right!
 A conflict presents itself primarily through a message similar to:\\
 \texttt{CONFLICT (content): Merge conflict in file\\
 Automatic merge failed; fix conflicts and then commit the result.}\\
-If anything like the above happens, the affected files by the conflict also contain a structure like shown in Listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter\footnote{\url{https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/} -- Tutorial about merging resolve conflicts on \texttt{GitHub}.}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
+If anything like the above happens, the affected files by the conflict also contain a structure like shown in Listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
 
 \subsubsection{Usage with \texttt{GitHub}}
 Especially when interacting with \texttt{GitHub's} REST API, it is very easy to generate and import file \texttt{diffs} of a given repository. Whether two branches or two commits using their \texttt{SHA} values are compared, a single HTTP request suffices for programmatically retrieving data, which is normally only accessible using a terminal emulator.
