@@ -3,19 +3,17 @@
 
 Before any explanation of the theoretical approach behind this research, there is a need of describing the technical foundations, on which the general thoughts were built on.
 
-Being mostly a back-end web developer since the start of my studies, I experienced a lot of changes in this field. Changes which were mostly caused by the ongoing progression of general web development, but also caused by constantly coming and going ``hypes''. Changes which mostly left minor traces, but sometimes had a major impact on the way I process things during my work on different projects.
+Being mostly a back-end web developer, one surely gets confronted with a lot of changes in this field. Changes which were mostly caused by the ongoing progression of general web development, but also caused by constantly coming and going ``hypes''. Changes which might leave minor traces, but sometimes also having a major impact on the way some developer processes things during his/her work on different projects.
 
 \paragraph{} % EcmaScript 6.
-One of these major turning points was the introduction of EcmaScript 6 (\emph{ES6}), which I first heard from in a talk given by \emph{Douglas Crockford}\footnote{\url{http://crockford.com} -- Douglas Crockford's website.} in March 2015. He is -- besides other projects -- not only the creator of \emph{JSLint} \cite{JSLintDocumentation}, but also the author of ``\emph{The Good Parts}'' \cite{crockford2008javascript}, a language reference for JavaScript.
-
-ES6 introduced a lot of new features, pushing JavaScript more and more towards the definition of an ``object-oriented'' scripting language, thus not only by providing ``real classes'', instead of the old and cumbersome approach of inheritence by setting a constructor function into the \emph{prototype} object \cite[47]{crockford2008javascript}.
+One of these major turning points was the introduction of EcmaScript 6 (\emph{ES6}), which provides a more sophisticated application flow for software developers compared to the old standards, where the code architecture quickly got out of hand, especially if not fastidiuosly checked using \emph{JSLint} \cite{JSLintDocumentation}. ES6 introduced a lot of new features, pushing JavaScript more and more towards the definition of an ``object-oriented'' scripting language, thus not only by providing ``real classes'', instead of the old and cumbersome approach of inheritence by setting a constructor function into the \emph{prototype} object \cite[47]{crockford2008javascript}.
 
 However, the probably most beneficial functions are \emph{Promises} \cite{MDNPromise} and \emph{Arrow functions} \cite{MDNArrowFunctions}, both saving significant amounts of code -- especially when working with asynchronous environments, like HTTP requests.
 
 \paragraph{} % Static site generation.
-Ever since I first got to work with a static site generator, I got more and more interested in how easy and fast static site projects may be scaffolded. Once completely set up, I was simply impressed by its power and variety -- this differed completely from the dynamic web environments I used to work with at that time.
-
 A dynamic web project often demands lots of preparation before receiving any visible outcome, sometimes even when using a predefined framework. Additionally, though many projects in the Node.js universe are already matured to an extent, where they may be even used for enterprise projects, there is still a remaining risk for failing a client due to the amount of dependencies on external services like databases, session storages or user management tools.
+
+Compared to a dynamic CMS, a static site generator takes out the complexity of a web project, as it only produces the very basic parts for serving information to the client. Furthermore, most of these projects are quickly scaffolded and provide a huge amount of variety in different tools they use. When using an environment for automatic deployment, an updated version may even be uploaded to the web server without a developer's intervening.
 
 \input{chapters/03-technical-foundations/_support/buildpipelines}
 \input{chapters/03-technical-foundations/_support/git}
