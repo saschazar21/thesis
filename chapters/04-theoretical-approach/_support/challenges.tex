@@ -20,10 +20,49 @@ If using GitHub for example, content editors, on the other hand, may easily make
 %
 
 \subsubsection{Separating content from code}
-As constantly growing static site projects may sooner or later come to a point, where content progression differs from development progression, it might be useful to separate both parts into independent repositories (see Fig. \ref{fig:repository-separation}).
+As constantly growing static site projects may sooner or later come to a point, where content progression differs from development progression, it might be useful to separate both parts into independent repositories (see Fig. \ref{fig:repository-separation}). This especially makes sense, if the content editor team is also separated from the development team and therefore an additional level of security against accidental branch intermixture is needed.
+
+\subsubsection{Merging only using pull requests}
+However, if this kind of strong division is not desired anyhow, another option would be to limit access to the development repository in a way, that everyone may \emph{fork} a repository, but only certain project users are allowed to \emph{merge} external branches into the main development tree. On GitHub, \emph{pull requests} may be used. These pull requests allow any user to announce his/her contribution to the project using a commit history of a forked repository. The source project owners may then decide whether or not to merge the announced changes and also have the chance to express their point of view via comments directly on the pull request to its creator \cite[p. 394f]{loeliger2012version}.
+
+The point in time a pull request is created is although subsidiary, as further development on the specific branch is as well automatically included, as per-line comments are also removed, once the specific line of code has been modified in a following commit \cite{GithubPullRequests}. Furthermore, the possibility to merge is checked after every commit pushed to the respective branch, so the responsible users always know, if a merge operation may be successfully executed before being able to complete the process by clicking the green ``Merge pull request'' button. Otherwise, a merge is only possible after locally checking out the pull request and processing it via the command line \cite{GithubMergePullRequests}.
+
+\subsubsection{Staging versions}
+Working with separate remote branches on a version control system like Git also allows for staging environments and therefore testing out different versions of the projects concurrently. The public version however, visible to all clients visiting the website, remains the most stable and might receive only well-tested or well-considered updates as the very last step in the ongoing development.
+
+To achieve this goal, a testbed is necessary and may be realized using another branch besides ``master''. Sometimes an additional ``bleeding edge'' version is also likely to be included in the build process. Based on this strategy, it is easy to control and maintain different revisions at the same time and nevertheless infer the functionality of different proof of concepts for merging them into the public version later on.
 
 
-\subsection{Time span for visual feedback}
-\label{sec:challenges-timespan}
+\subsection{Build cycle completion}
+\label{sec:challenges-buildcyclecompletion}
 
-One of these major challenges remains the issue of providing a ``real website look and feel'' to the content editor. Whereas authors are presented with an already pre-rendered version of the newly added content in dynamic CMSs (since the underlying system is not dependent on any template rendering before deployment), static site generators first offer a glance of the author's work, after the whole build pipeline process succeeded in its render flow.
+One of the major challenges remains the issue of providing a ``real website look and feel'' to the content editor. Whereas authors in dynamic CMSs are presented with an already pre-rendered version of the newly added content (since the underlying system is not dependent on any template rendering before deployment), static site generators first offer a glance of the author's work, after the whole build pipeline process succeeded in its render flow, unless other pre-caching methods are used. Yet, most static site generators do not include such kind of tools by default.
+
+Based on the size and the amount of files in the website source code, this time frame can easily grow linearly. If there are also additional tasks added to the build process, such as resizing images to different screen sizes for providing a  responsive user experience, the computational effort may easily get out of hand and therefore the duration until the content editor first sees the result of his/her work simply gets unacceptable.
+
+\subsubsection{Possible problems of long-lasting build processes}
+Waiting for the completion of the build pipeline can cause severe recesses in the work performance of a content editor or developer, as mostly any further work depends on its success, while a failure is often combined with time loss beforehand and intensive bug hunting afterwards -- probably resulting in even more consecutive build pipeline failures. This assertion may not only be linked to crucial modifications in development, also the smallest hotfixes might as well provoke a full rebuild without justifying the whole effort.
+
+Furthermore, being forced to wait in line as a developer may cause him-/herself to loose track on the development process, thus the introduction of sustainable bugs (although not resulting in a build failure) is more likely. Additionally, mindlessly executing build cycles may even lead to data loss or blocking the workflow of other contributors.
+
+%% Graphic of caching theory
+\begin{figure} % h-ere, t-op, b-ottom, p-age
+    \centering
+    \includegraphics[width=0.9\textwidth]{challenges-caching.png}
+    \caption{A graphic showing the theoretical approach of a build process flow, supported by caching.\\
+    After the \emph{client} (content creator, developer) executes a build, the included caching mechanism should filter modified or added files and send them to the build pipeline. After the build succeeded, the newly built files should be merged with the already existing files to form an updated version of the website root.}
+    \label{fig:caching}
+\end{figure}
+%
+
+\subsubsection{Choosing an appropriate caching method}
+Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and assemble the outcome to the already existing project build (see Fig. \ref{fig:caching}).
+
+Although a few static site generators already include some sort of caching methods -- although most of them only work locally (like Hexo's Warehouse, see ch. \ref{sec:hexo-technology}), a first step is made. It should significantly improve the build duration for local development, as long as the optimal cache storage is being used. Hexo's Warehouse uses a \emph{JSON} file as persistant storage, while the temporary storage lies in the Computer's RAM. This is fine for smaller projects, but could also lead to critical memory issues when used in projects containing a huge amount of files. For bigger data sets, it would be possible to use caching in conjunction with databases like \emph{SQLite} using the \emph{JSON1} extension\footnote{\url{https://www.sqlite.org/json1.html} -- JSON1 documentation on SQLite's website.}, however, the necessary effort at the beginning for providing a working mechanism should be well considered.
+
+Nevertheless, a major issue still remains, as the local cache may not easily be transferred to other contributors or deployment engines, so that the first build after each pull does not take advantage of any speed up technique. Moreover, the methods mentioned above all use a significant amount of computing power to provide a useable cache, which could lead to problems and unwanted slowdowns on portable devices.
+
+\subsubsection{Determination of cacheable contents}
+When having overcome the decision and setup of the respective caching system, the next step would be to select cacheable files, as not every file has the same impact on the project source. While normal blog posts mostly belong to their own, unless there is probably a preview featured somewhere, a template file on the other hand, is often a dependency for many blog posts. Therefore, it can be said, that a working cache is more important for a commit only containing blog posts, than for a commit which only contains template files.
+
+%% blargh -- dependency management, sitemap, etc...
