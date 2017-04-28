@@ -20,8 +20,22 @@ However, the most important part behind these thoughts is the choice of the idea
 \subsection{Choosing a static site generator}
 \label{sec:primarythoughts-generator}
 
-Due to the fact, that the choice of the best possible static site generator is the linchpin for a project like this, the evaluation needs to cover its usability, pluggability, customizability and overall maintenance, as well as the level of its general support. First and foremost, the installation process should be as easy as possible and not rely on too many third-party dependencies, which are probably not needed afterwards. Through this, it may be guaranteed, that also users -- foreign to development -- are likely to set up an instance on their local machines, although not critically required. This creates awareness for the project structure and therefore may lead to less support requests in the future.
+Due to the fact, that the choice of the best possible static site generator is the linchpin for a project like this, the evaluation needs to cover its usability, pluggability, customizability and overall maintenance, as well as the level of its general support. First and foremost, the installation process should be as easy as possible and not rely on too many third-party dependencies, which are probably not needed afterwards. Through this, it may be guaranteed, that also users, who are foreign to development, are likely to set up an instance on their local machines, although not critically required. This creates awareness for the project structure and therefore may lead to less support requests in the future.
 
 The programming language of the chosen static site generator does have to be considered well, as it has to fit seamlessly into a planned REST API, in the best case without any further adapter in between. This should make it also easy to hook additional code into the configuration step, if needed. Ideally, it emits events as well, so any host process knows when a detached thread is finished.
 
-All in all, the best possible solution seems to be \emph{Metalsmith} (see ch. \ref{sec:metalsmith} on p. \pageref{sec:metalsmith}), as it not only offers a pluggable module ecosystem, but also access to a JavaScript API, among others. % write something about CLI and JavaScript...
+All in all, the best possible solution seems to be \emph{Metalsmith} (see ch. \ref{sec:metalsmith} on p. \pageref{sec:metalsmith}), as it not only offers a pluggable module ecosystem, but also access to a JavaScript API, among others. Together with some custom tweaks (e.g. dynamic module loading), an independent build setup for each project may be injected using only a specific configuration file.
+
+
+\subsection{Constructing a REST API}
+\label{sec:primarythoughts-restapi}
+
+JavaScript proved its universality due to its usage both on client- and server-side, thus, a major advantage is its common knowledge among developers combined with a low barrier to entry for people, which are already found in frontend-development.
+
+Node.js is a server-side implementation for JavaScript, backed by Google's V8 engine, which directly translates the scripting language into machine code \cite[4]{cantelon2017node}. This perfetly supports developers in reducing their tradeoff for possibly having to handle multiple ecosystems at once. A seamless integration of Metalsmith into the API service may therefore happen without much hassle.
+
+The easy installation is supported by several third-party apps like Node Version Manager (\emph{NVM})\footnote{\url{https://github.com/creationix/nvm} -- NVM's repository on GitHub.} and mostly will not need any admin rights, which makes it ideal to use on hosting environments without root access (unlike PHP or Ruby for example). Although not equally well supported among the most popular operating systems, at least MacOS and Linux provide a stable enough environment for NVM.
+
+As framework for setting up an API, \emph{Express}\footnote{\url{http://expressjs.com/} -- Website of Express.} seems to be the perfect fit, as it consists only of a very basic setup -- similar to Metalsmith -- but may be easily enhanced using different node modules, thus providing a uniquely shaped web application in contrast to conventional, monolithic frameworks like \emph{Django} or \emph{Ruby on Rails} \cite[176]{cantelon2017node}.
+
+% write code listing here.
