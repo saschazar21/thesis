@@ -38,4 +38,8 @@ The easy installation is supported by several third-party apps like Node Version
 
 As framework for setting up an API, \emph{Express}\footnote{\url{http://expressjs.com/} -- Website of Express.} seems to be the perfect fit, as it consists only of a very basic setup -- similar to Metalsmith -- but may be easily enhanced using different node modules, thus providing a uniquely shaped web application in contrast to conventional, monolithic frameworks like \emph{Django} or \emph{Ruby on Rails} \cite[176]{cantelon2017node}.
 
-% write code listing here.
+% Express sample basic configuration
+\lstinputlisting[caption={An example for a basic express.js setup, roughly taken from \url{http://expressjs.com/en/starter/hello-world.html}.\\
+In this case, a web application listens for a \emph{GET} request on its root path ``/'' and responds with a ``Hello World!'' message.}, label={list:express-setup}, language=JavaScript]{chapters/04-theoretical-approach/_support/express.js}
+
+As a result, the main purpose of such an express application would be acting as a web-based infrastructure for the underlying build pipeline. Based on different REST endpoints, as well as their request parameters, executing a uniquely configured Metalsmith process on a project directory within the API's file tree should be possible without any further external interaction requirement. The project directory would be provided using an appropriate GitHub repository, requiring only a basic, as little opinionated configuration as possible, together with a public access possibility to the repo.
