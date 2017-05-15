@@ -25,3 +25,12 @@ The whole authentication process is necessary, as the final web application will
 Every account or project data has to be stored on a non-volatile type of memory to faithfully provide any requested information at any desired point in time. Moreover, these data requests may not interfere with each other, nor cause inconsistencies or conflicts within the storage, even if accessed at the same time. As a consequence, a memory solution depending on files will not likely fulfill every crucial requirement, especially when a service is constantly and fast growing.
 
 A good choice may therefore be to use \emph{MongoDB}, since it stores the entries already as formatted JSON and is not dependent on a fixed table schema beforehand. As a result, the structure most likely does not have to be excessively administered during development and stays as adaptive as possible until a final schema has evolved.
+
+Additionally, MongoDB also features the possibility of administration via
+JavaScript-files on the server-side. These files may not only query the database for entries, but also contain predefined tasks for manipulating the contents -- critical commands therefore should be rather automated by a \emph{Cronjob} or executed by the user from within the \emph{mongo} shell by only using this form of interaction method \cite{MongoDBWritingScripts}. This supports preventing mistyped commands as well as reducing the risk of data loss on the database. Moreover, it may also help in constantly keeping a second database updated, which is intended for testing purposes and is assumedly relying on a production-like ecosystem.
+
+In this case, the database is used for holding user data together with data logged by the API during every single build process. Thus, the user may get provided with a seamless reproduction of the build history of his/her project at any time.
+
+
+%% \subsection{GitHub API}
+%% \label{sec:foundation-github}
