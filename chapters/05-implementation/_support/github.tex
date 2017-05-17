@@ -1,0 +1,37 @@
+\subsection{GitHub API}
+\label{sec:foundation-github}
+
+Since the project will require every suitable static site source to be hosted on GitHub, the GitHub API is able to provide short and fast overviews of their current state. For providing an automated static site builder, the project needs to rely on some crucial informations before being able to set everything in place.
+
+Because of the fact, that speed and performance are the dominant factors in such considerations, it is unlikely to look up informations from a ``physical'' file tree on the disk, unless it cannot be done using a service, which already delivers data in an understandable form. Hence the GitHub API offers a wide range of informations about a hosted repository and furthermore is able to cope with a constantly high amount of load, it should be a good fit while even having the need of sending multiple requests until receiving the right extent of data.
+
+The most important API calls for this project are listed below, their description may be found on GitHub's API Reference\footnote{\url{https://developer.github.com/v3/} -- API Reference for version 3 on GitHub.}.
+
+\begin{itemize}
+  \item \texttt{/repos/:owner/:repo/git/trees/:sha} -- Returns the file tree of a repository at a given commit hash.
+  \item \texttt{/repos/:owner/:repo/contents/:path} -- Returns the contents of a file or directory. %% 1MB file limit!
+  \item \texttt{/repos/:owner/:repo/:archive\_format/:ref} -- Returns the link for a repo tarball at a given reference (e.g. \emph{master}, but can also be a commit hash).
+  \item \texttt{/repos/:owner/:repo/commits} -- Returns commits for the given repository.
+  \item \texttt{/repos/:owner/:repo/compare/:base...:head} -- Returns affected files between a \emph{base} and \emph{head} commit. Comparison between branches and/or forked repositories is also possible.
+\end{itemize}
+
+\subsubsection{Get a Tree}
+One of the most important steps prior to working with a foreign website source is the examination of its file structure, especially when dealing with static site sources. Unlike any other dynamic project, which probably updates itself using certain online sources under predefined circumstances, a static site nearly always has to be rebuilt from scratch.
+
+Although it is also possible to unveil the desired state from the past by reverting to that commit, multiple actions have to be taken before succeeding in that task. This goes from checking out the branch the commit belongs to, triggering a \texttt{git revert} command -- which reverts the changes made up to the current commit \cite{GitRevert} -- to reading in the file tree using any third-party plugin like \emph{node-klaw}\footnote{\url{https://github.com/jprichardson/node-klaw} -- Klaw's repository on GitHub.}.
+
+When calling the ``Get a Tree'' endpoint on the GitHub API although via a GET request, the response contains an array of objects, including file paths, as well as informations whether it is a file or directory (among others). Based on the provided parameters like \emph{recursive}, the endpoint filters every file and directory down to the lowest level, instead of returning only the files living in the top level of the repository. If the response also bears a \emph{truncated} key with value ``true'', the repository exceeded the file limit and not every file could be filtered. In this case, a manual checkout would be necessary\footnote{\url{https://developer.github.com/v3/git/trees/\#get-a-tree} -- ``Get a Tree''-section in the GitHub API Reference.}.
+
+\subsubsection{Get contents}
+After having caught a glimpse of the file structure, it is easy to look up certain file names and therefore check for their existence. Also, it allows for failing early in case of any user defined error concerning the availability of certain files before downloading its contents. Whenever the existence of a desired file is assured by having found its position in the file tree, the API is able to send its raw contents upon requesting the ``Get contents'' endpoint together with the appropriate \emph{Accept:} header\footnote{\url{https://developer.github.com/v3/repos/contents/\#get-contents} -- ``Get contents''-section in the GitHub API Reference.}.
+
+The use of this endpoint is as simple as valuable, as it lets the project's engine parse single files (e.g. configurations), without being dependent on downloading whole tarballs or zip archives. This completes the fail-early stage, as it not only checks for existence, but also for parseability of crucial files before requesting and processing heavy project archives. On the other hand, it is also necessary for setting up the required build steps, which should enable a parallel workflow, once everything comes into play.
+
+One of the core limitations, which should be considered here, is a maximum file size of 1MB. Whenever a file exceeds this limit, it should be downloaded as a buffer and read in manually afterwards.
+
+\subsubsection{Get archive link}
+Once all the preceding checks have passed, one of the heavier tasks may be executed. Since the possible integrity of the project was assumed using the successfully parsed configuration file, the subsequent step would be to download the static site repository, in fact at a certain commit state in the past, probably.
+
+However, this can only be done using GitHub's API, as the ``Get archive link'' endpoint might be one of the very few, which are not available in the Browser version yet. After the endpoint received a request by the client, it produces an archive according to the provided parameters and prepares a download possibility at a URL, which gets included in the response header, together with a ``302 Found'' HTTP status. Either the framework is configured to automatically follow the issued URL, or a second request to the location included in the \emph{Location} header field, becomes necessary. Private repository archives are issued together with a quickly expiring token\footnote{\url{https://developer.github.com/v3/repos/contents/\#get-archive-link} -- ``Get archive link''-section in the GitHub API Reference.}.
+
+After the download succeeded, a final step would be to extract the archive in a project working directory -- therefore, any further command line interaction for this task becomes obsolete.

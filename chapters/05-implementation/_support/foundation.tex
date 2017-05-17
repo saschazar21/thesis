@@ -5,32 +5,5 @@ Since Node.js is very suitable for providing an instant development environment 
 
 Together with the achievements of ES6, a clean code foundation marks the base structure for further module introduction into the project. Step by step, a modular web service is going to be raised and formed according to its designed operation mode.
 
-\subsection{Express.js for REST}
-\label{sec:foundation-express}
-Starting with Express.js, the sample code in chapter \ref{sec:primarythoughts-restapi} on p. \pageref{sec:primarythoughts-restapi} gives a good example on how to easily provide an API endpoint. While the example only returns a string containing ``Hello World!'', a JSON structure may also be used and is probably a better choice for working programmatically on the response data later on.
-
-Furthermore, a good advice would be to use a modular form of route definitions, since the main source file will soon get too bloated and may grow a lot of spaghetti-code in it. This may be achieved in outsourcing the routes in specific files and/or folders and importing them via a \emph{require}-statement. As a bonus, an external source file containing route definitions also allows for custom logic and middlewares, which may be hidden to the rest of the application by default \cite[p. 220f]{cantelon2017node}.
-
-\subsubsection{Middleware}
-Especially when depending on advanced application logic (e.g. user authentication, database management, etc\ldots), further tasks containing validation checks or user definitions may get necessary. If these tasks are required by more than one route, it makes sense to abstract their logic into reusable components for use as middleware in these specific routes \cite[223]{cantelon2017node}. Optionally, more than one middleware may be used on a single route, where their placement stands for their execution order -- from first to last.
-
-\lstinputlisting[label={list:express-middleware}, language=JavaScript, caption={An example for middleware ordering, where \emph{firstMiddleware} gets called right before \emph{secondMiddleware}. Both middlewares have to succeed (e.g. return \emph{done}-callback function) in order to grant access to the ``/secret'' route.}]{chapters/05-implementation/_support/middleware.js}
-
-\subsubsection{OAuth 2.0}
-\emph{OAuth 2.0} stands for an open authorization framework, which grants limited access to a certain HTTP service, either on behalf of a resource owner (e.g. allow access to user data of a social network account), or by allowing a third-party application to obtain access on its own behalf \cite[1]{hardt2012oauth}. In this case, the latter is more interesting, as a programmatical access may be achieved by issuing an access token via a ``client credentials'' grant type. Therefore, an application-only access is possible without depending on any user interaction.
-
-The whole authentication process is necessary, as the final web application will hold different user accounts, as well as their registered projects. Thus, every client (human or non-human) may interact with the application's API only via certain issued tokens, which ideally are only valid for a specific amount of time before they expire \cite[43]{hardt2012oauth}.
-
-\subsubsection{MongoDB}
-Every account or project data has to be stored on a non-volatile type of memory to faithfully provide any requested information at any desired point in time. Moreover, these data requests may not interfere with each other, nor cause inconsistencies or conflicts within the storage, even if accessed at the same time. As a consequence, a memory solution depending on files will not likely fulfill every crucial requirement, especially when a service is constantly and fast growing.
-
-A good choice may therefore be to use \emph{MongoDB}, since it stores the entries already as formatted JSON and is not dependent on a fixed table schema beforehand. As a result, the structure most likely does not have to be excessively administered during development and stays as adaptive as possible until a final schema has evolved.
-
-Additionally, MongoDB also features the possibility of administration via
-JavaScript-files on the server-side. These files may not only query the database for entries, but also contain predefined tasks for manipulating the contents -- critical commands therefore should be rather automated by a \emph{Cronjob} or executed by the user from within the \emph{mongo} shell by only using this form of interaction method \cite{MongoDBWritingScripts}. This supports preventing mistyped commands as well as reducing the risk of data loss on the database. Moreover, it may also help in constantly keeping a second database updated, which is intended for testing purposes and is assumedly relying on a production-like ecosystem.
-
-In this case, the database is used for holding user data together with data logged by the API during every single build process. Thus, the user may get provided with a seamless reproduction of the build history of his/her project at any time.
-
-
-%% \subsection{GitHub API}
-%% \label{sec:foundation-github}
+\input{chapters/05-implementation/_support/express}
+\input{chapters/05-implementation/_support/github}
