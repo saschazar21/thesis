@@ -15,5 +15,24 @@ A basic approach of the project structure may be seen in fig. \ref{fig:applicati
 The graphic can be interpreted as follows:
 
 \begin{itemize}
-  \item \emph{Base application} -- Backed by Node.js, together with necessary supporting packages, such as %% MongoDB, GithubAPI
+  \item \emph{Base Application} -- The base structure, consisting of a Node.js environment, together with necessary supporting packages, such as a MongoDB driver and a GitHub API implementation.
+  \item \emph{Backend} -- The Express.js ecosystem, responsible for controlling the HTTP subset.
+  \item \emph{Router} -- The Express.js router instance, providing all the necessary endpoints for accessing the application's functions.
+  \item \emph{OAuth} -- The authentication framework, as theoretically explained on p. \pageref{sec:foundation-express-oauth}.
+  \item \emph{Builder} -- The main build pipeline package consisting of many small plugins for asynchronous handling the process from parsing the configuration to actually building the website.
 \end{itemize}
+
+\subsection{Basic setup}
+The base application layer is more or less a Node.js stack, covering necessary support features, like reading environment variables or creating various instances of needed modules for the main application flow. It also cares for connecting the service to a MongoDB database, as well as providing a connection framework for the GitHub API.
+
+Furthermore it holds different database models for user registration, OAuth tokens and build logs. These models are necessary for maintaining a consistent structure on the database collections, thus avoiding additional value checks after fetching entries. Using \emph{Mongoose}\footnote{\url{http://mongoosejs.com} -- Mongoose, ``elegant mongodb object modeling for node.js''}, additional features like manipulation functions and automatic population may be used without depending on other toolsets. One example would be the automatic hashing and comparison of passwords, which is enabled using \emph{pre} hooks on schemas at a certain event (e.g. ``save'')\footnote{\url{http://mongoosejs.com/docs/api.html\#schema_Schema-pre} -- ``Pre'' hook documentation for MongooseJS.}.
+
+\subsubsection{Express.js}
+On top of the base application layer, an Express.js setup works as a REST API service. It is configured as first instance in the application's main entry point and is bootstrapped right after the launch of the project. Extending the core module of Express is easy due to the built-in middleware pluggability. A middleware function may get added to the application by binding it to an instance of the app object using an \texttt{app.use()} call \cite{ExpressMiddleware}.
+
+One of the additional middlewares used to extend the app instance is a logging mechanism called ``morgan''\footnote{\url{https://github.com/expressjs/morgan} -- Morgan repository on GitHub.}, which allows a fully customizeable output format for logging HTTP requests and the duration until a response was sent. Another important extension is ``method-override''\footnote{\url{https://github.com/expressjs/method-override} -- Method-override repository on GitHub.}. This module allows the consideration of a \emph{X-HTTP-Method-Override} field in the request header, sent by clients, which are not supporting request types like PUT or DELETE.
+
+\subsubsection{Router}
+The middleware concept is designed as a sequential flow of callback functions. Once a request is coming in, the instance is forwarding the data from middleware to middleware until either a response is returned and the middleware chain gets interrupted, or no additional function is left and the instance throws an error.
+
+Thus, the routing mechanism is nothing more than a built-in middleware of Express. It allows for dividing incoming requests based on their URL structure and subsequently assigning them to their respective predefined tasks. These functions again may contain different middleware functions (e.g. for checking authorization, including abstracted functions, imposing pre-conditions, etc\ldots) and therefore expand the callback cycle by additional functionality \cite{ExpressRouter}.

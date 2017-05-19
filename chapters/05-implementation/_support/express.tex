@@ -10,6 +10,7 @@ Especially when depending on advanced application logic (e.g. user authenticatio
 \lstinputlisting[label={list:express-middleware}, language=JavaScript, caption={An example for middleware ordering, where \emph{firstMiddleware} gets called right before \emph{secondMiddleware}. Both middlewares have to succeed (e.g. return \emph{done}-callback function) in order to grant access to the ``/secret'' route.}]{chapters/05-implementation/_support/middleware.js}
 
 \subsubsection{OAuth 2.0}
+\label{sec:foundation-express-oauth}
 \emph{OAuth 2.0} stands for an open authorization framework, which grants limited access to a certain HTTP service, either on behalf of a resource owner (e.g. allow access to user data of a social network account), or by allowing a third-party application to obtain access on its own behalf \cite[1]{hardt2012oauth}. In this case, the latter is more interesting, as a programmatical access may be achieved by issuing an access token via a ``client credentials'' grant type. Therefore, an application-only access is possible without depending on any user interaction.
 
 The whole authentication process is necessary, as the final web application will hold different user accounts, as well as their registered projects. Thus, every client (human or non-human) may interact with the application's API only via certain issued tokens, which ideally are only valid for a specific amount of time before they expire \cite[43]{hardt2012oauth}.
