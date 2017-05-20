@@ -10,7 +10,7 @@
 \end{figure}
 %
 
-A basic approach of the project structure may be seen in fig. \ref{fig:application_structure}. Although this might look still very abstract, the core packages are already clearly visible, while the access neither to the GitHub API, nor to the MongoDB is yet visualized.
+A basic approach of the project structure may be seen in fig. \ref{fig:application_structure}. Although this might look still very abstract, the core packages are already clearly visible, while neither the access to the GitHub API, nor the access to the MongoDB is yet visualized.
 
 The graphic can be interpreted as follows:
 
@@ -23,9 +23,9 @@ The graphic can be interpreted as follows:
 \end{itemize}
 
 \subsection{Basic setup}
-The base application layer is more or less a Node.js stack, covering necessary support features, like reading environment variables or creating various instances of needed modules for the main application flow. It also cares for connecting the service to a MongoDB database, as well as providing a connection framework for the GitHub API.
+The base application layer is more or less a Node.js stack, covering necessary support features, like reading environment variables or creating various instances of needed modules for the main application flow. It also cares for connecting the service to a MongoDB database, as well as providing a connection framework to the GitHub API.
 
-Furthermore it holds different database models for user registration, OAuth tokens and build logs. These models are necessary for maintaining a consistent structure on the database collections, thus avoiding additional value checks after fetching entries. Using \emph{Mongoose}\footnote{\url{http://mongoosejs.com} -- Mongoose, ``elegant mongodb object modeling for node.js''}, additional features like manipulation functions and automatic population may be used without depending on other toolsets. One example would be the automatic hashing and comparison of passwords, which is enabled using \emph{pre} hooks on schemas at a certain event (e.g. ``save'')\footnote{\url{http://mongoosejs.com/docs/api.html\#schema_Schema-pre} -- ``Pre'' hook documentation for MongooseJS.}.
+Furthermore, it holds different database models for user registration, OAuth tokens and build logs. These models are necessary for maintaining a consistent structure on the database collections, thus avoiding custom value checks after fetching entries. Using \emph{Mongoose}\footnote{\url{http://mongoosejs.com} -- Mongoose, ``elegant mongodb object modeling for node.js''}, additional features like manipulation functions and automatic population may be used without depending on other toolsets. One example would be the automatic hashing and comparison of passwords, which is enabled using \emph{pre} hooks on schemas at a certain event (e.g. ``save'')\footnote{\url{http://mongoosejs.com/docs/api.html\#schema_Schema-pre} -- ``Pre'' hook documentation for MongooseJS.}.
 
 \subsubsection{Express.js}
 On top of the base application layer, an Express.js setup works as a REST API service. It is configured as first instance in the application's main entry point and is bootstrapped right after the launch of the project. Extending the core module of Express is easy due to the built-in middleware pluggability. A middleware function may get added to the application by binding it to an instance of the app object using an \texttt{app.use()} call \cite{ExpressMiddleware}.
@@ -35,4 +35,13 @@ One of the additional middlewares used to extend the app instance is a logging m
 \subsubsection{Router}
 The middleware concept is designed as a sequential flow of callback functions. Once a request is coming in, the instance is forwarding the data from middleware to middleware until either a response is returned and the middleware chain gets interrupted, or no additional function is left and the instance throws an error.
 
-Thus, the routing mechanism is nothing more than a built-in middleware of Express. It allows for dividing incoming requests based on their URL structure and subsequently assigning them to their respective predefined tasks. These functions again may contain different middleware functions (e.g. for checking authorization, including abstracted functions, imposing pre-conditions, etc\ldots) and therefore expand the callback cycle by additional functionality \cite{ExpressRouter}.
+Thus, the routing mechanism is nothing more than a built-in middleware of Express. It allows for dividing incoming requests based on their URL structure and subsequently assigning them to their respective predefined tasks. These functions again may behave like middleware functions (e.g. for checking authorization, including abstracted functions, imposing pre-conditions, etc\ldots) and therefore expand the callback cycle by additional functionality \cite{ExpressRouter}.
+
+\subsubsection{Authentication}
+Several routes require authentication before being able to access, as a consequence, an automated mechanism handling all necessary steps for securely exchanging user details should be inserted in front of the respective routes. Before doing so, the OAuth stack has to be implemented -- the \emph{OAuth2orize} package provides an authorization server toolkit for setting up a service implementing the OAuth 2.0 protocol.
+
+The skeleton coming with the package needs to be configured based on the current project's setup, then the instance exposes a middleware, which may be mounted in certain routes \cite{OAuth2orizeGitHub}. After this has happened, the use of the framework may divide the routing configuration into fully accessible routes on the one hand and routes with limited access on the other hand:
+
+\lstinputlisting[caption={A basic router configuration showing the use of an authorization service as a middleware, thus dividing the routes into fully accessible ones (\emph{/all}) and ones with limited access (\emph{/limited} and \emph{/secret}).}, language=JavaScript, label={list:oauth-routes}]{chapters/05-implementation/_support/oauth.js}
+
+From this point on, the client has to provide an access token in the \emph{Authorization} HTTP header using the ``Bearer'' authentication scheme for gaining access \cite[5]{RFC6750}. The service will deny further processing if either an inexisting or already expired access token was provided. In this case, the client has to exchange his/her correct client credentials for a new access token on the authorization endpoint prior accessing the desired endpoint again \cite[41]{hardt2012oauth}.
