@@ -1,0 +1,6 @@
+\section{Engine}
+\label{sec:engine}
+
+The build pipeline engine basically wraps a common interface around the static site generator. Together with already mentioned supporting modules, it forms a nearly standalone ecosystem within a service, that exposes a REST API.
+
+Other than pure HTTP services, the build engine not only has to cope with database queries -- its main purpose is to handle file input/output management based on various configurations, ideally asynchronous and possibily even in parallel.
