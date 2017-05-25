@@ -1,7 +1,7 @@
-\section{Primary thoughts}
+\section{Preparing for implementation}
 \label{sec:primarythoughts}
 
-After looking at challenges and possible solutions to them, a few keywords may inevitably pop up:
+After looking at challenges and possible solutions to them, a few keywords are essential:
 
 \begin{description}
   \item[Remote] -- Outsorce long-lasting actions to an external service.
@@ -10,9 +10,18 @@ After looking at challenges and possible solutions to them, a few keywords may i
   \item[Branches] -- Let different parts of development evolve to their own speed.
 \end{description}
 
-While it may appear, that the above list so too fixated on version control systems, it should be clear now, that especially Git qualifies core companion to any website project, especially when the project itself is maintained by multiple developers, designers and/or authors. Being aware of GitHub as social code management tool and moreover the benefits of its API, the foundation stone should be laid.
+While it may appear, that the above list is too fixated on version control systems, it should be clear now, that especially Git qualifies core companion to any website project, especially when the project itself is maintained by multiple developers, designers and/or authors. Being aware of GitHub as social code management tool and moreover the benefits of its API, the foundation stone should be laid (see ch. \ref{sec:solutions-distributeddevelopment} on p. \pageref{sec:solutions-distributeddevelopment}).
 
-Since the tool should be also remotely accessible, it makes sense to also design it as RESTful API, for handling programmatical access as well as access from possible frontend apps lying on top. Furthermore, its main work cycle might get detached for neither distracting users due to ordering them to wait until it finished, nor blocking access in between.
+%% Graphic of basic api flow
+\begin{figure} % h-ere, t-op, b-ottom, p-age
+    \centering
+    \includegraphics[width=0.75\textwidth]{api_flow.png}
+    \caption{An abstract flow visualization of the planned request cycle. The client (developer, content creator) manages his/her code on GitHub. Based on the respective configuration, a build cycle may be triggered either using a GitHub webhook, or by manually sending a POST request to a certain endpoint.    That request then gets caught by the REST API, which creates an instance of the build pipeline. The pipeline requests data of the project from GitHub and sets up the project configuration. After a successful build, the REST API provides a downloadable archive of the newly built webroot.}
+    \label{fig:api-flow}
+\end{figure}
+%
+
+Since the tool should be also remotely accessible, it makes sense to also design it as RESTful API, for handling programmatical access as well as access from possible frontend apps lying on top. Furthermore, its main work cycle might get detached for neither distracting users due to ordering them to wait until it finished, nor blocking access in between (see Fig. \ref{fig:api-flow}).
 
 However, the most important part behind these thoughts is the choice of the ideal static site generator.
 

@@ -1,6 +1,16 @@
 \section{Engine}
 \label{sec:engine}
 
-The build pipeline engine basically wraps a common interface around the static site generator. Together with already mentioned supporting modules, it forms a nearly standalone ecosystem within a service, that exposes a REST API.
+The build pipeline engine basically wraps a common interface around the static site generator. Together with already mentioned supporting modules, it forms a nearly standalone ecosystem within a service, which happens to expose a REST API.
 
-Other than pure HTTP services, the build engine not only has to cope with database queries -- its main purpose is to handle file input/output management based on various configurations, ideally asynchronous and possibily even in parallel.
+Other than pure HTTP services, the build engine not only has to cope with database queries -- its main purpose is to handle file input/output management based on various configurations, ideally asynchronous and possibily even in parallel. Especially the latter may cause trouble at some point, because of JavaScript's single threaded model. Though Node.js may handle asynchronous operations well, it requires its event loop to continue running, when non-blocking operations (like input/output) are executed concurrently. This differs heavily from other programming languages, which are likely to create additional threads for such kind of tasks \cite{NodejsBlockingNonblocking}.
+
+\subsection{Asynchronous work}
+Possibly one of the most important requirements of the project is to work with asynchronous calls, as well as processing them as performant as possible. As already explained, the API depends on a significant variety of tasks for fetching data to create an instance of the build pipeline according to a certain configuration.
+
+Most of them are realized using the JavaScript Promise API, where on the one hand subsequently nesting callback functions are avoided and on the other hand, various \emph{then}-functions are not only getting chained to each other (``Promise chain''), but also returning a Promise themself \cite{MDNPromise}. This allows to keep an asynchronous flow in the same block -- some operations even allow handling more than one asynchronous function concurrently within a Promise construct.
+
+As a result, all API calls to GitHub are realized using Promises -- as a matter of fact, the contained \emph{then}-functions are acting as necessary backbone, as the returned data often needs to be altered or even merged with the response of a second, concurrent request. One example would be the comparison of the existing file tree versus the affected files by the commit range.
+
+\subsection{Child processes}
+For keeping the API responsive to requests while a build process is running, it makes sense to decouple the heavy rendering task into an own thread (``Child process''). The child process will balance the work load, so that the rendering will happen in its own ecosystem on an additional processor core, only able to communicate to the host process via emitting events \cite[335]{cantelon2017node}. The host process will reside in its initial thread and only receive a message, if the child process emits one, or exited -- therefore enough information will be distributed to keep the project's status in the database up to date.

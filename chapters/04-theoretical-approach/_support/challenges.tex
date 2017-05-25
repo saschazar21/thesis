@@ -33,7 +33,7 @@ Working with separate remote branches on a version control system like Git also 
 To achieve this goal, a testbed is necessary and may be realized using another branch besides ``master''. Sometimes an additional ``bleeding edge'' version is also likely to be included in the build process. Based on this strategy, it is easy to control and maintain different revisions at the same time and nevertheless infer the functionality of different proof of concepts for merging them into the public version later on.
 
 
-\subsection{Build cycle completion}
+\subsection{Build cycles}
 \label{sec:challenges-buildcyclecompletion}
 
 One of the major challenges remains the issue of providing a ``real website look and feel'' to the content editor. Whereas authors in dynamic CMSs are presented with an already pre-rendered version of the newly added content (since the underlying system is not dependent on any template rendering before deployment), static site generators first offer a glance of the author's work, after the whole build pipeline process succeeded in its render flow, unless other pre-caching methods are used. Yet, most static site generators do not include such kind of tools by default.
@@ -55,7 +55,7 @@ Furthermore, being forced to wait in line as a developer may cause him-/herself 
 \end{figure}
 %
 
-\subsubsection{Choosing an appropriate caching method}
+\subsection{Caching}
 Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and assemble the outcome to the already existing project build (see Fig. \ref{fig:caching}).
 
 Although a few static site generators already include some sort of caching methods -- although most of them only work locally (like Hexo's Warehouse, see ch. \ref{sec:hexo-technology}), a first step is made. It should significantly improve the build duration for local development, as long as the optimal cache storage is being used. Hexo's Warehouse uses a \emph{JSON} file as persistant storage, while the temporary storage lies in the Computer's RAM. This is fine for smaller projects, but could also lead to critical memory issues when used in projects containing a huge amount of files. For bigger data sets, it would be possible to use caching in conjunction with databases like \emph{SQLite} using the \emph{JSON1} extension\footnote{\url{https://www.sqlite.org/json1.html} -- JSON1 documentation on SQLite's website.}, however, the necessary effort at the beginning for providing a working mechanism should be well considered.
