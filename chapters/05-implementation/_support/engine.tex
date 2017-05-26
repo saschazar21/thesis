@@ -13,4 +13,25 @@ Most of them are realized using the JavaScript Promise API, where on the one han
 As a result, all API calls to GitHub are realized using Promises -- as a matter of fact, the contained \emph{then}-functions are acting as necessary backbone, as the returned data often needs to be altered or even merged with the response of a second, concurrent request. One example would be the comparison of the existing file tree versus the affected files by the commit range.
 
 \subsection{Child processes}
-For keeping the API responsive to requests while a build process is running, it makes sense to decouple the heavy rendering task into an own thread (``Child process''). The child process will balance the work load, so that the rendering will happen in its own ecosystem on an additional processor core, only able to communicate to the host process via emitting events \cite[335]{cantelon2017node}. The host process will reside in its initial thread and only receive a message, if the child process emits one, or exited -- therefore enough information will be distributed to keep the project's status in the database up to date.
+For keeping the API responsive to requests while a build process is running, it makes sense to decouple the heavy rendering task into an own thread (``Child process''). The child process will balance the work load, so that the rendering will happen in its own V8-process on an additional processor core \cite[335]{cantelon2017node}, only able to communicate to the host process via emitting events on its built-in communication channel \cite{NodejsChildProcesses}. The host process will reside in its initial thread and only receive a message, if the child process emits one or exited -- therefore enough information will be distributed to keep the project's status in the database up to date.
+
+There is a critical thing to consider though; since every child process gets equipped with an own memory and V8 instance, constantly allocating resources by spawning a large amount threads may lead to unexpected server crashes \cite{NodejsChildProcesses}. Virtual private servers (VPS) with up to 20 processor cores and more handle such heavy tasks of course better than local machines with often less than 4 cores, but also have to be managed well in terms of resource usage.
+
+\subsection{Storage}
+Because of the fact, that the project requires different stages of every repository to be stored for making use of caching, a significant amount of data has to be stored for quick access. To not loose track on the constantly growing extent, it possibly would be best to export them to long-lasting storage services like Amazon S3 buckets\footnote{\url{https://aws.amazon.com/de/s3/} -- Amazon's S3 cloud storage service.} -- however, due to the many locally hosted services (first and foremost the REST API), the decision was made in favor of also storing repository data locally in the mean time during development.
+
+The first kind of data to outsource would surely be the rendered archive, containing the webroot. As this needs to be accessed at all time, a downtime is simply not acceptable and a constant uptime cannot be guaranteed on a service like this, unless it is also run on multiple failsafe instances around the globe.
+
+\subsection{Realization}
+After the necessary technologies for providing a non-blocking event flow were defined, the build pipeline module set could be brought in shape. Together with the wrapping REST API and the predefined endpoints (see ch. \ref{sec:structure-buildpipeline} on p. \pageref{sec:structure-buildpipeline}f), the main entry point should be able to carry the heavy load of instantiating the static site generator, as well as fetching data from GitHub. Furthermore, it should act as control interface for managing the internal communication between Metalsmith and the API.
+
+%% Graphic of the finished workflow of the build pipeline
+\begin{figure} % h-ere, t-op, b-ottom, p-age
+    \centering
+    \includegraphics[width=0.75\textwidth]{application_flow.png}
+    \caption{A graphic showing the main application flow of the build pipeline. At first, the \emph{repo tree} and \emph{file diff} are fetched from the GitHub API in parallel. After file filtering and creating a database entry, a child process is forked, which cares for executing the heavy tasks for building. After a successful build, the resulting files are compressed into a \emph{tar.gz} archive, then the database entry is updated accordingly. Afterwards, the child process is terminating gracefully.}
+    \label{fig:application-flow}
+\end{figure}
+%
+
+As seen in fig. \ref{fig:application-flow}, much of the build pipeline's workflow actually happens without the user knowing about (grayish area). Basically the only thing happening before sending an HTTP response, is the parsing of the configuration file, as well as filtering files, affected by the commit range. If both succeeds, the database entry is created and the user may then query the API for getting to know the current status, while the main task possibly is still running in a forked child process. So, the REST API stays responsive the whole time during build, without causing any lack of performance.
