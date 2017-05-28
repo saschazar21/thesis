@@ -2,7 +2,7 @@ const Metalsmith = require('metalsmith');
 const layouts = require('metalsmith-layouts');
 const markdown = require('metalsmith-markdown');
 
-Metalsmith(__dirname)
+Metalsmith(__dirname)        // Invoke with "__dirname" as CWD
 .metadata({                  // define globally available variables
   name: 'Test site',
   url: 'http://localhost:3000'
