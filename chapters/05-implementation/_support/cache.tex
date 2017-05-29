@@ -1,0 +1,10 @@
+\section{Cache}
+\label{sec:implementation-cache}
+
+Since the structure of the application flow is now in shape, the last major thing missing is the caching method, although already largely prepared using the GitHub API calls. As seen on fig. \ref{fig:application-flow}, the first action after fetching the file tree and commit data, respectively, is to filter the unchanged files.
+
+But to really make caching work using diff, there are a few additional preconditions to be aware of; one of them is a functional folder structure at certain levels, another one is some crucial project-based information, which should be contained in the repository's configuration file.
+
+\subsection{Caching flow}
+%% Eventually include another graphic...
+%% Folder structure, configuration files, fixed files, etc...
