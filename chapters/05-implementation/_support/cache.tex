@@ -5,6 +5,32 @@ Since the structure of the application flow is now in shape, the last major thin
 
 But to really make caching work using diff, there are a few additional preconditions to be aware of; one of them is a functional folder structure at certain levels, another one is some crucial project-based information, which should be contained in the repository's configuration file.
 
-\subsection{Caching flow}
+\subsection{Preconditions}
 %% Eventually include another graphic...
 %% Folder structure, configuration files, fixed files, etc...
+Basically the most important place for gaining informations about cacheable data is the structure of the respective repository itself. To know which files should be considered for caching presumes to know which files are critical for the project. It is very unlikely though, to perceive the full extent of this data.
+
+A first approach however would be to getting to know the exact opposite; files which are unnecessary to cache. Metalsmith already cares for a first step of file separation, as the content file directory is announced in the \emph{source}-property of its configuration, whereas everything on the same level of its CWD is treated as a supporting file (e.g. templates, partials, etc\ldots). Since the relations between certain supporting files (or system files) and content files remain unclear -- unless there is already some kind of network, which is able to sketch these relationships -- the developer may announce ignoreable files right in the build pipeline configuration.
+
+As the content files more or less are likely to not have any dependents, it can be safely assumed, that commits only featuring content files cause the build pipeline to only include these files and leave out every other content file (see ch. \ref{sec:challenges-caching} on p. \pageref{sec:challenges-caching}f). This marks the ideal scenario for this caching approach.
+
+\begin{enumerate}
+  \item To make the approach work, the source repository has to be placed in the future working directory of Metalsmith, deleting any remains of past build cycles.
+  \item Then, the website has to be built to an intermediate file path, which remains until a full rebuild becomes necessary (e.g. a template file has changed).
+  \item Any further builds are either merged into this intermediate directory, or completely rebuilt after deleting the file tree.
+  \item Finally, this directory is holding the latest website version, so that a tar.gz archive is created out of it.
+\end{enumerate}
+
+\subsection{Filtering files}
+Because of the fact that both Metalsmith's source directory and the ignoreable files declared by the developer are known after parsing the repository's configuration file, it is easy to filter any possibly cacheable file out of the affected files by the given commit range. Without already having to deal with physical files, the respective file path is enough to compare it against the file path of the declared source directory.
+
+If the list only contained content files, every other content file, which was unmentioned in the commit result, is being put on the ignore list, as it remained unchanged. This only works, if there was at least one successful build log stored in the database and the build engine is able to rely on an already present intermediate build folder. Otherwise, the result would be an incomplete webroot.
+
+After the ignore list was populated, it is also added to Metalsmith's build instance, after the child process was forked. Therefore it stays in the global configuration object, which is handed from one task to the other. In the end, the ignore list is being stored in the database entry, so that the caching extent of every build may be looked up using the respective build log.
+
+\subsubsection{Ignore vs. delete}
+Initially, the ignore list was inexistent, as one of the first tasks of the build pipeline was to slim down the build directory in deleting all unchanged files. On the one hand, this supports the engine in precisely only rendering altered files, without having to deal with different globbing patterns\footnote{\url{https://github.com/isaacs/minimatch\#usage} -- Minimatch matching library on GitHub.}, or an array of file paths.
+
+However, there are a few downsides; the first is the inevitability of returning to files which have been deleted. If any future task needs to access a file deleted by the prior selection, it would have to download the whole archive again, which would be very costly in terms of time. Additionally, file input/output is always a computational expensive operation -- physically deleting a file by overwriting it even more.
+
+Therefore, populating an array with file path strings, without having to read from disk, seems the best possible solution for this ecosystem after all.
