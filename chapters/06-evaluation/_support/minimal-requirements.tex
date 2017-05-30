@@ -1,0 +1,24 @@
+\section{Minimal requirements}
+\label{sec:minimalrequirements}
+
+For even being able to build a repository successfully, it has to consist of a ``valid'' Metalsmith project. This means, that a few requirements have to be met, such as the following:
+
+\begin{itemize}
+  \item A folder structure, which consists of at least a source folder inside the project root,
+  \item a configuration file, either in YAML or JSON format and named \emph{\_config.*},
+  \item and finally being hosted on GitHub as public repository.
+  \item Furthermore, it must not rely on any other build tools (e.g. \emph{Gulp}\footnote{\url{http://gulpjs.com} -- Website of Gulp.js}, \emph{Webpack}\footnote{\url{https://webpack.js.org} -- Website of Webpack.}, etc\ldots), only Metalsmith is supported at this time.
+\end{itemize}
+
+\subsection{Configuration file}
+\label{sec:minimalrequirements-configuration}
+The configuration file is probably the most critical part in the repository's contents, as it is the only source for the build pipeline to obtain the setup instructions from. Since the Metalsmith CLI is able to render a project based on a single JSON configuration file and the API setup doesn't really differ, the format of the configuration needed by the REST API is nearly identical. Therefore it is safe to say, that the configuration for a local Metalsmith installation and the one used for the project's build pipeline are very well interchangeable.
+
+\lstinputlisting[caption={\textbf{\_config.yml} -- a sample configuration file, containing some global configuration data, as well as a few Metalsmith plugin definitions.}, language=ruby, label={list:pipeline-config}]{chapters/06-evaluation/_support/_config.yml}
+
+Since the REST API is able to parse both YAML and JSON notations, it is up to the developer to choose what fits his/her needs best. Since Metalsmith only understands JavaScript, any YAML configuration is parsed to JSON by the API, prior to forking the child process. This makes sense in a way, as the build setting information is being included in the general options object, which is handed over from the REST API to the build pipeline, where parts of it get stored in the database together with the build log.
+
+\subsection{Local testing}
+Having a local Metalsmith install at stake may not only support the developer in finding and fixing bugs, it also helps to constantly pursue a clean build setup. The remote build pipeline neither is configured to inform about any installed modules, nor is it able to independently draw any conclusions of the provided configuration file. The only way to communicate with any responsible developer, is to send E-Mails containing status messages, or to respond build log informations from the database upon request.
+
+Although caching is not available when testing locally, it is often the only way to fix the build tree in a way, that Metalsmith is able to produce a successful outcome again.

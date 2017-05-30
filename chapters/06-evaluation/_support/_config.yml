@@ -1,0 +1,19 @@
+global:
+  source: '_src'          # source folder
+  destination: '_dist'    # distribution folder
+  metadata:
+    # define metadata
+
+exclude:                  # list of ignoreable files
+
+# Metalsmith plugin configuration starts here
+
+drafts: true              # metalsmith-drafts plugin
+markdown: true            # metalsmith-markdown plugin
+excerpts: true            # metalsmith-excerpts plugin
+
+collections:              # metalsmith-collections plugin
+  blog: posts/*.md
+  repos: repos/*.md
+
+# To be continued (...)
