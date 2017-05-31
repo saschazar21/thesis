@@ -1,0 +1,33 @@
+\section{Comparison}
+\label{sec:comparison}
+
+When trying to compare the project's build pipeline to standalone static site generators like Jekyll or Metalsmith, it has to be stated, that neither one of those requires a git repository, nor any sort of authorization (besides during installing them possibly). Furthermore, Jekyll also provides a command line argument for setting up a base project (see ch. \ref{sec:jekyll-technology} on p. \pageref{sec:jekyll-technology}), so that hardly any time is lost before a content author actually is being able to start writing.
+
+As this project initially was designed to support porting Jekyll projects to Metalsmith, it already requires a basic structure for being able to work with. However, when starting from scratch, the probably best advice is to set up a local project, which makes use of the Metalsmith CLI and then start porting the configuration to fit the REST APIs standards.
+
+\subsection{Jekyll}
+A Jekyll project, as already explained in ch. \ref{sec:jekyll-technology}, is entirely written in Ruby and sets up on the Liquid templating engine. As a configuration file, it requires a YAML file called \emph{\_config.yml} in the project root and supports parsing data from YAML, JSON and CSV files to usable site variables out of the box \cite[76]{dhillon2016}. A functional Jekyll project also has to be equipped with Liquid templates in the \emph{\_layouts} folder, together with a few more directories holding different contents resulting in various recylcleable parts during the build process. As of Jekyll 3.2, most of these parts have gotten outsourced in different Ruby gems, thus being hidden to the public and making it harder to port them to other generator applications like Metalsmith \cite{JekyllDirectoryStructure}.
+
+\subsubsection{Jekyll source repository}
+Parallel to the development of this project, the Jekyll docs sources\footnote{\url{https://github.com/jekyll/jekyll/tree/master/docs} -- Jekyll docs section in the Jekyll repository on GitHub.} were ported the best possible for setting a benchmark for the usability of the REST API. To make this happen, a few major changes needed to be made in order to get a positive build result:
+
+\begin{itemize}
+  \item The root folder was put in the source folder, but \emph{\_data}, \emph{\_layouts} and \emph{\_includes} were left out. Additionally, all asset-containing folders were moved into the \emph{\_public} directory.
+  \item Necessary plugins were installed and configured for correctly setting the render flow:
+  \begin{itemize}
+    \item metalsmith-date-in-filename,
+    \item metalsmith-sass,
+    \item metalsmith-collections,
+    \item metalsmith-permalinks,
+    \item and a few more\ldots
+  \end{itemize}
+  \item Due to the limitations of \emph{TinyLiquid}\footnote{\url{https://github.com/leizongmin/tinyliquid} -- TinyLiquid repository on GitHub.}, especially file paths in include and extend statements had to be adjusted.
+  \item Some functionality still does not work without further engineering, for example the YAML files in the \_data directory, or gem-dependent tasks like generating the sitemap or managing redirects.
+\end{itemize}
+
+To conclude, it is possible to successfully render a Jekyll project using Metalsmith, although there are a lot of adjustments necessary beforehand, not to speak of the deficits of the TinyLiquid package. Therefore, the expected behaviour of the outcome is likely to differ heavily from the reality. The test repository for this evaluation was obviously uploaded on GitHub\footnote{\url{https://github.com/vorchdorfmedia/jekyll-docs} -- Test repository for porting a Jekyll project to Metalsmith.} and may be tested locally using the Metalsmith CLI.
+
+\subsection{Metalsmith}
+Since Metalsmith was chosen for use as static site generator within the REST API (see ch. \ref{sec:primarythoughts-generator} on p. \pageref{sec:primarythoughts-generator}), it should be used as the foundation framework for any website project, which should be built using the REST API in the future. Due to the fact that Metalsmith is yet another npm module built for Node.js, it also offers to act as part of any available build tool, such as Gulp, Webpack or else -- however, this is not supported (see ch. \ref{sec:minimalrequirements}).
+
+The main reason behind this limitation is, that automatically detecting a different or additional build setup is error-prone and may easily slow down the render process. Furthermore, Metalsmith offers a feature-rich API and the possibility of writing plugins\footnote{\url{http://www.metalsmith.io/\#writing-a-plugin} -- ``Writing a plugin'' section in Metalsmith's documentation.} to fit the developer's needs, thus making nearly any additional build tool obsolete. All that is left to do, is to publish any written plugin publicly available to npm and append it in the repository's configuration file for future use in the build pipeline. As a result, other developers may also download and/or enhance the plugin to keep it up to date.

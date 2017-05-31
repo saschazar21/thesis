@@ -1,0 +1,7 @@
+\section{REST API}
+\label{sec:restapi}
+The REST API was built and designed as remote-acting standalone web application, running on Node's servers-side JavaScript engine. Apart from specificly reserved firewall ports, the project is only dependent on a Node.js install, every other dependency may be installed using npm, regardless on the used operating system.
+
+By extending any desired Node.js Dockerfile\footnote{\url{https://hub.docker.com/_/node/} -- Official repository for Node.js on Docker Hub.}, it may be even run as autonomous Docker container and therefore multiplied for better load balancing based on the current HTTP load extent.
+
+\subsection{Load testing}
