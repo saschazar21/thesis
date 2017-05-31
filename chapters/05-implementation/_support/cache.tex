@@ -8,7 +8,7 @@ But to really make caching work using diff, there are a few additional precondit
 \subsection{Preconditions}
 %% Eventually include another graphic...
 %% Folder structure, configuration files, fixed files, etc...
-Basically the most important place for gaining informations about cacheable data is the structure of the respective repository itself. To know which files should be considered for caching presumes to know which files are critical for the project. It is very unlikely though, to perceive the full extent of this data.
+Basically the most important place for gaining information about cacheable data is the structure of the respective repository itself. To know which files should be considered for caching presumes to know which files are critical for the project. It is very unlikely though, to perceive the full extent of this data.
 
 A first approach however would be to getting to know the exact opposite; files which are unnecessary to cache. Metalsmith already cares for a first step of file separation, as the content file directory is announced in the \emph{source}-property of its configuration, whereas everything on the same level of its CWD is treated as a supporting file (e.g. templates, partials, etc\ldots). Since the relations between certain supporting files (or system files) and content files remain unclear -- unless there is already some kind of network, which is able to sketch these relationships -- the developer may announce ignoreable files right in the build pipeline configuration.
 

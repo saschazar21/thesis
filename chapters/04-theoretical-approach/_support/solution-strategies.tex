@@ -51,7 +51,7 @@ However, after trying to push a newly generated Jekyll project to their service 
 \subsection{Caching}
 \label{sec:solutions-caching}
 
-As stated before, most static site generators do not contain any form of caching mechanism by default -- if they do, caching is limited to the local machine a build is executed on. Since there is probably not an easy way of providing a form of remote caching, as this largely includes the necessity of external services to exchange a common status, as well as an index containing informations about source and destination files for later rebuilds, it needs an equivalent strategy, which merely contains these informations from a certain point in the past to the present, without relying on physical file structures to be exchanged.
+As stated before, most static site generators do not contain any form of caching mechanism by default -- if they do, caching is limited to the local machine a build is executed on. Since there is probably not an easy way of providing a form of remote caching, as this largely includes the necessity of external services to exchange a common status, as well as an index containing information about source and destination files for later rebuilds, it needs an equivalent strategy, which merely contains these information from a certain point in the past to the present, without relying on physical file structures to be exchanged.
 
 Furthermore, such a caching strategy must be universally useable across all operating systems and ideally does not require any additional setup from the user. Moreover, it should also feature hassle-free integration into any project without depending on an external, yet unused service.
 
