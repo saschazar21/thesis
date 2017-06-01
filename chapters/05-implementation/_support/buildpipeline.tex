@@ -13,7 +13,7 @@ After the HTTP- and authentication service was built as a user interaction possi
 \end{figure}
 %
 
-From the first draft of an API cycle (as seen in fig. \ref{fig:buildpipeline-api}) to the final structure, a lot of details needed to be tidied up. This was mainly due to the complexity of the build pipeline itself, since one of the biggest challenges were to provide a real non-blocking event loop. By realizing such a non-blocking loop, the client receives an instant, intermediate response, instead of having to queue beforehand, and/or wait until the whole operation finishes. Furthermore, a recurring request for obtaining the build status was enabled using an own endpoint returning information from the database entry.
+From the first draft of an API cycle (as seen in fig. \ref{fig:buildpipeline-api}) to the final structure, a lot of details needed to be tidied up. This was mainly due to the complexity of the build pipeline itself, since one of the biggest challenges was to provide a real non-blocking event loop. By realizing such a non-blocking loop, the client receives an instant, intermediate response, instead of having to queue beforehand, and/or wait until the whole operation finishes. Furthermore, a recurring request for obtaining the build status was enabled using an own endpoint returning information from the database entry.
 
 The endpoints, which were implemented in favor of user projects, were the following:
 
