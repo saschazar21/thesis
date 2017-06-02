@@ -7,3 +7,18 @@ Additionally, MongoDB also features the possibility of administration via
 JavaScript-files on the server-side. These files may not only query the database for entries, but also contain predefined tasks for manipulating the contents -- critical commands therefore should be rather automated by a \emph{Cronjob} or executed by the user from within the \emph{mongo} shell by only using this form of interaction method \cite{MongoDBWritingScripts}. This supports preventing mistyped commands as well as reducing the risk of data loss on the database. Moreover, it may also help in constantly keeping a second database updated, which is intended for testing purposes and is assumedly relying on a production-like ecosystem.
 
 In this case, the database is used for holding user data together with data logged by the API during every single build process. Thus, the user may get provided with a seamless reproduction of the build history of his/her project at any time.
+
+\subsubsection{Schemas}
+Besides holding user data and information about the build cycles, the database also is the first section to be addressed in terms of information about the currently processed repository itself. This saves time and reduces the access rate to the GitHub API, as the most important information about the repository and its contributors gets stored in the database upon registration using the REST API.
+
+However, most of the required data during a build cycle still is fetched from GitHub, as the database's core task is the user management, as well as the storage of build logs. It would be a bit redundant to also constantly update repository changes on GitHub into the database.
+
+Therefore, the schema structure on the database can be listed as follows:
+
+\begin{description}
+  \item[users] -- Holds the plain user data, users have to sign up using the e-mail addresses they are also using on GitHub.
+  \item[clients] -- Registered users have to register a client for OAuth 2.0 token exchange. Client ID and password are generated automatically by the REST API.
+  \item[accesstokens] -- Holds access tokens issued by the OAuth 2.0 framework. The tokens are only valid for 60 minutes and are checked for validity upon every request (see ch. \ref{sec:foundation-express-oauth} on p. \pageref{sec:foundation-express-oauth}).
+  \item[projects] -- Once new repositories are registered using the REST API, data from GitHub is fetched and stored together with references to the user schema. Furthermore, every time a build log was created, the respective array in the project schema grows by one reference to the ``builds'' schema.
+  \item[builds] -- Every time a build cycle was triggered and succeeded in validating the repository information on GitHub, an intermediate build entry is created. Finally, after the process finished, the success property in the build log is updated accordingly (either \emph{true} or \emph{false}).
+\end{description}

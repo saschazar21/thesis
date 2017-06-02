@@ -2,13 +2,13 @@
 \label{sec:structure-buildpipeline}
 After the HTTP- and authentication service was built as a user interaction possibility for the upcoming build pipeline realization, the full extent of the necessary API endpoints needed to be defined. Since the OAuth 2.0 framework was already implemented and the access to the GitHub API was prepared as includeable module, only the endpoints responsible for managing and triggering builds, needed to be reserved for the final build service development.
 
-\subsubsection{API integration}
+\subsubsection{API definition}
 
 %% Graphic of the first draft of the API
 \begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.9\textwidth]{buildpipeline-api.png}
-    \caption{A graphic showing the first draft of the then proposed API cycle. At first the OAuth step should care for authentication, then the build pipeline should be initiated and orchestrate its services to interact with the GitHub API, select files to build and run the build task before saving a rendered version of the webroot, ready for deployment.}
+    \caption{A graphic showing the first draft of the then proposed REST API cycle. At first the OAuth step should care for authentication, then the build pipeline should be initiated and orchestrate its services to interact with the GitHub API, select files to build and run the build task before saving a rendered version of the webroot, ready for deployment.}
     \label{fig:buildpipeline-api}
 \end{figure}
 %
