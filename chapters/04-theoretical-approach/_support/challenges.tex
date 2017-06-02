@@ -63,9 +63,8 @@ Although a few static site generators already include some sort of caching metho
 
 As the local cache may not easily be transferred to other contributors or deployment engines, the first build after a pull does not take advantage of any speed up technique. Moreover, the methods mentioned above all use a significant amount of local computing power to provide a useable cache, which could lead to problems and unwanted slowdowns on portable devices.
 
-%% until here
-
 \subsubsection{Determination of cacheable contents}
+\label{sec:challenges-cachedetermination}
 The next step would be to select cacheable files, as not every file has the same impact on the project source. While normal blog posts are mostly self-contained --  unless there is probably a preview of a post featured somewhere, a template file on the other hand, is often a dependency for many blog posts. A working cache is more important for a commit only containing blog posts, than for a commit which only contains template files, as a template file acts as a dependency for possibly multiple content files. Therefore a template file invalidates the cache, which leads to a complete rebuild.
 
 Since the relations between files, as well as their dependencies, may appear a bit obscure at first sight, it needs some kind of tracking system for ensuring a persistent overview of cacheable contents. This does not stop at comparing the file path within the project tree, as for example, all template files are stored within one special directory. For future considerations, also the source code would have to be examined, as the frontmatter in content files may contain information about dependencies to external files (see ch. \ref{sec:buildpipelines-frontmatter} on p. \pageref{sec:buildpipelines-frontmatter}). Therefore, the challenge here would be a reverse lookup mechanism for spotting file relations in the project source.
