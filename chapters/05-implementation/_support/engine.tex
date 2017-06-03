@@ -63,6 +63,6 @@ Everything that is still missing, is waiting until both tasks (archive fetching,
 \subsubsection{Finishing the task}
 When the build pipeline was fully executed and nothing is left to do in the external JavaScript file, the process should normally exit automatically. This can be determined by listening to the \emph{close} or \emph{exit} events -- moreover, it is also possible to \emph{kill} it right from the parent process using \texttt{child.kill()} \cite{NodejsKillProcess}.
 
-After the build pipeline finished, the CWD gets reset to its initial value, before the file tree of the rendered website is compressed into a tar.gz archive. This currently overwrites any previous archive of the same repository data -- nevertheless, any previous version may be rendered by appending the desired commit hash to the build endpoint. From this point on, any future HTTP requests trying to fetch the website archive will get provided the latest version.
+After the build pipeline finished, the CWD gets reset to its initial value, before the file tree of the rendered website is compressed into a tar.gz archive. This currently overwrites any previous archive of the same commit data -- nevertheless, any previous version may be held available by appending the respective commit hash to the file name. From this point on, any future HTTP requests trying to fetch the website archive will get provided the latest version.
 
 To conclude the build task, the database entry finally gets updated with information about the outcome of the rendering cycle.
