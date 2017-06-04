@@ -1,0 +1,12 @@
+\section{User experience}
+\label{sec:userexperience}
+
+To not only offer access to the REST API, but also a certain level of project management without relying on pure HTTP requests, it needs a graphical user interface. Furthermore, the current setup consists of a hard-coded access token for accessing certain data on GitHub -- this is not feasible for a multi-user system.
+
+\subsection{Graphical user interface}
+Through providing a graphical user interface (\emph{GUI}), a repository owner may not only have the possibility of a quick overview of his/her project, also managing a repository by adding/removing contributors authorized for triggering build cycles, as well as adjusting settings for any possible deployment strategy surely leverages the overall productivity. Moreover, build messages may be examined much easier and clearer.
+
+Because of the REST API already being present, such a GUI may easily be built on top using different frontend libraries based on JavaScript. In the end, the API below will have to be extended for a few endpoints more. This not only enhances the overall functionality of the GUI, but also enables to provide the same functions to low level HTTP requests.
+
+\subsection{GitHub authorization}
+For making it possible to interact with repository data of any logged in user, he/she has to grant access somehow \cite{GithubAuthentication}. Normally this is done via a dialog in the browser, then the REST API receives an access token for making future requests without permanently asking the user for authorization, similar to the implemented OAuth 2.0 framework (see ch. \ref{sec:foundation-express-oauth} on p. \pageref{sec:foundation-express-oauth}).

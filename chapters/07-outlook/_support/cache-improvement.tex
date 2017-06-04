@@ -1,0 +1,12 @@
+\section{Cache improvement}
+\label{sec:cacheimprovement}
+
+Caching currently works by only comparing file paths, thus differentiating between system- and content files. Whereas this works fine for the vast majority of used repositories to a reasonable extent, the performance, as well as the reliability also depend on future improvements concerning the selective rendering algorithm.
+
+\subsection{Frontmatter parsing}
+The first approach for improving the overall caching performance would be an analysis of the frontmatter. As it is written in YAML and delimited using three dashes on the top and on the bottom \cite[77]{dhillon2016}, it should be very well parseable. Metalsmith already does that in order to provide different plugins with additional per-post metadata. However, since the list of cacheable files already has to be declared prior to creating the Metalsmith instance, making use of data parsed by Metalsmith would conflict the actual caching process.
+
+This is aggravated by the fact that frontmatter does not always follow a fixed schema, so that every repository owner would have to introduce certain keys into a kind of tracking system on the REST API for supporting the caching algroithm with additional data.
+
+\subsection{Machine learning}
+A much more performant approach would be the constant tracking of processed files and thereby creating a virtual network of dependencies within a respository. Based on the individual data of every website project, the conjunctions to various dependent files of a system file (e.g. a template) could be revealed. A precise detection of cacheable files could be refined more and more, resulting in the most performant build process possible.

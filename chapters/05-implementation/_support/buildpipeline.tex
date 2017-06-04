@@ -22,7 +22,7 @@ The endpoints, which were implemented in favor of user projects, were the follow
   \item \texttt{POST /api/project/:owner/:repo/delete} -- Deletes all references to the project from the database.
   \item \texttt{POST /api/project/:owner/:repo/build} -- Trigger a new build cycle. Returns the reference to the database entry of its build log.
   \item \texttt{GET /api/project/:owner/:repo/status} -- Get the status of the latest build (pending, failed, success).
-  \item \texttt{GET /api/project/:owner/:repo/download} -- Download the latest successful build as tar.gz-archive. (e.g. for automated deployments)
+  \item \texttt{GET /api/project/:owner/:repo/download} -- Download the latest successful build as tar.gz archive. (e.g. for automated deployments)
 \end{itemize}
 
 \subsubsection{Tasks}
