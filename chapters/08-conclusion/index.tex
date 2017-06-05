@@ -13,5 +13,12 @@ However, the major premise for this project was to provide an unopinionated tool
 As a conclusion, I can now say, the most interesting part about my research was not only to find ways to overcome those local performance issues during rebuilds, but also trying to leverage the common workflow in moving as many local tasks to a remote workspace as possible. This should support content authors and developers in focusing on their core jobs by taking unnecessary responsibilities off their hands.
 
 \paragraph{}
-Soon after my initial project setup, I was already forced to balance the importance of the core principles and therefore I had to compromise over some of them. First, the project is not as unopinionated as originally planned, as by all forms of customizability, Metalsmith needs at least a core structure of parameters in its configuration file.
+Soon after my initial project setup, I was already forced to balance the importance of the core principles and therefore I had to compromise over some of them. First, the project is not as unopinionatedly usable as originally planned, as by all forms of customizability, Metalsmith needs at least a core structure of parameters in its configuration file. To not interfere with the standard configuration file, I designed an adjusted format, by also allowing it to be written in YAML. This especially should support developers switching from Jekyll.
+
+Second, by providing an automated remote workspace, the question of long-term storage has to be reconsidered, as the tar.gz archive currently only gets written to the same file structure the REST API lies in. This saves time by always having the latest version at hand, however, using an external storage like Amazon S3\footnote{\url{https://aws.amazon.com/s3/?hp=tile&so-exp=below} -- Amazon S3 website.} would scale significantly better (especially when using multiple instances in Docker containers, etc\ldots) and is also a lot cheaper in the long run.
+
+Third, the caching algorithm currently appears very basic, as the variety of future repositories cannot be correctly evaluated by now. Therefore it needs some kind of machine learning, which is able to virtualize a dependency graph throughout a single repository (see ch. \ref{sec:chacheimprovement-machinelearning} on p. \pageref{sec:chacheimprovement-machinelearning}). However, this would cover the extent of a project on its own.
+
+\paragraph{}
+Lastly it can be said, that the overall performance of the REST API handling different smaller demo projects was quite the same, as both a repository containing 24 files and a repository containing roughly over 300 files needed roughly 20 seconds for an initial build.
 %% verschiedenheit der projekte, unopinionated, begrenztheit der vielfalt, etc..

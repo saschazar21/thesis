@@ -9,4 +9,5 @@ The first approach for improving the overall caching performance would be an ana
 This is aggravated by the fact that frontmatter does not always follow a fixed schema, so that every repository owner would have to introduce certain keys into a kind of tracking system on the REST API for supporting the caching algroithm with additional data.
 
 \subsection{Machine learning}
+\label{sec:chacheimprovement-machinelearning}
 A much more performant approach would be the constant tracking of processed files and thereby creating a virtual network of dependencies within a respository. Based on the individual data of every website project, the conjunctions to various dependent files of a system file (e.g. a template) could be revealed. A precise detection of cacheable files could be refined more and more, resulting in the most performant build process possible.
