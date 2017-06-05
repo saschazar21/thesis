@@ -6,6 +6,12 @@ The main interest for static site generators evolved during my work at a perform
 The project I used to work with was initially based on Jekyll, but with some strong customizations added to the build pipeline setup. Consisting of a reasonable amount of content files, a build cycle sometimes lasted more than 20 minutes -- mostly due to heavy tasks, such as picture resizing, etc\ldots
 
 \paragraph{}
+Originally designed only as supporting tool for local development, it quickly grew out of hand as I figured out, that this type of development is facing too many limitations. One of the very first approaches was to use the GitHub API, as I had already gained some experience with it through working on a few projects in the past. Concerning the amount of information needed, and first and foremost where to actually fetch it, GitHub is the best possible tool to use, unless a strictly local solution is preferred. Soon after, it was clear to build something, which is able to act remotely and as automated as possible.
+
+However, the major premise for this project was to provide an unopinionated tool for rendering a website with a chaching solution included. Although this may sound fairly understandable in the beginning, it soon turned out, that this mixture is also going to be the biggest challenge in finding a suitable way of solving this problem statement.
+
 As a conclusion, I can now say, the most interesting part about my research was not only to find ways to overcome those local performance issues during rebuilds, but also trying to leverage the common workflow in moving as many local tasks to a remote workspace as possible. This should support content authors and developers in focusing on their core jobs by taking unnecessary responsibilities off their hands.
 
+\paragraph{}
+Soon after my initial project setup, I was already forced to balance the importance of the core principles and therefore I had to compromise over some of them. First, the project is not as unopinionated as originally planned, as by all forms of customizability, Metalsmith needs at least a core structure of parameters in its configuration file.
 %% verschiedenheit der projekte, unopinionated, begrenztheit der vielfalt, etc..
