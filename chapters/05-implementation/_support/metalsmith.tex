@@ -8,13 +8,13 @@ Creating a Metalsmith instance marks the beginning of any further build pipeline
 
 It is included the same way as any other ordinary Node.js module, therefore the first step towards a dynamic setup is taken -- basically all that needs to be done in the first place, is the provision of a callback function, containing a reference to Metalsmith, as well as taking a configuration object as parameter.
 
-Before being ready to get exported, the Metalsmith instance has to handle the configuration object provided by the function parameter to form at least a basic shape of a useable static site generator. Compared to Listing \ref{list:metalsmith} on p. \pageref{list:metalsmith}, this may look like this:
+Before being ready to get exported, the Metalsmith instance has to handle the configuration object provided by the function parameter to form at least a basic shape of a useable static site generator. Compared to listing \ref{list:metalsmith} on p. \pageref{list:metalsmith}, this may look like this:
 
 \lstinputlisting[caption={A sample file showing a Metalsmith setup handled as a module. The \emph{module.exports}-function marks the entry point from outside. The \emph{return}-statement is everything a function from outside will see.}, language=JavaScript, label={list:metalsmith-module}]{chapters/05-implementation/_support/metalsmith.js}
 
 After the Metalsmith instance was returned from the module, the receiving function only has to execute \texttt{metal.build()} for the build process to start. If acting from a foreign working directory, a smart advice would also be to change the CWD to the folder Metalsmith should perform his actions in. Some of the community-built modules tend to ignore the working directory set in Metalsmith's configuration and use the current one instead, which could lead to unwanted side effects of not handling certain tasks at all.
 
 \subsubsection{Dynamic module loading}
-Line 13 of Listing \ref{list:metalsmith-module} already shows what dynamic module loading is all about. Of course, the required modules differ from website project to website project, therefore all needed modules have to be listed in a configuration object -- in the best case, they are included in an iterable form, so that the setup function may process one module after the other.
+Line 13 of listing \ref{list:metalsmith-module} already shows what dynamic module loading is all about. Of course, the required modules differ from website project to website project, therefore all needed modules have to be listed in a configuration object -- in the best case, they are included in an iterable form, so that the setup function may process one module after the other.
 
 However, one of the biggest challenges is the verification of available modules, otherwise missing modules need to be downloaded prior to inclusion on runtime. Together with setting up the instance, these two steps probably require the most background checks for not being responsible to crash the application if any error occurs.

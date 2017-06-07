@@ -52,7 +52,7 @@ To provide a more readable user experience, GNU diff contains an improved format
 -g
 \end{lstlisting}
 
-As an example, Listing \ref{list:diff-unifiedformat} shows the same diff output as Listing \ref{list:diff-normalformat}, only as Unified Format using the following components:
+As an example, listing \ref{list:diff-unifiedformat} shows the same diff output as listing \ref{list:diff-normalformat}, only as Unified Format using the following components:
 
 \begin{description}
   \item[\texttt{------ \{filename\} \{timestamp\}}] -- indicates the initial file together with the timestamp it was created,
@@ -85,7 +85,7 @@ The branch_name is right!
 A conflict presents itself primarily through a message similar to:\\
 \texttt{CONFLICT (content): Merge conflict in file\\
 Automatic merge failed; fix conflicts and then commit the result.}\\
-If anything like the above happens, the affected files by the conflict also contain a structure like shown in Listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
+If anything like the above happens, the affected files by the conflict also contain a structure like shown in listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
 
 \subsubsection{Usage with GitHub}
 Especially when interacting with GitHub's REST API, it is very easy to generate and import file diffs of a given repository. Whether two branches or two commits using their \emph{SHA} values are compared, a single HTTP request suffices for programmatically retrieving data, which is normally only accessible using a terminal emulator.
