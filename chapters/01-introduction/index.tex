@@ -1,6 +1,46 @@
 % Here comes the introduction
 \chapter{Introduction}
 \label{cha:introduction}
+Back in the early 1990s, when the internet made its first steps towards a broader public use, a group of students at the University of Illinois created ``Mosaic'', the first publicly available Browser \cite[11]{dhillon2016}. At that time, websites consisted of just HTML and probably some images, whereas the release of ``Netscape Navigator'' led to the introduction of \emph{Brendan Eich}'s JavaScript engine. Additionally, Netscape also introduced a web server software called ``Netscape Enterprise Server'', thus making the Internet available for the first web developers \cite[12]{dhillon2016}.
+
+Since then, a lot has changed; content management systems were published, the internet was turning to what was called ``Web 2.0'' and the common user was not just a content recipient anymore, but also a content creator without requiring deeper understanding of web technologies \cite[19]{dhillon2016}. This has affected not only private users, but also whole enterprise structures until today.
+
+However, the most important part stayed the same; steadily providing content which is deliverable on request. To do so using content management systems requires not only a web server and the client's browser, but also a properly set up chain of interacting services for assembling HTML code on the fly. While this kind of architecture may surely be fitting smaller blogs very well, the necessary effort of managing constantly growing enterprise sites is likely to grow exponentially.
+
+Therefore, systems which are not dependent on such a chain are constantly on the rise over the last yars. They especially make sense in environments, where content is constantly added, but hardly ever deleted or changed. Lastly, by constructing static websites in plain HTML and mostly avoiding any dynamic features, a trend reversal back to the internet origins is clearly noticeable in some fields of modern web development.
+
+\section{Problem statement}
+\label{sec:staticsitegenerators}
+Static site generators are growing fast and are more and more used as a replacement for common content management systems. The main advantage is their independence of external services, like database systems, session caching services, etc\ldots Also, they seldomly consist of complicated backend systems and are mostly created in pure HTML or simple markup languages like Markdown (see ch. \ref{sec:buildpipelines-markdown} on p. \pageref{sec:buildpipelines-markdown}).
+
+One of the biggest drawbacks however is the fact, that static site generators have to preprocess every bit of information they contain. This is the complete opposite compared to other content management systems, which process information on request. This means, that user-readable content is fetched and rendered ``just in time'' it was requested from the client.
+
+Therefore, depending on the setup, a dynamically growing amount of time needed for a build cycle might be the case. For being able to work against this fact, a working approach has to be found, which saves time by leaving out information, which has not changed since the previous build.
+
+\section{Goals}
+\label{sec:goals}
+To find a suitable solution, a service which contains a build pipeline including a caching mechanism has to be implemented. The caching mechanism should thereby act as the core part, as it is responsible for fetching data between the current development state and a previous build cycle. Furthermore it should determine the build extent by selecting the respective files for rendering based on the fetched commit diff. The research question is therefore the following:
+
+\begin{center}
+  How to speed up static site generation by a selective approach?
+\end{center}
+
+The implemented solution covers the necessary steps for working with cacheable content in a way, that a remote-only building process is possible. Together with the precondition of having a GitHub account, any repository consisting of a Metalsmith project should be able to get rendered on this service's REST API.
+
+By introducing this service early into a project workflow, the user should notice a significant improvement concerning the rendering time per build cycle. Furthermore, it should take a considerable amount of workload out the developers hands.
+
+\section{Structure}
+\label{sec:structure}
+To express the considerations which led to the finished solution, the following pages are structured into several chapters, each covering a certain topic between the analysis of the state of the art and the evaluation of the project itself. It is suggested to read this thesis sequentially from start to end, however a few paragraphs are actually referring to other chapters, mostly also showing the respective page numbers for easy navigation.
+
+\begin{description}
+  \item[Chapter 2] -- Shows the current state of the art, culminating in the presentation of three selected static site generators: \emph{Jekyll}, \emph{Hexo}, \emph{Metalsmith}, as well as a comparison between them.
+  \item[Chapter 3] -- Explains the most important terms concerning the operation of static site generators (including code samples); \emph{build pipelines}, \emph{frontmatter}, \emph{markdown}, \emph{templates} and \emph{diff}.
+  \item[Chapter 4] -- Gives an understanding of the initial theoretical approach behind this project. Challenges and solution strategies are examined prior to general considerations towards the implementation are being unveiled.
+  \item[Chapter 5] -- Describes the full extent of the implementation including the whole REST framework, which was built around the build pipeline. Different graphics are showing examples of how various parts were realized.
+  \item[Chapter 6] -- Evaluates the project using different testing approaches. The REST API was put under high load testing, whereas the build pipeline and the caching mechanism were compared using the timespan needed for an operation. Furthermore, an outlook shows possible future improvements.
+  \item[Chapter 7] -- Shows the conclusion of this project work and unveils difficulties, as well as enhancement strategies for productive use.
+\end{description}
 
 % Transforming Web 1.0 to Web 2.0 - common user is not only content recipient anymore, also content creator
 %% in the beginning, creating content on the internet was too difficult for the average Joe.
