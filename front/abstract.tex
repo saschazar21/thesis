@@ -1,29 +1,7 @@
 \chapter{Abstract}
 
-\begin{english} %switch to English language rules
-This should be a 1-page (maximum) summary of your work in English.
-%und hier geht dann das Abstract weiter...
-\end{english}
+Whereas modern content management systems provide a solid environment for dynamic content creating and editing, their dependency on external services like database services or authentication providers often complicate their abilities to scale. Additional duties for keeping them responsive in larger ecosystems are therefore often responsible for slowing down the overall workflow of a developer.
 
-Im englischen Abstract sollte inhaltlich das Gleiche
-stehen wie in der deutschen Kurzfassung. Versuchen Sie daher, die
-Kurzfassung prä\-zise umzusetzen, ohne aber dabei Wort für Wort zu
-übersetzen. Beachten Sie bei der Übersetzung, dass gewisse
-Redewendungen aus dem Deutschen im Englischen kein Pendant haben
-oder völlig anders formuliert werden müssen und dass die
-Satzstellung im Englischen sich (bekanntlich) vom Deutschen stark
-unterscheidet (mehr dazu in Abschn.\ \ref{sec:englisch}). Es
-empfiehlt sich übrigens -- auch bei höchstem Vertrauen in die
-persönlichen Englischkenntnisse -- eine kundige Person für das
-"`proof reading"' zu engagieren.
+Static site generators on the other hand offer an easy solution for steadily growing websites. Their only task is to create a full-featured file structure, which contains browser-readable HTML files that do not require any on-the-fly rendering upon request. However, static site generators contain a significant drawback, as the rendering mechanism normally cannot distinguish between already present files and new content. In fact, the build time increases every time a new file is added to the source directory.
 
-Die richtige Übersetzung für "`Diplomarbeit"' ist übrigens
-schlicht \emph{thesis}, allenfalls  "`diploma thesis"' oder "`Master's thesis"', 
-auf keinen Fall aber "`diploma work"' oder gar "`dissertation"'. 
-Für "`Bachelorarbeit"' ist wohl "`Bachelor thesis"' die passende Übersetzung. 
-
-Übrigens sollte für diesen Abschnitt die \emph{Spracheinstellung} in \latex\ von Deutsch
-auf Englisch umgeschaltet werden, um die richtige Form der
-Silbentrennung zu erhalten, die richtigen Anführungszeichen müssen allerdings selbst gesetzt werden %
-(s.\ dazu die Abschnitte \ref{sec:sprachumschaltung} %
-und \ref{sec:anfuehrungszeichen}).
+This Master's thesis therefore tries to compensate the full extent of a complete rebuild every single build cycle by providing a caching mechanism based on a selective approach, together with a remotely working REST API as wrapping interface for user-friendly interaction and improved division of work.
