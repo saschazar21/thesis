@@ -13,7 +13,7 @@
 
 A static site generator mostly consists of a build pipeline, which handles the workflow needed for bringing the content into shape. This goes from setting the boundaries, determined by a configuration file, to finally producing a web root, consisting of HTML, CSS and JavaScript files, as well as images.
 
-Normally, the major part of it happens sequentially, as nearly all content files are facing a series of transformations on them \cite{Metalsmith2015technicaldocumentation}. Although the amount and extent of conversions may differ significantly from pipeline setup to pipeline setup, it can be broken down to the following core parts (see Fig. \ref{fig:build-pipeline}):
+Normally, the major part of it happens sequentially, as nearly all content files are facing a series of transformations on them \cite{Metalsmith2015technicaldocumentation}. Although the amount and extent of conversions may differ significantly from pipeline setup to pipeline setup, it can be broken down to the following core parts (see fig. \ref{fig:build-pipeline}):
 
 \begin{description}
   \item[Metadata parser] -- Parses global metadata, found in the configuration file or in the YAML frontmatter of content files.

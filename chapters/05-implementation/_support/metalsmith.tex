@@ -1,7 +1,7 @@
 \subsection{Metalsmith}
 \label{sec:foundation-metalsmith}
 
-As ch. \ref{sec:primarythoughts-generator} on p. \pageref{sec:primarythoughts-generator} already stated, Metalsmith would be a good fit for a project like this. The most important part after setting up a REST API using Express, is to include Metalsmith's JavaScript API as a module for on-demand building -- first and foremost although, a strong focus should be kept on maintaining its customizability in terms of loadable modules.
+As already stated in ch. \ref{sec:primarythoughts-generator} on p. \pageref{sec:primarythoughts-generator}, Metalsmith would be a good fit for a project like this. The most important part after setting up a REST API using Express, is to include Metalsmith's JavaScript API as a module for on-demand building -- first and foremost although, a strong focus should be kept on maintaining its customizability in terms of loadable modules.
 
 \subsubsection{Metalsmith instance}
 Creating a Metalsmith instance marks the beginning of any further build pipeline interaction, as it holds all the necessary modules, configurations, as well as the asynchronous \emph{build}-function, caring for the overall work and furthermore emitting different events for signaling errors or warnings during the process itself.

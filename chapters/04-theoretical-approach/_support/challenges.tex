@@ -8,7 +8,7 @@ As already stated above, nearly every web project bears challenges to solve, bot
 
 When it comes to administer a static site project, it is very likely, that there will not be any possiblity of working on the same project in the same environment in a linear way. Instead, every developer will have to have a local install of the used generator at his/her disposal, together with access to a remote repository of a version control system for exchanging the current development status with other project maintainers. The main reason for that is the fact, that unlike content authors, developers do have the obligation of installing or maintaining the project's dependencies \cite[85]{dhillon2016}.
 
-Content Editors on the other hand may, if using for example GitHub, make use of the remote "In-Page Code Editor" (see fig. \ref{fig:github-page-editor} on p. \pageref{fig:github-page-editor}), which also provides an optimistically rendered version of the current content, although without making use of the project's style sheet.
+Content Editors on the other hand may, if using for example GitHub, make use of the remote ``In-Page Code Editor'' (see fig. \ref{fig:github-page-editor} on p. \pageref{fig:github-page-editor}), which also provides an optimistically rendered version of the current content, although without making use of the project's style sheet.
 
 %% Graphic of separating project repositories
 \begin{figure} % h-ere, t-op, b-ottom, p-age
@@ -57,7 +57,7 @@ Furthermore, being forced to wait in line may cause a developer to loose track o
 
 \subsection{Caching}
 \label{sec:challenges-caching}
-Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and merge the outcome to the already existing project build (see Fig. \ref{fig:caching}).
+Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and merge the outcome to the already existing project build (see fig. \ref{fig:caching}).
 
 Although a few static site generators already include some sort of caching methods -- although most of them only work locally (like Hexo's Warehouse, see ch. \ref{sec:hexo-technology}), a first step is made. It should significantly improve the build duration for local development, as long as the optimal cache storage is being used. Hexo's Warehouse uses a JSON file as persistant storage, while the temporary storage lies in the Computer's RAM. This is fine for smaller projects, but could also lead to critical memory issues when used in projects containing a huge amount of files. For bigger data sets, it would be possible to use caching in conjunction with databases like SQLite using the \emph{JSON1}\footnote{\url{https://www.sqlite.org/json1.html} -- JSON1 documentation on SQLite's website.} extension.
 
