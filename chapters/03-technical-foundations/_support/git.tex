@@ -8,13 +8,12 @@ Today, hardly any software project is started without any form of version contro
 Git was initially published by \emph{Linus Torvalds} on April 7\textsuperscript{th}, 2005 \cite[6]{loeliger2012version}. This was necessary, as the ``free'' version of the then used VCS for the \emph{Linux} kernel development, \emph{BitKeeper}, was restricted in a way it was not suitable any longer for the community behind it. Furthermore, the search of an already available alternative to the BitKeeper system failed due to an unsatisfying combination of needed features, so \emph{Torvalds} came up with his own VCS flavor, containing all desired functionalities for further Linux development (among others) \cite[4]{loeliger2012version}:
 
 \begin{itemize}
-  \item Distributed development
-  \item Handle thousands of developers
-  \item Efficient performance
-  \item Support branched development
-  \item Free, as in freedom
+  \item distributed development,
+  \item handle thousands of developers,
+  \item efficient performance,
+  \item support branched development, as well as
+  \item free, as in freedom.
 \end{itemize}
-
 While it was merely a tool for kernel hackers in the beginning, its simplicity quickly made developers use it for other projects too. However, the CLI still scared off people with less programming background, until GitHub came and introduced its Desktop client\footnote{\url{https://desktop.github.com/} -- GitHub Desktop client.}. Today, it is one of many GUIs, which are available for different operating systems\footnote{\url{https://git-scm.com/downloads/guis} -- Git GUI clients on the Git website.} and completely omits the necessity of terminal emulator knowledge when working with Git.
 
 %% Write something, why it is so famous. distributed development - other use cases .. blargh.
@@ -36,8 +35,7 @@ Every commit is organized in a way, that it is chained to its predecessor (\emph
 \begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.8\textwidth]{git-branches.png}
-    \caption{A graphic showing the basic structure of branches in Git.\\
-    The \emph{testing} branch was created out of project state ``B'', whereas \emph{dev} was branched away from state ``D'' and currently holds the \emph{head commit} at ``Z''. In the meantime, \emph{testing} was merged into \emph{dev} at state ``R''. In the end, \emph{dev} contains the commit history of all states connected with the bold line \cite[p. 92f]{loeliger2012version}.}
+    \caption{A graphic showing the basic structure of branches in Git. The \emph{testing} branch was created out of project state ``B'', whereas \emph{dev} was branched away from state ``D'' and currently holds the \emph{head commit} at ``Z''. In the meantime, \emph{testing} was merged into \emph{dev} at state ``R''. In the end, \emph{dev} contains the commit history of all states connected with the bold line \cite[p. 92f]{loeliger2012version}.}
     \label{fig:git-branches}
 \end{figure}
 %

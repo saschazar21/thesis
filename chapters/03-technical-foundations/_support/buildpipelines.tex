@@ -5,34 +5,29 @@
 \begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.9\textwidth]{build_pipeline.png}
-    \caption{A graphic showing the basic flow of a \emph{build pipeline}.\\
-    First, the configuration file is read and necessary modules invoked. Second, the global metadata, as well as metadata from within the content, is parsed and stored in the global configuration. Third, the content sources get compiled into basic \emph{HTML} markup. Last, the compiled content gets rendered into predefined templates, to apply a given structure which is used commonly throughout the website.}
+    \caption{A graphic showing the basic flow of a \emph{build pipeline}. First, the configuration file is read and necessary modules invoked. Second, the global metadata, as well as metadata from within the content, is parsed and stored in the global configuration. Third, the content sources get compiled into basic \emph{HTML} markup. Last, the compiled content gets rendered into predefined templates, to apply a given structure which is used commonly throughout the website.}
     \label{fig:build-pipeline}
 \end{figure}
 %
 
 A static site generator mostly consists of a build pipeline, which handles the workflow needed for bringing the content into shape. This goes from setting the boundaries, determined by a configuration file, to finally producing a web root, consisting of HTML, CSS and JavaScript files, as well as images.
 
-Normally, the major part of it happens sequentially, as nearly all content files are facing a series of transformations on them \cite{Metalsmith2015technicaldocumentation}. Although the amount and extent of conversions may differ significantly from pipeline setup to pipeline setup, it can be broken down to the following core parts (see fig. \ref{fig:build-pipeline}):
+Normally, the major part of it happens sequentially, as nearly all content files are facing a series of transformations on them \cite{Metalsmith2015technicaldocumentation}. Although the amount and extent of conversions may differ significantly from pipeline setup to pipeline setup, it can be broken down to the following core parts (see Fig. \ref{fig:build-pipeline}):
 
 \begin{description}
   \item[Metadata parser] -- Parses global metadata, found in the configuration file or in the YAML frontmatter of content files.
   \item[Markdown compiler] -- Used to convert easily read- and writeable Markdown files in browser-readable HTML.
-  \item[Template renderer] -- Responsible for bringing the very basic content structure in shape. The goal should be a common appearence, enriched with additional elements (like navigation, breadcrumbs, \ldots).
+  \item[Template renderer] -- Responsible for bringing the very basic content structure in shape. The goal should be a common appearence, enriched with additional elements (like navigation, breadcrumbs, etc.).
 \end{description}
-
-Of course, the list above overlaps at some point with the list mentioned in <<\emph{\nameref{par:creatingcontent}}>> on p. \pageref{par:creatingcontent}, as a build pipeline may be considered only as a part of the given static site generator (although the main part), not as the generator itself. One of the reasons is its independence of programming languages: A build pipeline doesn't care which programming language it consists of, as long as it knows how to interpret the content sources and templates. Therefore, it merely should be called a concept, not a framework.
+Of course, the list above overlaps at some point with the list mentioned by Vikram Dhillon \cite[24]{dhillon2016}, as a build pipeline may be considered only as a part of the given static site generator (although the main part), not as the generator itself. One of the reasons is its independence of programming languages: A build pipeline doesn't care which programming language it consists of, as long as it knows how to interpret the content sources and templates. Therefore, it merely should be called a concept, not a framework.
 
 %% Say something about the config file, yadda yadda yadda one hand pure build pipeline, because of metadata and configuration, other hand no, because of plugins. plugins??
 
 \input{chapters/03-technical-foundations/_support/frontmatter}
 
 % TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
-\vspace{20pt}
+% \vspace{20pt}
 
 \input{chapters/03-technical-foundations/_support/markdown}
-
-% TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
-\vspace{20pt}
 
 \input{chapters/03-technical-foundations/_support/templates}

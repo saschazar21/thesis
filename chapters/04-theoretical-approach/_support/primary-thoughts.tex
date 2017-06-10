@@ -10,7 +10,7 @@ After looking at challenges and possible solutions, the following topics can be 
   \item[Branching] -- Let different parts of development evolve to their own speed.
 \end{description}
 
-Git qualifies as core companion to any website project, especially when the project itself is maintained by multiple developers, designers and/or authors. Being aware of GitHub as social code management tool and moreover the benefits of its API, it serves well as foundation for the solution (see ch. \ref{sec:solutions-distributeddevelopment} on p. \pageref{sec:solutions-distributeddevelopment}).
+Git qualifies as core companion to any website project, especially when the project itself is maintained by multiple developers, designers and/or authors. Being aware of GitHub as social code management tool and moreover the benefits of its API, it serves well as foundation for the solution (see Sec. \ref{sec:solutions-distributeddevelopment}).
 
 %% Graphic of basic api flow
 \begin{figure} % h-ere, t-op, b-ottom, p-age
@@ -21,8 +21,7 @@ Git qualifies as core companion to any website project, especially when the proj
 \end{figure}
 %
 
-Since the tool should also be remotely accessible, it makes sense to also design it as RESTful API, for handling programmatical access as well as access from possible frontend apps lying on top. Furthermore, its main work cycle might get detached for neither distracting users due to ordering them to wait until it finished, nor blocking access in between (see fig. \ref{fig:api-flow}).
-
+Since the tool should also be remotely accessible, it makes sense to also design it as RESTful API, for handling programmatical access as well as access from possible frontend apps lying on top. Furthermore, its main work cycle might get detached for neither distracting users due to ordering them to wait until it finished, nor blocking access in between (see Fig. \ref{fig:api-flow}).
 However, the most important part behind these thoughts is the choice of the ideal static site generator system.
 
 
@@ -33,7 +32,7 @@ The evaluation needs to cover the usability, pluggability, customizability and o
 
 The programming language of the chosen static site generator does have to be considered well, as it has to fit seamlessly into a planned REST API, in the best case without any further adapter in between. This should make it also easy to hook additional code into the configuration step, if needed. Ideally, it emits events as well, so any host process knows when a detached process is finished.
 
-All in all, the currently best solution seems to be \emph{Metalsmith} (see ch. \ref{sec:metalsmith} on p. \pageref{sec:metalsmith}), as it offers a pluggable module ecosystem, and also provides access to a JavaScript API, among others. Together with some custom tweaks (e.g. dynamic module loading), an independent build setup for each project may be injected using only a specific configuration file.
+All in all, the currently best solution seems to be \emph{Metalsmith} (see Sec. \ref{sec:metalsmith}), as it offers a pluggable module ecosystem, and also provides access to a JavaScript API, among others. Together with some custom tweaks (e.g. dynamic module loading), an independent build setup for each project may be injected using only a specific configuration file.
 
 
 \subsection{Constructing a REST API}
@@ -46,8 +45,11 @@ The easy installation is supported by several third-party apps like Node Version
 Looking for a framework for setting up an API, \emph{Express}\footnote{\url{http://expressjs.com/} -- Website of Express.} is well suited for this task, as it consists only of a very basic setup -- similar to Metalsmith -- but may be easily enhanced using different node modules, thus providing a uniquely shaped web application in contrast to conventional, monolithic frameworks like \emph{Django} or \emph{Ruby on Rails} \cite[176]{cantelon2017node}.
 
 % Express sample basic configuration
-\lstinputlisting[caption={An example for a basic express.js setup, roughly taken from \url{http://expressjs.com/en/starter/hello-world.html}.\\
-In this case, a web application listens for a \emph{GET} request on its root path ``/'' and responds with a ``Hello World!'' message.}, label={list:express-setup}, language=JavaScript]{chapters/04-theoretical-approach/_support/express.js}
+\begin{program}
+  \caption{An example for a basic express.js setup, roughly taken from \url{http://expressjs.com/en/starter/hello-world.html}. In this case, a web application listens for a \emph{GET} request on its root path ``/'' and responds with a ``Hello World!'' message.}
+  \label{list:express-setup}
+\lstinputlisting[language=JavaScript]{chapters/04-theoretical-approach/_support/express.js}
+\end{program}
 
 As a result, the main purpose of such an express application would be acting as a web-based infrastructure for the underlying build pipeline. Based on different REST endpoints, as well as their request parameters, executing a uniquely configured Metalsmith process on a project directory within the API's file tree should be possible without any further external interaction requirement. The project directory would be provided using an appropriate GitHub repository, requiring only a basic, as little opinionated configuration as possible, together with a public access possibility to the repo.
 
@@ -61,4 +63,4 @@ As the technical foundations for a project covering the use case of static site 
 
 Concentrating on basic improvements of speeding up a build cycle, a solution without exchanging complete file trees might be possible. To make sure all required data is accessible, the respective GitHub API credentials are mandatory. The main reason behind that is the gapless availability of every commit and its underlying file tree via HTTP -- therefore a separate \texttt{git checkout} on server level is not needed, GitHub provides the according file tree as immediately obtainable tarball or zip archive.
 
-Together with the development history between two individual commits resulting in a diff and a downloadable file tree representing a certain step in the current progress, a build log has to keep track of the ongoing rendering actions and their results. The idea behind that is the possibility of remembering any render action in the past and incrementally building up on the latest positive result by only selecting the modified files for use in the build pipeline and leave out any other. Relying on an already available bugless result of a previous build cycle, any successful outcome of an upcoming action based on a later commit may be easily merged (see ch. \ref{sec:solutions-caching} on p. \pageref{sec:solutions-caching}).
+Together with the development history between two individual commits resulting in a diff and a downloadable file tree representing a certain step in the current progress, a build log has to keep track of the ongoing rendering actions and their results. The idea behind that is the possibility of remembering any render action in the past and incrementally building up on the latest positive result by only selecting the modified files for use in the build pipeline and leave out any other. Relying on an already available bugless result of a previous build cycle, any successful outcome of an upcoming action based on a later commit may be easily merged (see Sec. \ref{sec:solutions-caching}).

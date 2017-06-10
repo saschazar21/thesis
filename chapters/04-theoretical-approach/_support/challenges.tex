@@ -8,13 +8,12 @@ As already stated above, nearly every web project bears challenges to solve, bot
 
 When it comes to administer a static site project, it is very likely, that there will not be any possiblity of working on the same project in the same environment in a linear way. Instead, every developer will have to have a local install of the used generator at his/her disposal, together with access to a remote repository of a version control system for exchanging the current development status with other project maintainers. The main reason for that is the fact, that unlike content authors, developers do have the obligation of installing or maintaining the project's dependencies \cite[85]{dhillon2016}.
 
-Content Editors on the other hand may, if using for example GitHub, make use of the remote ``In-Page Code Editor'' (see fig. \ref{fig:github-page-editor} on p. \pageref{fig:github-page-editor}), which also provides an optimistically rendered version of the current content, although without making use of the project's style sheet.
-
+Content Editors on the other hand may, if using for example GitHub, make use of the remote ``In-Page Code Editor'' (see Fig. \ref{fig:github-page-editor}), which also provides an optimistically rendered version of the current content, although without making use of the project's style sheet.
 %% Graphic of separating project repositories
 \begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.9\textwidth]{challenges-repositories.png}
-    \caption{A graphic showing the stylized separation of a project into a \emph{content} and a \emph{development} repository. The content authors may only be granted access to the content repository, while developers should be granted access to both, thus providing a seamless integration for the content into the build pipeline flow (see Fig. \ref{fig:build-pipeline} on p. \pageref{fig:build-pipeline}).}
+    \caption{A graphic showing the stylized separation of a project into a \emph{content} and a \emph{development} repository. The content authors may only be granted access to the content repository, while developers should be granted access to both, thus providing a seamless integration for the content into the build pipeline flow (see Fig. \ref{fig:build-pipeline}).}
     \label{fig:repository-separation}
 \end{figure}
 %
@@ -49,17 +48,15 @@ Furthermore, being forced to wait in line may cause a developer to loose track o
 \begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.9\textwidth]{challenges-caching.png}
-    \caption{A graphic showing the theoretical approach of a build process flow, supported by caching.\\
-    After the \emph{client} (content creator, developer) executes a build, the included caching mechanism should filter modified or added files and send them to the build pipeline. After the build succeeded, the newly built files should be merged with the already existing files to form an updated version of the website root.}
+    \caption{A graphic showing the theoretical approach of a build process flow, supported by caching. After the \emph{client} (content creator, developer) executes a build, the included caching mechanism should filter modified or added files and send them to the build pipeline. After the build succeeded, the newly built files should be merged with the already existing files to form an updated version of the website root.}
     \label{fig:caching}
 \end{figure}
 %
 
 \subsection{Caching}
 \label{sec:challenges-caching}
-Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and merge the outcome to the already existing project build (see fig. \ref{fig:caching}).
-
-Although a few static site generators already include some sort of caching methods -- although most of them only work locally (like Hexo's Warehouse, see ch. \ref{sec:hexo-technology}), a first step is made. It should significantly improve the build duration for local development, as long as the optimal cache storage is being used. Hexo's Warehouse uses a JSON file as persistant storage, while the temporary storage lies in the Computer's RAM. This is fine for smaller projects, but could also lead to critical memory issues when used in projects containing a huge amount of files. For bigger data sets, it would be possible to use caching in conjunction with databases like SQLite using the \emph{JSON1}\footnote{\url{https://www.sqlite.org/json1.html} -- JSON1 documentation on SQLite's website.} extension.
+Speeding up a build process can be done via \emph{caching}. The right caching method should differ between unmodified content and files which actually have been reworked or were newly introduced into the project source. Using this sort of information, the algorithm might only choose the latter files, send them to the build pipeline and merge the outcome to the already existing project build (see Fig. \ref{fig:caching}).
+Although a few static site generators already include some sort of caching methods -- although most of them only work locally (like Hexo's Warehouse, see Sec. \ref{sec:hexo-technology}), a first step is made. It should significantly improve the build duration for local development, as long as the optimal cache storage is being used. Hexo's Warehouse uses a JSON file as persistant storage, while the temporary storage lies in the Computer's RAM. This is fine for smaller projects, but could also lead to critical memory issues when used in projects containing a huge amount of files. For bigger data sets, it would be possible to use caching in conjunction with databases like SQLite using the \emph{JSON1}\footnote{\url{https://www.sqlite.org/json1.html} -- JSON1 documentation on SQLite's website.} extension.
 
 As the local cache may not easily be transferred to other contributors or deployment engines, the first build after a pull does not take advantage of any speed up technique. Moreover, the methods mentioned above all use a significant amount of local computing power to provide a useable cache, which could lead to problems and unwanted slowdowns on portable devices.
 
@@ -67,4 +64,4 @@ As the local cache may not easily be transferred to other contributors or deploy
 \label{sec:challenges-cachedetermination}
 The next step would be to select cacheable files, as not every file has the same impact on the project source. While normal blog posts are mostly self-contained --  unless there is probably a preview of a post featured somewhere, a template file on the other hand, is often a dependency for many blog posts. A working cache is more important for a commit only containing blog posts, than for a commit which only contains template files, as a template file acts as a dependency for possibly multiple content files. Therefore a template file invalidates the cache, which leads to a complete rebuild.
 
-Since the relations between files, as well as their dependencies, may appear a bit obscure at first sight, it needs some kind of tracking system for ensuring a persistent overview of cacheable contents. This does not stop at comparing the file path within the project tree, as for example, all template files are stored within one special directory. For future considerations, also the source code would have to be examined, as the frontmatter in content files may contain information about dependencies to external files (see ch. \ref{sec:buildpipelines-frontmatter} on p. \pageref{sec:buildpipelines-frontmatter}). Therefore, the challenge here would be a reverse lookup mechanism for spotting file relations in the project source.
+Since the relations between files, as well as their dependencies, may appear a bit obscure at first sight, it needs some kind of tracking system for ensuring a persistent overview of cacheable contents. This does not stop at comparing the file path within the project tree, as for example, all template files are stored within one special directory. For future considerations, also the source code would have to be examined, as the frontmatter in content files may contain information about dependencies to external files (see Sec. \ref{sec:buildpipelines-frontmatter}). Therefore, the challenge here would be a reverse lookup mechanism for spotting file relations in the project source.

@@ -12,9 +12,13 @@ For even being able to build a repository successfully, it has to consist of a `
 
 \subsection{Configuration file}
 \label{sec:minimalrequirements-configuration}
-The configuration file is probably the most critical part in the repository's contents, as it is the only source for the build pipeline to obtain the setup instructions from. Since the Metalsmith CLI is able to render a project based on a single JSON configuration file and the API setup doesn't really differ, the format of the configuration needed by the REST API is nearly identical. Therefore, the configuration for a local Metalsmith installation and the one used for the project's build pipeline are very well interchangeable.
+The configuration file is probably the most critical part in the repository's contents, as it is the only source for the build pipeline to obtain the setup instructions from. Since the Metalsmith CLI is able to render a project based on a single JSON configuration file and the API setup doesn't really differ, the format of the configuration needed by the REST API is nearly identical. Therefore, the configuration for a local Metalsmith installation and the one used for the project's build pipeline are very well interchangeable (see Program \ref{list:pipeline-config}).
 
-\lstinputlisting[caption={\textbf{\_config.yml} -- a sample configuration file, containing some global configuration data, as well as a few Metalsmith plugin definitions.}, language=ruby, label={list:pipeline-config}]{chapters/06-evaluation/_support/_config.yml}
+\begin{program}
+  \caption{\textbf{\_config.yml} -- a sample configuration file, containing some global configuration data, as well as a few Metalsmith plugin definitions.}
+  \label{list:pipeline-config}
+\lstinputlisting[language=ruby]{chapters/06-evaluation/_support/_config.yml}
+\end{program}
 
 Since the REST API is able to parse both YAML and JSON notations, it is up to the developer to choose what fits his/her needs best. Since Metalsmith only understands JavaScript, any YAML configuration is parsed to JSON by the API, prior to forking the child process. This makes sense in a way, as the build setting information is getting included in the general options object, which is handed over from the REST API to the build pipeline, where parts of it get stored in the database together with the build log.
 

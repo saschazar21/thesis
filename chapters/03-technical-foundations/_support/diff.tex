@@ -5,68 +5,68 @@
 
 \subsection{History}
 \label{sec:diff-history}
-Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called diff. \emph{Paul Eggert} and \emph{Richard Stallman} (among others) also wrote the diff application as part of their \emph{GNU diffutils}\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for GNU diff.}, which is nowadays mainly distributed in Linux derivatives, MacOS, as well as part of Git. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985 \cite[3]{mackenzie2003comparing}, who proved, that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, Miller's and Myers' algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
+Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called diff. \emph{Paul Eggert} and \emph{Richard Stallman} (among others) also wrote the diff application as part of their \emph{GNU diffutils}\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for GNU diff.}, which is nowadays mainly distributed in Linux derivatives, MacOS, as well as part of Git. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985 \cite[3]{mackenzie2003comparing}, who proved that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, Miller's and Myers' algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
 
 \subsection{Technology}
+diff's core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Combined with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers joined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Program \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} (one line per letter) \cite[p. 1f]{Hunt1976}.
+
 \label{sec:diff-technology}
-
-\begin{lstlisting}[label={list:diff-normalformat}, caption=sample.diff]
-0a1
-> w
-3,4c4,6
-< c
-< d
----
-> x
-> y
-> z
-6,7d7
-< f
-< g
-\end{lstlisting}
-
-diff's core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Combined with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers joined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Listing \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} (one line per letter)\cite[p. 1f]{Hunt1976}.
-
+\begin{program}
+  \caption{sample.diff}
+  \label{list:diff-normalformat}
+  \begin{GenericCode}
+  0a1
+  > w
+  3,4c4,6
+  < c
+  < d
+  ---
+  > x
+  > y
+  > z
+  6,7d7
+  < f
+  < g
+  \end{GenericCode}
+\end{program}
 
 % TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
-\vspace{20pt}
-\subsubsection{The Unified Format}
+% \vspace{20pt}
 
+\subsubsection{The Unified Format}
 To provide a more readable user experience, GNU diff contains an improved format, called Unified Format, removing redundancy by using a more compact syntax. It can be selected as output format by executing diff together with a \texttt{-u} flag \cite[16]{mackenzie2003comparing}, whereas git diff uses this as standard format to show changes within the current working tree \cite{GitDiff}.
 
+\begin{program}
+  \caption{unified\_format.diff}
+  \label{list:diff-unifiedformat}
+  \begin{GenericCode}
+  --- oldfile	2017-04-13 09:42:47.474769553 +0200
+  +++ newfile	2017-04-13 09:43:13.898566935 +0200
+  @@ -1,7 +1,7 @@
+  +w
+   a
+   b
+  -c
+  -d
+  +x
+  +y
+  +z
+   e
+  -f
+  -g
+  \end{GenericCode}
+\end{program}
 
-\begin{lstlisting}[label={list:diff-unifiedformat}, caption=unified\_format.diff]
---- oldfile	2017-04-13 09:42:47.474769553 +0200
-+++ newfile	2017-04-13 09:43:13.898566935 +0200
-@@ -1,7 +1,7 @@
-+w
- a
- b
--c
--d
-+x
-+y
-+z
- e
--f
--g
-\end{lstlisting}
+As an example, Program \ref{list:diff-unifiedformat} shows the same diff output as Program \ref{list:diff-normalformat}, only as Unified Format using the following components: \texttt{------ \{filename\} \{timestamp\}} indicates the initial file together with the timestamp it was created, whereas \texttt{+++ \{filename\} \{timestamp\}} is the same as above, but for the compared file.
+\texttt{@@ -\{intial line range\} +\{compared line range\} @@} shows the affected line range, where \texttt{-1,7} indicates the following 7 lines, starting from the first line of the initial file. Lastly \texttt{+} marks a line as added in compared file and \texttt{-} marks a line as deleted in the compared file. To make the above explanation a little bit more clear, an additional example with a text speaking for itself is shown in Program \ref{list:diff-explanation}.
 
-As an example, listing \ref{list:diff-unifiedformat} shows the same diff output as listing \ref{list:diff-normalformat}, only as Unified Format using the following components:
+\begin{program}
+  \caption{file.diff}
+  \label{list:diff-explanation}
+\lstinputlisting{chapters/03-technical-foundations/_support/file.txt}
+\end{program}
 
-\begin{description}
-  \item[\texttt{------ \{filename\} \{timestamp\}}] -- indicates the initial file together with the timestamp it was created,
-  \item[\texttt{+++ \{filename\} \{timestamp\}}] -- same as above, but for the compared file
-  \item[\texttt{@@ -\{intial line range\} +\{compared line range\} @@}] -- \texttt{-1,7} indicates the following 7 lines, starting from the first line of the initial file
-  \item[\texttt{+}] -- marks a line as added in compared file
-  \item[\texttt{-}] -- marks a line as deleted in compared file
-\end{description}
-
-To make the above explanation a little bit more clear, an additional example with a text speaking for itself is added below:
-
-\lstinputlisting[caption={file.diff}, label={list:diff-explanation}]{chapters/03-technical-foundations/_support/file.txt}
-
-It can be clearly seen, that line 3 shows a growth of \emph{newfile} by two lines: -1,8 vs. +1,10. Having also a color-coded representation, it would boost the readability of such diff outputs once again.
+It can be clearly seen, that line 3 shows a growth of \emph{newfile} by two lines: \texttt{-1,8} vs. \texttt{+1,10}. Having also a color-coded representation, it would boost the readability of such diff outputs once again.
 
 
 % TODO: Ugly, remove if not necessary anymore, cares for vertical spaces above subsections
@@ -74,18 +74,22 @@ It can be clearly seen, that line 3 shows a growth of \emph{newfile} by two line
 \subsubsection{Usage with Git}
 As already stated, diff is one of the core components of Git. Not only does it support determining changes in the source code between a snapshot and another, it may also reveal merge conflicts, if segments are mutually exclusive and therefore preventing a flawless propagation of development. Thus, a varying development history of different origins (e.g. branches) not compatible to each other might be indicated. Furthermore, a conflict may also happen, if a developer forgot to \emph{pull} the latest changes before committing his/her current development progress. These conflicts may only be handled through human guidance \cite[124]{loeliger2012version}.
 
-\begin{lstlisting}[label={list:diff-conflict}, caption={A snippet of a file called ``manual.txt'', which is affected by a conflict. Content between \texttt{HEAD} and \texttt{=======} contains the local version, content below contains the foreign conflicting version.}]
+\begin{program}
+  \caption{A snippet of a file called ``manual.txt'', which is affected by a conflict. Content between \texttt{HEAD} and \texttt{=======} contains the local version, content below contains the foreign conflicting version.}
+  \label{list:diff-conflict}
+\begin{GenericCode}
 <<<<<<< HEAD:manual.txt
 I (the developer) am right!
 =======
 The branch_name is right!
 >>>>>>> branch_name:manual.txt
-\end{lstlisting}
+\end{GenericCode}
+\end{program}
 
 A conflict presents itself primarily through a message similar to:\\
 \texttt{CONFLICT (content): Merge conflict in file\\
 Automatic merge failed; fix conflicts and then commit the result.}\\
-If anything like the above happens, the affected files by the conflict also contain a structure like shown in listing \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
+If anything like the above happens, the affected files by the conflict also contain a structure like shown in Program \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
 
 \subsubsection{Usage with GitHub}
 Especially when interacting with GitHub's REST API, it is very easy to generate and import file diffs of a given repository. Whether two branches or two commits using their \emph{SHA} values are compared, a single HTTP request suffices for programmatically retrieving data, which is normally only accessible using a terminal emulator.

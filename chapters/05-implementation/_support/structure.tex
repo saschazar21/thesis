@@ -1,24 +1,23 @@
 \section{Application structure}
-\label{sec:structure}
+\label{sec:applicationstructure}
 
 %% Graphic of the request cycle to the build pipeline and back
-\begin{figure}[b] % h-ere, t-op, b-ottom, p-age
+\begin{figure} % h-ere, t-op, b-ottom, p-age
     \centering
     \includegraphics[width=0.9\textwidth]{application_structure.png}
-    \caption{A graphic showing the base structure of the implemented application.\\ The \emph{base application} layer serves as foundation, containing necessary libraries for implementing the \emph{HTTP} specifications. The \emph{routing} and \emph{OAuth} layer are responsible for authenticated requests to the endpoints, while the \emph{builder package} is designed as a partly autonomous, loosely coupled rendering service.}
+    \caption{A graphic showing the base structure of the implemented application. The \emph{base application} layer serves as foundation, containing necessary libraries for implementing the \emph{HTTP} specifications. The \emph{routing} and \emph{OAuth} layer are responsible for authenticated requests to the endpoints, while the \emph{builder package} is designed as a partly autonomous, loosely coupled rendering service.}
     \label{fig:application_structure}
 \end{figure}
 %
 
-A basic approach of the project structure may be seen in fig. \ref{fig:application_structure}. Although this might look still very abstract, the core packages are already clearly visible, while neither the access to the GitHub API, nor the access to the MongoDB is yet visualized.
-
+A basic approach of the project structure may be seen in Fig. \ref{fig:application_structure}. Although this might look still very abstract, the core packages are already clearly visible, while neither the access to the GitHub API, nor the access to the MongoDB is yet visualized.
 The graphic can be interpreted as follows:
 
 \begin{itemize}
   \item \emph{Base Application} -- The base structure, consisting of a Node.js environment, together with necessary supporting packages, such as a MongoDB driver and a GitHub API implementation.
   \item \emph{Backend} -- The Express.js ecosystem, responsible for controlling the HTTP subset.
   \item \emph{Router} -- The Express.js router instance, providing all the necessary endpoints for accessing the application's functions.
-  \item \emph{OAuth} -- The authentication framework, as theoretically explained on p. \pageref{sec:foundation-express-oauth}.
+  \item \emph{OAuth} -- The authentication framework, as theoretically explained in Sec. \ref{sec:foundation-express-oauth}.
   \item \emph{Builder} -- The main build pipeline package consisting of many small plugins for asynchronous handling the process from parsing the configuration to actually building the website.
 \end{itemize}
 

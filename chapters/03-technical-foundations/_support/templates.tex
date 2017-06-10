@@ -5,8 +5,12 @@
 
 Born out of the need to fail-safe produce HTML on the server, as the produced data chunks -- initiated by a client HTTP request -- steadily grew, the goal behind templating engines is primarily to separate business logic from data display. Ideally, at the end of the day, there should be no code in HTML, and no HTML in code \cite[225]{Parr2004templates}.
 
-\lstinputlisting[caption={post.hbs}, label={list:handlebars}, language=HTML]{chapters/03-technical-foundations/_support/post.html}
+\begin{program}
+  \caption{post.hbs}
+  \label{list:handlebars}
+\lstinputlisting[language=HTML]{chapters/03-technical-foundations/_support/post.html}
+\end{program}
 
-A simple template file example for a blog post is shown in listing \ref{list:handlebars}. It is written in \emph{Handlebars}, a very basic templating language, offering only a very limited amount of template logic. Included are \emph{loops, if/else, partials,~\ldots}~--~however, additional ``\emph{helper}''-functions may be added by the developer.
+A simple template file example for a blog post is shown in Program \ref{list:handlebars}. It is written in \emph{Handlebars}, a very basic templating language, offering only a very limited amount of template logic. Included are \emph{loops, if/else, partials,~\ldots}~--~however, additional ``\emph{helper}''-functions may be added by the developer.
 
-Although such template logic may come in handy for the most part, as some business logic decisions seem to be rather taken during rendering, instead of being hard-coded before, the concept of data separation is therefore often unknowingly violated \cite[228]{Parr2004templates}. Thus, the choice of the ``optimal'' templating engine for a given project is crucial, as different engines offer a different range of built-in logic. This could go from very conservative \emph{Mustache}\footnote{\url{https://mustache.github.io/} -- Mustache website.} to very powerful ones like \emph{Liquid}\footnote{\url{https://help.shopify.com/themes/liquid} -- Shopify's Liquid template engine.} (see ch. \ref{sec:jekyll-technology} on p. \pageref{sec:jekyll-technology}) or \texttt{EJS}\footnote{\url{http://www.embeddedjs.com/} -- Embedded JavaScript website}.
+Although such template logic may come in handy for the most part, as some business logic decisions seem to be rather taken during rendering, instead of being hard-coded before, the concept of data separation is therefore often unknowingly violated \cite[228]{Parr2004templates}. Thus, the choice of the ``optimal'' templating engine for a given project is crucial, as different engines offer a different range of built-in logic. This could go from very conservative \emph{Mustache}\footnote{\url{https://mustache.github.io/} -- Mustache website.} to very powerful ones like \emph{Liquid}\footnote{\url{https://help.shopify.com/themes/liquid} -- Shopify's Liquid template engine.} (see Sec. \ref{sec:jekyll-technology}) or \texttt{EJS}\footnote{\url{http://www.embeddedjs.com/} -- Embedded JavaScript website}.

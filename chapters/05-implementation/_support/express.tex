@@ -1,6 +1,6 @@
 \subsection{Express.js for REST}
 \label{sec:foundation-express}
-Starting with Express.js, the sample code in chapter \ref{sec:primarythoughts-restapi} on p. \pageref{sec:primarythoughts-restapi} shows a reasonable example on how to easily provide an API endpoint. While the example only returns a string containing ``Hello World!'', a JSON structure may also be used and is probably a better choice for working programmatically on the response data later on.
+Starting with Express.js, the sample code in Sec. \ref{sec:primarythoughts-restapi} shows a reasonable example on how to easily provide an API endpoint. While the example only returns a string containing ``Hello World!'', a JSON structure may also be used and is probably a better choice for working programmatically on the response data later on.
 
 Furthermore, a good advice would be to use a modular form of route definitions, since the main source file will soon get too bloated and may grow a lot of spaghetti-code in it. This may be achieved in outsourcing the routes in specific files and/or folders and importing them via a \emph{require}-statement. As a bonus, an external source file containing route definitions also allows for custom logic and middlewares, which may be hidden to the rest of the application by default \cite[p. 220f]{cantelon2017node}.
 
