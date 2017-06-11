@@ -47,7 +47,7 @@ What is additionally happening in the child task, is the following; the respecti
 \begin{enumerate}
   \item Creating a Metalsmith instance by setting the global API options according to the global configuration object, provided by the parent process.
   \item Filter required Metalsmith module names from the configuration object.
-  \item Sequentially invoke the modules to the Metalsmith instance
+  \item Sequentially invoke the modules to the Metalsmith instance.
   \begin{enumerate}
     \item Check if the current module is already available in the main project's node modules folder,
     \item append it by default,
