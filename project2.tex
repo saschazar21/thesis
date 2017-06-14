@@ -37,7 +37,7 @@ This project should reveal possibilities to overcome these challenges, mainly by
 
 
 %%%----------------------------------------------------------
-\chapter{Initial situation}
+\chapter{Initial Situation}
 %%%----------------------------------------------------------
 
 Static site generators are growing fast and are more and more used as a replacement for common content management systems.
@@ -70,7 +70,7 @@ The status of Thesis Project 1 at submission included necessary REST API endpoin
   \item Added compression (tar.gz) and distribution workflows at the end of the build cycle, enabled by events.
 \end{itemize}
 
-\section{Relation to Written Thesis}
+\section{Relation to written thesis}
 \label{sec:relation-thesis}
 The written thesis mainly shows different possibilites for improving build cycles of static site generators in theory, but concentrates on the considerations behind this project. Most importantly, it also evaluates this project in terms of usability and stability concerning high load on the REST API.
 
@@ -110,9 +110,9 @@ Originally introduced by \emph{Tom Preston-Werner}, one of the co-founders of Gi
 Due to the possibility of heavily customizing a Metalsmith setup to your needs, the decision was made in favor of this framework, although a few challenges remained:
 
 \begin{itemize}
-\item A working remap of Jekyll's variable structure to Metalsmith could not be realized. Both projects handle their build cycles too different. This makes it even harder to compare my intended selective approach to conventional Jekyll project setups.
-\item Shopify's Liquid template engine has not been fully ported to JavaScript till this day. It easily breaks when using custom functionality within template files.
-\item Custom project setups in general require a customized, adaptive handling during build time. This concerns not only Jekyll projects, but also customized Metalsmith projects.
+  \item A working remap of Jekyll's variable structure to Metalsmith could not be realized. Both projects handle their build cycles too different. This makes it even harder to compare my intended selective approach to conventional Jekyll project setups.
+  \item Shopify's Liquid template engine has not been fully ported to JavaScript till this day. It easily breaks when using custom functionality within template files.
+  \item Custom project setups in general require a customized, adaptive handling during build time. This concerns not only Jekyll projects, but also customized Metalsmith projects.
 \end{itemize}
 
 \section{Application structure}
@@ -122,37 +122,84 @@ Using this persistence possibility, an additional authentication service was rea
 
 In the end, the application featured a routing service to different API-endpoints, an \emph{OAuth2.0}-authentication service and a decoupled building service containing access to the GitHub API, as well as a very basic \emph{Metalsmith} setup (see Fig. \ref{fig:application_structure}).
 
+\subsection{Challenges}
+After providing a basic working example in the last semester, a few major challenges had to be solved during the ongoing development. These challenges were mostly caused by diving deeper into Node.js' low-level environment without any prior experience.
+
+The probably most significant impact in any further development was the introduction of child process handling during a build cycle. Due to Node.js' asynchronous and event-driven ecosystem, any blocking operations are possibly causing major delay and may lead to an unresponsive web application. By forking a child process, it is possible to keep the event loop responsive while executing a blocking task on a separate process.
+
+Thus, concurrent build cycles of different projects are possible, as every rendering process is being outsourced and managed via events from the main process. The executing user receives an intermediate result with a reference to a database entry for further information about the status of the current build operation.
+
+Other challenges were mostly caused by the general interaction with the GitHub API, as well as the time management behind asynchronous requests and their subsequent evaluation.
+
+\subsection{Implemented request flow}
+The finished REST API now consists of a fully working request flow, which was being optimized for speed and reliability. Whether a build cycle succeeded or failed, the client receives a response using the ``fail-early'' principle~--~this means, that the most error-prone tasks are processed in an early stage of the build process. These possibly error-prone tasks contain the following:
+
+\begin{itemize}
+  \item examination of the file tree and retrieving various file paths,
+  \item fetching and parsing of the configuration file,
+  \item fetching the latest build entry and comparing the commit hash, as well as
+  \item requesting the commit range and filtering the affected files.
+\end{itemize}
+After completion of the above tasks, a new build log is stored in the database and the client receives a response with the current, intermediate data. Then, the child process is forked, and the heaviest task of the build pipeline is initiated: creating and configuring the Metalsmith instance.
+
+After everything went well, the database entry is updated accordingly and the finished outcome of the rendering task is compressed as tar.gz-archive for deployment on any desired web server (see Figs. \ref{fig:request_flow} and \ref{fig:application_flow}).
+
 %
 \begin{figure}
     \centering
-    \includegraphics[width=0.65\textwidth]{diff_sample.png}
-    \caption{A screenshot showing a \emph{diff} of two different revisions of a file. In this case, the \textbf{author} information was added above the \textbf{title} field, compared to the previous version. Furthermore, the term ``again'' was also added to the \textbf{title} string.\\ Overall, this file features 2 additions and 1 deletion.}
-    \label{fig:diff_sample}
+    \includegraphics[width=0.9\textwidth]{request_flow.png}
+    \caption{A graphic showing the request flow of the REST API. The \emph{client producer} requests the build endpoint on the REST API; the \emph{OAuth} layer first authorizes the request by verifying the access token in the request header, then the request is handled by the \emph{build pipeline}. The build pipeline consists of a collection of tasks which are grouped and either handled concurrently or sequentially. Before forking the child process (light brown background), the intermediate status is written to the \emph{database} and returned to the client producer. Afterwards, the outcome is compressed to a \emph{tar.gz}-archive and the database entry is updated accordingly.}
+    \label{fig:request_flow}
+\end{figure}
+%
+
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{application_flow.png}
+    \caption{A graphic showing the main application flow of the build pipeline from top to bottom. At first, the \emph{repo tree} and \emph{file diff} are fetched from the GitHub API in parallel. After file filtering and creating a database entry, a child process is forked, which cares for executing the heavy tasks for building. After a successful build, the resulting files are compressed into a \emph{tar.gz} archive, then the database entry is updated accordingly. Afterwards, the child process is terminating gracefully.}
+    \label{fig:application_flow}
 \end{figure}
 %
 
 \section{Selective approach}
-To get a basic overview on which parts have changed, a file comparison using \textbf{diff} is very supportive in this case. Not only does it show how different files have been altered (\emph{added}, \emph{modified} or \emph{deleted}), but also which contents faced a change (\emph{see Fig. \ref{fig:diff_sample}}).
+To get a basic overview on which parts have changed, a file comparison using \emph{diff} is very supportive in this case. Not only does it show how different files have been altered (\emph{added}, \emph{modified} or \emph{deleted}), but also which contents faced a change.
 
-To compare the actual state of the project, the current project branch has to be checked out. Furthermore a \emph{diff} between the latest build state as \emph{base}-reference and the current \emph{HEAD}-reference shows the file changes within the given project. A sample request for such a \emph{diff} would be for example:
-\begin{center}
-\url{https://github.com/saschazar21/twitter-infovis/compare/777f148...b3c84ab.diff}
-\end{center}
+Luckily, the GitHub API already provides certain diff information using a \emph{JSON}-formatted structure\footnote{\url{https://developer.github.com/v3/repos/commits/\#compare-two-commits} -- ``Compare two commits'' documentation on GitHub.}.
+Parsing a diff file is therefore not necessary anymore, as the GitHub API returns this sort of information based on the \emph{base} and \emph{head} commit hash present as request parameters.
 
-The above URL shows a raw \emph{diff} of a sample repository between commits \textbf{777f148} as \emph{base} and \textbf{b384ab} as \emph{head} for all files involved. Due to the fact, that this is basically only a simple output from a console program, this functionality would later be not anymore limited to \emph{GitHub} alone.
+The only thing left is to filter out every file path from the object and decide whether it is a content file or a system file. If there were only content files present in the commit comparison, only these have to be built, as all the other content files are already rendered and available. At the end of the build process the rendered content files only need to be merged with the existing, previous file tree to form an updated version of the website.
 
-Being able to investigate the altered contents of the project using \emph{diff}, it now only needs to temporarily delete all unmentioned files from the source directory before performing a build. After a successful build though, the contents of the newly rendered remaining files in the source need to be merged with the previous state of the project to form a complete website in the end.
+\section{Summary}
+\label{sec:summary}
+As a summary it can be said, that although this is a working web application, it has to be seen as proof of concept in the first place. The reason is simple: as the REST API needs different access tokens and keys to work with the various online services, it can not be easily customized to a multi-user environment at the moment.
+
+The experience I gained from working on a project of such a size on the other hand was very important, since I hardly ever worked on such a low level in JavaScript. Therefore the most important lessons I've learned during the last semester are:
+
+\begin{itemize}
+  \item Find the correct balance of responsiveness and functionality, outsource heavy, blocking tasks to child processes if possible, but care for a clean communication and data exchange between parent and child.
+  \item Include automated tests into the development workflow as soon as possible, many small refactorings concerning the correct distribution of sub-tasks (config parsing, repository downloading, etc.) could have been avoided in the first place.
+  \item Have an online testbed available, as online services are likely to behave differently than a local workstation.
+\end{itemize}
+Looking back, using Node.js was the right choice for this project, as especially its modular and enhanceable features supported me in a way, that an ongoing development was possible and even bigger changes did not cause a major rework on dependent parts of the application.
+
+Metalsmith also played an important part, as its extensible plugin handling supported me in filling the gap between heavily customized projects and the build pipeline's interface to the REST API. Together with Express.js as well-tested REST framework, it now features a semi-automatic build pipeline, which is responsive to HTTP requests.
+
+\subsection{Future development}
+Future development would definitely have to include a graphical user interface in the browser, as pure CLI and HTTP request based operations are error-prone and confusing at some point. Especially build errors would be easier to display and visualize.
+
+Furthermore, a graphical user interface would also offer the possibility of opening the project to multiple users by supporting a correct authorization flow between the REST API and GitHub. Currently authorization is done by storing a certain access token into an environment variable, leading to a very limited support of repositories on GitHub.
 
 %%%----------------------------------------------------------
 \chapter{Milestones acquired}
 %%%----------------------------------------------------------
 
 \begin{itemize}
-\item GitHub API integration
+\item Rework requests to GitHub API
 \item Provide ecosystem for web project builds
-\item Compare states using diff
+\item Select files using GitHub's commit comparison
 \item Keep track on build states
-\item Create a possible testbed for render measurements
+\item Refactor testbed for render measurements
 \end{itemize}
 
 
