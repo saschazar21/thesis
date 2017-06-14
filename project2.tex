@@ -120,7 +120,9 @@ The application itself was bootstrapped from an \emph{Express.js}\footnote{\url{
 
 Using this persistence possibility, an additional authentication service was realized using \emph{OAuth2orize}\footnote{\url{https://github.com/jaredhanson/oauth2orize} -- OAuth2orize repository on GitHub.}. This makes it easier to provide an application-wide user management system, which does not require any HTML login form.
 
-In the end, the application featured a routing service to different API-endpoints, an \emph{OAuth2.0}-authentication service and a decoupled building service containing access to the GitHub API, as well as a very basic \emph{Metalsmith} setup (see Fig. \ref{fig:application_structure}).
+At the end of last semester, the application featured a routing service to different API endpoints, an \emph{OAuth2.0} authentication service and a decoupled building service containing access to the GitHub API, as well as a very basic \emph{Metalsmith} setup (see Fig. \ref{fig:application_structure}).
+
+The Metalsmith setup was since enhanced, as well as the decoupled build pipeline. Both are outsourced into an own child process now, leaving the REST API as reliable and responsive as initially intended -- the communication channel between parent and child process cares for optimal information exchange.
 
 \subsection{Challenges}
 After providing a basic working example in the last semester, a few major challenges had to be solved during the ongoing development. These challenges were mostly caused by diving deeper into Node.js' low-level environment without any prior experience.

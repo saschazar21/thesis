@@ -1,0 +1,189 @@
+%% A simple template for a lab or course report using the Hagenberg setup
+%% with the standard LaTeX 'report' class
+%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
+
+\documentclass[a4paper,english,11pt]{report}
+%\documentclass[a4paper,ngerman,11pt]{report}
+
+\usepackage{hgb}
+\usepackage{hgbabbrev}
+\usepackage{hgblistings}
+\usepackage{hgbbib}
+\usepackage{hgbheadings}
+
+\RequirePackage[utf8]{inputenc}		% remove when using lualatex oder xelatex!
+
+\graphicspath{{images/}}  % where are the images?
+\bibliography{literatur}  % requires file 'literatur.bib'
+
+\author{Sascha Zarhuber\\ S1510629021}
+\title{IM790 Thesis Project 2\\ \emph{Event-based build pipeline for static content management}\\ Technical Documentation}
+\date{\today}
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+\maketitle
+\tableofcontents
+%%%----------------------------------------------------------
+
+\chapter*{Abstract} % Vorwort
+
+A modular, automated build pipeline API for static site generation.
+Builds Metalsmith\footnote{\url{http://www.metalsmith.io/} -- Website of Metalsmith.} projects hosted on GitHub\footnote{\url{https://github.com} -- Website of GitHub.}, based on a well-formatted configuration file into downloadable tarballs.
+
+
+%%%----------------------------------------------------------
+\chapter{Installation}
+%%%----------------------------------------------------------
+
+\section{Prerequisites}
+The following prerequisites are necessary for installing the REST API on a local machine:
+
+\begin{itemize}
+  \item Node.js\footnote{\url{https://nodejs.org/en/} -- Website of Node.js.} v6 and above
+  \item MongoDB\footnote{\url{https://www.mongodb.com/} -- Website of MongoDB.} (local or remote)
+  \item Mailgun\footnote{\url{https://www.mailgun.com/} -- Website of Mailgun.} API keys, and of course
+  \item GitHub API keys.
+  \item (optional) Yarn\footnote{\url{https://yarnpkg.com/en/} -- Website of Yarn.} (for faster installs)
+\end{itemize}
+
+
+\section{Setup}
+To set up a working instance of this project, the following steps have to be done (in that order preferrably):
+
+\begin{enumerate}
+  \item \texttt{git clone https://github.com/saschazar21/contentcrane \&\& cd ./contentcrane}
+  \item \texttt{yarn} or \texttt{npm install}
+  \item \texttt{cp .env.sample .env}
+  \item Add values to ENV keys in \texttt{.env} for providing system with necessary environment variables
+\end{enumerate}
+%
+
+\section{Authentication}
+This system uses OAuth 2.0\footnote{\url{https://oauth.net/2/} -- Website of OAuth 2.0} for user authentication. All API calls to the \texttt{/api/...} sub-route require an access token, issued by the built-in OAuth-service. Every token is valid for \emph{60 minutes} and cannot be renewed, instead, a new token must be obtained once the current one expires.
+
+
+\section{User}
+Since this service is tightly coupled with GitHub's services, every user has to sign up using the e-mail address he/she is also using for his/her GitHub account.\\
+\textbf{CAUTION}: Since this is still a \emph{proof-of-concept}, a test user has to be set in \texttt{.env} for even being allowed to create a user.
+
+\begin{center}
+  \texttt{curl -X POST -L -u \{process.env.TEST\_USER\} -d "email=\{your github email\}\&password=\{your password\}" http://localhost:3000/api/user}
+\end{center}
+
+
+\section{Client}
+For obtaining an access token, a user has to create a \emph{client}:
+
+\begin{program}
+  \caption{A standard response showing newly issued client data for use with the OAuth 2.0 authorization framework.}
+  \label{prog:client_response}
+  \begin{JsCode}
+{
+  "api_user":"{a hash string}",
+  "api_secret":"{a longer hash string}"
+}
+  \end{JsCode}
+\end{program}
+
+\begin{center}
+  \texttt{curl -X POST -L -u \{your user name\} http://localhost:3000/api/user/client}
+\end{center}
+After entering the user's correct password, the server should provide a response as shown in Program \ref{prog:client_response}.\\
+\textbf{CAUTION}: Please be aware, that this information cannot be retrieved again -- once the client user/secret is lost, the user has to create a new client.
+
+\section{Access Token}
+After receiving client details, an \emph{access token} might be requested:
+
+\begin{program}
+  \caption{A standard response showing an issued access token as well as its expiry timestamp.}
+  \label{prog:accesstoken_response}
+  \begin{JsCode}
+    {
+      "access_token":"{access token hash}",
+      "expires":"{expiry date, +60min in the future}",
+      "token_type":"Bearer"
+    }
+  \end{JsCode}
+\end{program}
+
+\begin{center}
+  \texttt{curl -X POST -L -u \{your client user\} -d "grant\_type=client\_credentials" http://localhost:3000/api/token}
+\end{center}
+After entering the client's correct password, the server should provide a response as shown in Program \ref{prog:accesstoken_response}.\\
+\textbf{INFO}: Currently only the \emph{client\_credentials} grant type is implemented.
+
+
+%%%----------------------------------------------------------
+\chapter{API Endpoints}
+%%%----------------------------------------------------------
+
+Each API call must contain an \texttt{Authorization: Bearer \{access token hash\}} header, otherwise the response will be \texttt{403 Forbidden}.
+
+\section{/api/project}
+Creates a new entry for a project using a \emph{POST} request. Mandatory fields are:
+\begin{description}
+  \item[repo] -- The repository name on GitHub.
+\end{description}
+
+\section{/api/project/:owner/:repo/build}
+Initiates a build job for the given repo using a \emph{POST} request. Optional fields are:
+\begin{description}
+  \item[force] -- If set to true, a full rebuild without the use of a cache is triggered.
+  \item[base] -- A hash or date value to set as base; if date is used, always the first commit on that date is used as base.
+  \item[head] -- A hash or date value to set as head; if date is used, always the first commit on that date is used as head.
+\end{description}
+
+\section{/api/project/:owner/:repo/status}
+Gets the status of the latest build using a \emph{GET} request
+
+\section{/api/project/:owner/:repo/download}
+Downloads the latest successful build as \emph{.tar.gz} archive using a \emph{GET} request. Additional informations in response header are:
+\begin{description}
+  \item[X-Head] -- The commit hash value the archive was built from.
+  \item[X-Timestamp] -- The timestamp as ISO string when the build succeeded.
+\end{description}
+
+\section{/api/project/:owner/:repo/delete}
+Deletes the project from the database using a *POST* request. Optional fields are:
+\begin{description}
+  \item[recursive] -- When set to \emph{true}, also delete its builds from the database.
+\end{description}
+
+\chapter{Configuration}
+Each project must contain either a \texttt{\_config.json} or \texttt{\_config.yml} file in its root directory. In that configuration file, the required settings for the Metalsmith API\footnote{\url{https://github.com/segmentio/metalsmith\#api} -- The Metalsmith API documentation.} should be placed after a \emph{global} property.
+Below that, the configurations of needed Metalsmith plugins\footnote{\url{https://npms.io/search?q=metalsmith} -- A search of Metalsmith plugins on \emph{npms.io}.} may follow (see Prog. \ref{prog:configuration_sample}).\\
+\textbf{CAUTION}: Please note, that every Metalsmith plugin name should explicitely be featured \emph{without} its \texttt{metalsmith-} prefix!
+
+The same configuration as above also works as \emph{YAML}-formatted file saved as \texttt{\_config.yml}.
+
+\begin{program}[t]
+  \caption{A sample configuration structure for any project, which should be handled by the project's build pipeline.}
+  \label{prog:configuration_sample}
+  \begin{JsCode}
+    {
+      "global": {
+        "source": "{source directory of your content}",
+        "destination": "{output folder name}",
+        "metadata": {
+          "name": "Your global site name"
+        }
+      },
+      "markdown": {
+        "smartyPants": true
+      }
+    }
+  \end{JsCode}
+\end{program}
+
+\chapter{Troubleshooting}
+Please refer to the error message in the JSON object retrieved via\\
+\texttt{/api/project/:owner/:repo/status}.
+Generally it can be said, that as long as the build succeeds using the Metalsmith CLI\footnote{\url{https://github.com/segmentio/metalsmith\#cli} -- The Metalsmith CLI documentation.}, chances are high that it also succeeds using this service. Please note the similar structure of the configuration files.
+
+%%%----------------------------------------------------------
+%\MakeBibliography[nosplit]
+%%%----------------------------------------------------------
+
+\end{document}
