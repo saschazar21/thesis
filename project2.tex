@@ -1,0 +1,176 @@
+%% A simple template for a lab or course report using the Hagenberg setup
+%% with the standard LaTeX 'report' class
+%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
+
+\documentclass[a4paper,english,11pt]{report}
+%\documentclass[a4paper,ngerman,11pt]{report}
+
+\usepackage{hgb}
+\usepackage{hgbabbrev}
+\usepackage{hgblistings}
+\usepackage{hgbbib}
+\usepackage{hgbheadings}
+
+\RequirePackage[utf8]{inputenc}		% remove when using lualatex oder xelatex!
+
+\graphicspath{{images/}}  % where are the images?
+\bibliography{literatur}  % requires file 'literatur.bib'
+
+\author{Sascha Zarhuber\\ S1510629021}
+\title{IM790 Thesis Project 2\\ \emph{Event-based build pipeline for static content management}\\ Project Report}
+\date{\today}
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+\maketitle
+\tableofcontents
+%%%----------------------------------------------------------
+
+\chapter*{Abstract} % Vorwort
+
+With a constantly growing number of internet users worldwide, websites are facing a difficult challenge nowadays: Serving information \emph{without delay}.
+
+Static site generators build websites which don't need to interfere with any other service when requested by a client, and are therefore saving precious time and resources, if configured properly. A big drawback however is the amount of \emph{time}, \emph{configuration} and \emph{resources} needed for rebuilding the website every time its content changes.
+
+This project should reveal possibilities to overcome these challenges, mainly by using a \emph{selective approach} to only render parts which have changed, but also by providing a REST API for outsourcing the build cycle to a remote service.
+
+
+%%%----------------------------------------------------------
+\chapter{Initial situation}
+%%%----------------------------------------------------------
+
+Static site generators are growing fast and are more and more used as a replacement for common content management systems.
+
+The main advantage are their independence of \emph{external} services, like database systems, session caching services, etc. Also, they seldomly consist of complicated backend systems and are mostly created in pure \emph{HTML} or simple markup languages like \emph{Markdown}\footnote{\url{https://daringfireball.net/projects/markdown/} -- Website of Markdown.}.
+%
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\textwidth]{jekyll_build.png}
+    \caption{A screenshot showing the build time for the webroot of\newline \url{https://jekyllrb.com}. 172 files were generated in approximately 4:30 minutes. The result is a complete webroot containing browser readable HTML pages, assets, style sheets and JavaScript files.}
+    \label{fig:jekyll_build}
+\end{figure}
+%
+
+One of the biggest drawbacks however, is the fact, that static site generators have to preprocess every bit of information they contain (see Fig. \ref{fig:jekyll_build}). This is the complete opposite compared to other content management systems, which process information on request. This means, that user-readable content is fetched and rendered \emph{just in time} it was requested from the client.
+
+Therefore, depending on the setup, a dynamically growing amount of time needed for a build cycle might be the case. For being able to work against this fact, a working approach has to be found, which saves time by \emph{leaving out} information, which has not changed since the previous build.
+
+\section{Relation to Thesis Project 1}
+\label{sec:relation-project}
+This project is closely related to ``IM690 Thesis Project 1'', as the Thesis Project 1 was considered as intermediate result, whereas the current state of this project represents a usable version containing a static site generator wrapped in a REST API.
+
+The status of Thesis Project 1 at submission included necessary REST API endpoints, together with a working configuration file parser and a file deletion possibility for slimming down the website sources prior instantiating the build pipeline. Furthermore, the authentication framework and the database connection were fully usable. The development steps for Thesis Project 2 concentrated on mainly refining the build services and making it as fail-safe as possible:
+
+\begin{itemize}
+  \item Restructured the build pipeline flow for enabling ``fail-early'' error handling.
+  \item Improved the \emph{node modules} install service.
+  \item Decoupled the build pipeline flow into an own child process to unblock the main event-loop.
+  \item Enhanced the detection of previous builds by adding necessary information to build entries.
+  \item Added compression (tar.gz) and distribution workflows at the end of the build cycle, enabled by events.
+\end{itemize}
+
+\section{Relation to Written Thesis}
+\label{sec:relation-thesis}
+The written thesis mainly shows different possibilites for improving build cycles of static site generators in theory, but concentrates on the considerations behind this project. Most importantly, it also evaluates this project in terms of usability and stability concerning high load on the REST API.
+
+Because of the complexity of different parts used in this project, the thesis explains the state of the art, as well as the technical foundations necessary for development before any in-depth code documentation. Therefore, the reader should be able to follow the design decisions made in favor of the project outcome.
+
+Lastly, a developer should get a good insight of how different web technologies, which may look contradictory at first sight, are able to interact seamlessly, although some sort of customization could be necessary.
+%
+
+%%%----------------------------------------------------------
+\chapter{Implementation}
+%%%----------------------------------------------------------
+
+%
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{application_structure.png}
+    \caption{A graphic showing the base structure of the implemented application. The \emph{base application} layer serves as foundation, containing necessary libraries for implementing the \emph{HTTP} specifications. The \emph{routing} and \emph{OAuth} layer are responsible for authenticated requests to the endpoints, whilst the \emph{builder package} is designed as a partly autonomous, loosely coupled rendering service.}
+    \label{fig:application_structure}
+\end{figure}
+%
+
+The project itself was intended to work as a standalone service, thus leading to the advantage of not having to install a complete project setup locally on the content producer side. Additionally, one of the first design decisions was to closely couple this project with the \emph{GitHub API}\footnote{\url{https://developer.github.com/v3/} -- Documentation of GitHub API v3.}.
+
+Both of these decisions should lead to a fully customizable production environment, easy to setup and adapted to each desired workflow, without having the need of making a compromise prior to getting workload done.
+
+\section{Framework choice}
+Although there are a lot of static site generator frameworks available, I mainly concentrated on comparing the following two, before setting up my project application:
+
+\subsection{Jekyll}
+\emph{Jekyll}\footnote{\url{https://jekyllrb.com} -- Website of Jekyll.} -- the leading static site generator with more than 28,000 stars on GitHub\footnote{\url{https://github.com/jekyll/jekyll} -- Jekyll on GitHub.}, was responsible for a renaissance of statically generated websites, when it was introduced in 2008\footnote{\url{https://jekyllrb.com/docs/history/} -- History of Jekyll}.
+
+Originally introduced by \emph{Tom Preston-Werner}, one of the co-founders of GitHub, it quickly grew a big community around it, benefitted mostly due to its wide usage on \emph{GitHub Pages}\footnote{\url{https://pages.github.com} -- GitHub's Pages service}. However, Jekyll is written in \emph{Ruby}, which causes a bit of friction, when trying to embed it into a server-side JavaScript-based ecosystem.
+
+\subsection{Metalsmith}
+\emph{Metalsmith}\footnote{\url{http://www.metalsmith.io} -- Website of Metalsmith.} -- a very modular static site generator on the other hand, is completely written in JavaScript, which makes it easier to integrate it into \emph{Node.js}-based applications. Furthermore, it consists basically just of modules, so that every job inside the build pipeline gets handled from its own module. The whole application may be put together and extended like using \emph{LEGO} bricks.
+
+Due to the possibility of heavily customizing a Metalsmith setup to your needs, the decision was made in favor of this framework, although a few challenges remained:
+
+\begin{itemize}
+\item A working remap of Jekyll's variable structure to Metalsmith could not be realized. Both projects handle their build cycles too different. This makes it even harder to compare my intended selective approach to conventional Jekyll project setups.
+\item Shopify's Liquid template engine has not been fully ported to JavaScript till this day. It easily breaks when using custom functionality within template files.
+\item Custom project setups in general require a customized, adaptive handling during build time. This concerns not only Jekyll projects, but also customized Metalsmith projects.
+\end{itemize}
+
+\section{Application structure}
+The application itself was bootstrapped from an \emph{Express.js}\footnote{\url{https://expressjs.com} -- Website of Express.js.} base configuration. To persist user, project and build information, the online \emph{MongoDB}-service \emph{mLab}\footnote{\url{https://mlab.com} -- Website of mLab.} was used, as it provides a free tier for testing purposes.
+
+Using this persistence possibility, an additional authentication service was realized using \emph{OAuth2orize}\footnote{\url{https://github.com/jaredhanson/oauth2orize} -- OAuth2orize repository on GitHub.}. This makes it easier to provide an application-wide user management system, which does not require any HTML login form.
+
+In the end, the application featured a routing service to different API-endpoints, an \emph{OAuth2.0}-authentication service and a decoupled building service containing access to the GitHub API, as well as a very basic \emph{Metalsmith} setup (see Fig. \ref{fig:application_structure}).
+
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.65\textwidth]{diff_sample.png}
+    \caption{A screenshot showing a \emph{diff} of two different revisions of a file. In this case, the \textbf{author} information was added above the \textbf{title} field, compared to the previous version. Furthermore, the term ``again'' was also added to the \textbf{title} string.\\ Overall, this file features 2 additions and 1 deletion.}
+    \label{fig:diff_sample}
+\end{figure}
+%
+
+\section{Selective approach}
+To get a basic overview on which parts have changed, a file comparison using \textbf{diff} is very supportive in this case. Not only does it show how different files have been altered (\emph{added}, \emph{modified} or \emph{deleted}), but also which contents faced a change (\emph{see Fig. \ref{fig:diff_sample}}).
+
+To compare the actual state of the project, the current project branch has to be checked out. Furthermore a \emph{diff} between the latest build state as \emph{base}-reference and the current \emph{HEAD}-reference shows the file changes within the given project. A sample request for such a \emph{diff} would be for example:
+\begin{center}
+\url{https://github.com/saschazar21/twitter-infovis/compare/777f148...b3c84ab.diff}
+\end{center}
+
+The above URL shows a raw \emph{diff} of a sample repository between commits \textbf{777f148} as \emph{base} and \textbf{b384ab} as \emph{head} for all files involved. Due to the fact, that this is basically only a simple output from a console program, this functionality would later be not anymore limited to \emph{GitHub} alone.
+
+Being able to investigate the altered contents of the project using \emph{diff}, it now only needs to temporarily delete all unmentioned files from the source directory before performing a build. After a successful build though, the contents of the newly rendered remaining files in the source need to be merged with the previous state of the project to form a complete website in the end.
+
+%%%----------------------------------------------------------
+\chapter{Milestones acquired}
+%%%----------------------------------------------------------
+
+\begin{itemize}
+\item GitHub API integration
+\item Provide ecosystem for web project builds
+\item Compare states using diff
+\item Keep track on build states
+\item Create a possible testbed for render measurements
+\end{itemize}
+
+
+
+%%%----------------------------------------------------------
+\chapter{Intended project goals}
+%%%----------------------------------------------------------
+
+\begin{itemize}
+\item Render or re-render static webroots seamlessly
+\item Provide latest build as archive for deployment
+\item Make service responsive to GitHub webhooks
+\item Integrate into CI services
+\end{itemize}
+
+
+%%%----------------------------------------------------------
+%\MakeBibliography[nosplit]
+%%%----------------------------------------------------------
+
+\end{document}
