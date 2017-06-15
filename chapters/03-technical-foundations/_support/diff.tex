@@ -5,7 +5,7 @@
 
 \subsection{History}
 \label{sec:diff-history}
-Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called diff. \emph{Paul Eggert} and \emph{Richard Stallman} (among others) also wrote the diff application as part of their \emph{GNU diffutils}\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for GNU diff.}, which is nowadays mainly distributed in Linux derivatives, MacOS, as well as part of Git. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985 \cite[3]{mackenzie2003comparing}, who proved that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but containing a single non-blank file on both ends. As a fact, using other experiments performed on typical files, Miller's and Myers' algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
+Initially published by \emph{James W. Hunt} and \emph{Malcolm D. McIlroy} in July 1976 when working at \emph{Bell Labs}, the algorithm was later used in \emph{UNIX} as application called diff. \emph{Paul Eggert} and \emph{Richard Stallman} (among others) also wrote the diff application as part of their \emph{GNU diffutils}\footnote{\url{http://manpages.ubuntu.com/manpages/zesty/en/man1/diff.1.html} -- Manpage for GNU diff.}, which is nowadays mainly distributed in Linux derivatives, MacOS, as well as part of Git. They used an improved algorithm published by \emph{Webb Miller} and \emph{Eugene W. Myers} in 1985 \cite[3]{mackenzie2003comparing}, who proved that the original ``Hunt-McIlroy algorithm'' is inefficient on certain special cases. As a test case, they used a file containing 1000 blank lines, and a second file, consisting of the initial file, but with a single non-blank line added on both ends. As a fact, using other experiments performed on typical files, Miller's and Myers' algorithm ran roughly four times faster \cite[p. 1034f]{miller1985file}.
 
 \subsection{Technology}
 diff's core task is finding the ``shortest sequence of insertions and deletions that will convert the first string to the second'' \cite[1025]{miller1985file} together with finding the longest common subsequence occurring in both files \cite[2]{Hunt1976}. Combined with the mathematical algorithm, it should provide an easily understandable format for humans, consisting of line numbers joined with \emph{a, c} or \emph{d} (append, change, delete), as well as \emph{<} and \emph{>} line prefixes, showing the affiliation either to the initial or compared file. This is called the ``Normal Format'' \cite[12]{mackenzie2003comparing}. Program \ref{list:diff-normalformat} shows a sample output, comparing the strings \texttt{a b c d e f g} and \texttt{w a b x y z e} (one line per letter) \cite[p. 1f]{Hunt1976}.
@@ -86,9 +86,11 @@ The branch_name is right!
 \end{GenericCode}
 \end{program}
 
-A conflict presents itself primarily through a message similar to:\\
-\texttt{CONFLICT (content): Merge conflict in file\\
-Automatic merge failed; fix conflicts and then commit the result.}\\
+A conflict presents itself primarily through a message similar to:
+\begin{center}
+  \texttt{CONFLICT (content): Merge conflict in file\\
+Automatic merge failed; fix conflicts and then commit the result.}
+\end{center}
 If anything like the above happens, the affected files by the conflict also contain a structure like shown in Program \ref{list:diff-conflict}. A conflict can then be resolved by removing its markers and picking the appropriate resolution of either side of the \texttt{=======} delimiter \cite{GitConflicts}, as well as mixing them to the developers needs \cite[126]{loeliger2012version}. A single file may also contain multiple conflicts.
 
 \subsubsection{Usage with GitHub}
