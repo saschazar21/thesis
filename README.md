@@ -16,25 +16,11 @@ This is the source code for my Master's thesis, which was submitted to the [Univ
 
 ## Abstract
 
-Whereas modern content management systems provide a solid environment
-for dynamic content creating and editing, their dependency on external ser-
-vices like database services or authentication providers often complicate
-their abilities to scale. Additional duties for keeping them responsive in
-larger ecosystems are therefore often responsible for slowing down the over-
-all workflow of a developer.
+Whereas modern content management systems provide a solid environment for dynamic content creating and editing, their dependency on external services like database services or authentication providers often complicate their abilities to scale. Additional duties for keeping them responsive in larger ecosystems are therefore often responsible for slowing down the overall workflow of a developer.
 
-Static site generators on the other hand offer an easy solution for steadily
-growing websites. Their only task is to create a full-featured file structure,
-which contains browser-readable HTML files that do not require any on-
-the-fly rendering upon request. However, static site generators contain a
-significant drawback, as the rendering mechanism normally cannot distin-
-guish between already present files and new content. In fact, the build time
-increases every time a new file is added to the source directory.
+Static site generators on the other hand offer an easy solution for steadily growing websites. Their only task is to create a full-featured file structure, which contains browser-readable HTML files that do not require any on-the-fly rendering upon request. However, static site generators contain a significant drawback, as the rendering mechanism normally cannot distinguish between already present files and new content. In fact, the build time increases every time a new file is added to the source directory.
 
-This Master’s thesis therefore tries to compensate the full extent of a
-complete rebuild every single build cycle by providing a caching mechanism
-based on a selective approach, together with a remotely working REST API
-as wrapping interface for user-friendly interaction and improved division of
+This Master’s thesis therefore tries to compensate the full extent of a complete rebuild every single build cycle by providing a caching mechanism based on a selective approach, together with a remotely working REST API as wrapping interface for user-friendly interaction and improved division of
 work.
 
 ## Prerequisites
