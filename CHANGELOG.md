@@ -20,5 +20,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Final version of thesis. Ready to submit.
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/saschazar21/thesis/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/saschazar21/thesis/releases/tag/v1.0.0
